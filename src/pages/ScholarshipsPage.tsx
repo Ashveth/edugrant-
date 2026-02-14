@@ -90,9 +90,11 @@ function ScholarshipCard({ match, isSaved, onToggleSave }: { match: MatchResult;
             )}
           </AnimatePresence>
           <div className="flex gap-2">
-            <Button className="flex-1 gradient-primary text-primary-foreground font-semibold shadow-glow" size="sm">
-              <ExternalLink className="mr-2 h-3.5 w-3.5" /> Apply Now
-            </Button>
+            <a href={s.applicationUrl} target="_blank" rel="noopener noreferrer" className="flex-1">
+              <Button className="w-full gradient-primary text-primary-foreground font-semibold shadow-glow" size="sm">
+                <ExternalLink className="mr-2 h-3.5 w-3.5" /> Apply Now
+              </Button>
+            </a>
             <Link to={`/dashboard/scholarship/${s.id}`}>
               <Button variant="outline" size="sm">Details</Button>
             </Link>
