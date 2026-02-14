@@ -23,9 +23,7 @@ function calculateMatch(profile: StudentProfile, scholarship: Scholarship): Matc
       const ratio = 1 - profile.annualFamilyIncome / scholarship.eligibility.maxIncome;
       const score = 0.5 + ratio * 0.5;
       weightedScore += incomeWeight * score;
-      reasons.push(
-        `Your family income (₹${(profile.annualFamilyIncome / 100000).toFixed(1)}L) is within the ₹${(scholarship.eligibility.maxIncome / 100000).toFixed(1)}L limit`
-      );
+      reasons.push(`Your family income (₹${(profile.annualFamilyIncome / 100000).toFixed(1)}L) is within the ₹${(scholarship.eligibility.maxIncome / 100000).toFixed(1)}L limit`);
     } else {
       reasons.push(`Family income exceeds the ₹${(scholarship.eligibility.maxIncome / 100000).toFixed(1)}L limit`);
     }
@@ -42,9 +40,7 @@ function calculateMatch(profile: StudentProfile, scholarship: Scholarship): Matc
       const excess = profile.academicPercentage - scholarship.eligibility.minPercentage;
       const score = 0.6 + Math.min(excess / 20, 1) * 0.4;
       weightedScore += academicWeight * score;
-      reasons.push(
-        `Your academic score (${profile.academicPercentage}%) exceeds the minimum ${scholarship.eligibility.minPercentage}%`
-      );
+      reasons.push(`Your academic score (${profile.academicPercentage}%) exceeds the minimum ${scholarship.eligibility.minPercentage}%`);
     } else {
       reasons.push(`Academic score below the required ${scholarship.eligibility.minPercentage}%`);
     }
@@ -108,35 +104,25 @@ function calculateMatch(profile: StudentProfile, scholarship: Scholarship): Matc
   const genders = scholarship.eligibility.genders;
   if (genders && genders.length > 0 && !genders.includes(profile.gender)) {
     return {
-      scholarship,
-      matchPercentage: 0,
-      financialNeedScore: 0,
-      meritScore: 0,
-      approvalProbability: 0,
-      reasons: [`This scholarship is only for ${genders.join("/")} applicants`],
+      scholarship, matchPercentage: 0, financialNeedScore: 0, meritScore: 0, approvalProbability: 0,
+      reasons: [`This scholarship is only for ${genders.join("/")} applicants`], badges: [],
     };
   }
 
   const matchPercentage = Math.round((weightedScore / totalWeight) * 100);
-
-  // Financial need score
-  const financialNeedScore = Math.round(
-    Math.max(0, Math.min(100, 100 - (profile.annualFamilyIncome / 1200000) * 100))
-  );
-
-  // Merit score
+  const financialNeedScore = Math.round(Math.max(0, Math.min(100, 100 - (profile.annualFamilyIncome / 1200000) * 100)));
   const meritScore = Math.round(Math.min(100, profile.academicPercentage * 1.05));
+  const approvalProbability = Math.round(matchPercentage * 0.5 + financialNeedScore * 0.2 + meritScore * 0.3);
 
-  // Approval probability
-  const approvalProbability = Math.round(
-    matchPercentage * 0.5 + financialNeedScore * 0.2 + meritScore * 0.3
-  );
+  // Generate badges
+  const badges: string[] = [];
+  if (approvalProbability >= 75) badges.push("🔥 High Approval");
+  if (scholarship.amount >= profile.targetCourseCost * 0.5) badges.push("💰 High Coverage");
+  if (matchPercentage >= 85) badges.push("🎯 Perfect Match");
+  if (scholarship.competitionLevel === "High") badges.push("⚠️ Competitive");
 
   return {
-    scholarship,
-    matchPercentage,
-    financialNeedScore,
-    meritScore,
+    scholarship, matchPercentage, financialNeedScore, meritScore,
     approvalProbability: Math.min(98, approvalProbability),
     reasons: reasons.filter(
       (r) =>
@@ -147,5 +133,6 @@ function calculateMatch(profile: StudentProfile, scholarship: Scholarship): Matc
         !r.startsWith("Field ") &&
         !r.startsWith("State ")
     ),
+    badges,
   };
 }

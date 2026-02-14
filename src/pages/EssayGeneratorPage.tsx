@@ -21,22 +21,7 @@ function generateEssay(scholarshipName: string, name: string, field: string, inc
     ? `I humbly submit my application for the ${scholarshipName}, hoping that my dedication and circumstances will be considered worthy of this support.`
     : `I am honored to apply for the ${scholarshipName}. As a student of ${field} with ${percentage}% academic performance, I believe I am a strong candidate for this scholarship.`;
 
-  return `Dear Scholarship Committee,
-
-${toneIntro}
-
-My name is ${name}, and I am currently pursuing ${field}. Coming from a family with an annual income of ₹${incomeL} lakhs, this scholarship would significantly ease the financial burden on my family and allow me to focus entirely on my academic and career goals.
-
-Throughout my academic journey, I have maintained a consistent performance of ${percentage}%, which reflects my dedication to learning and personal growth. I believe that education is not just about grades — it's about developing the skills and perspective needed to contribute meaningfully to society.
-
-The ${scholarshipName} aligns perfectly with my aspirations. With this support, I plan to deepen my knowledge in ${field}, engage in research, and eventually give back to my community through mentorship and innovation.
-
-I am committed to making the most of every opportunity that comes my way, and this scholarship would be a transformative stepping stone in my journey. I sincerely hope you will consider my application.
-
-Thank you for your time and for investing in the future of students like me.
-
-Sincerely,
-${name}`;
+  return `Dear Scholarship Committee,\n\n${toneIntro}\n\nMy name is ${name}, and I am currently pursuing ${field}. Coming from a family with an annual income of ₹${incomeL} lakhs, this scholarship would significantly ease the financial burden on my family and allow me to focus entirely on my academic and career goals.\n\nThroughout my academic journey, I have maintained a consistent performance of ${percentage}%, which reflects my dedication to learning and personal growth. I believe that education is not just about grades — it's about developing the skills and perspective needed to contribute meaningfully to society.\n\nThe ${scholarshipName} aligns perfectly with my aspirations. With this support, I plan to deepen my knowledge in ${field}, engage in research, and eventually give back to my community through mentorship and innovation.\n\nI am committed to making the most of every opportunity that comes my way, and this scholarship would be a transformative stepping stone in my journey. I sincerely hope you will consider my application.\n\nThank you for your time and for investing in the future of students like me.\n\nSincerely,\n${name}`;
 }
 
 export default function EssayGeneratorPage() {
@@ -63,13 +48,13 @@ export default function EssayGeneratorPage() {
     <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="max-w-3xl">
       <div className="mb-6">
         <h1 className="font-display text-2xl font-bold text-foreground flex items-center gap-2">
-          <BookOpen className="h-6 w-6 text-accent" /> AI Essay Generator
+          <BookOpen className="h-6 w-6 text-primary" /> AI Essay Generator
         </h1>
-        <p className="mt-1 text-muted-foreground text-sm">Generate a personalized scholarship application essay based on your profile</p>
+        <p className="mt-1 text-muted-foreground text-sm">Generate a personalized scholarship application essay</p>
       </div>
 
       {!profile ? (
-        <Card className="border-accent/30 bg-accent/5 shadow-card">
+        <Card className="border-primary/30 gradient-subtle shadow-card">
           <CardContent className="p-6 text-center">
             <p className="text-muted-foreground">Please complete your profile first to generate essays.</p>
           </CardContent>
@@ -77,36 +62,26 @@ export default function EssayGeneratorPage() {
       ) : (
         <div className="space-y-4">
           <Card className="shadow-card">
-            <CardHeader>
-              <CardTitle className="font-display text-lg">Essay Settings</CardTitle>
-            </CardHeader>
+            <CardHeader><CardTitle className="font-display text-lg">Essay Settings</CardTitle></CardHeader>
             <CardContent className="grid gap-4 sm:grid-cols-2">
               <div>
                 <Label>Scholarship</Label>
                 <Select value={selectedScholarship} onValueChange={setSelectedScholarship}>
                   <SelectTrigger className="mt-1.5"><SelectValue placeholder="Select scholarship" /></SelectTrigger>
-                  <SelectContent>
-                    {scholarships.map((s) => <SelectItem key={s.id} value={s.id}>{s.name}</SelectItem>)}
-                  </SelectContent>
+                  <SelectContent>{scholarships.map((s) => <SelectItem key={s.id} value={s.id}>{s.name}</SelectItem>)}</SelectContent>
                 </Select>
               </div>
               <div>
                 <Label>Tone</Label>
                 <Select value={tone} onValueChange={setTone}>
                   <SelectTrigger className="mt-1.5"><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    {toneOptions.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}
-                  </SelectContent>
+                  <SelectContent>{toneOptions.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}</SelectContent>
                 </Select>
               </div>
             </CardContent>
           </Card>
 
-          <Button
-            onClick={handleGenerate}
-            disabled={!selectedScholarship}
-            className="gradient-gold text-accent-foreground font-semibold shadow-gold"
-          >
+          <Button onClick={handleGenerate} disabled={!selectedScholarship} className="gradient-primary text-primary-foreground font-semibold shadow-glow">
             <Sparkles className="mr-2 h-4 w-4" /> Generate Essay
           </Button>
 

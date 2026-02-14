@@ -28,17 +28,18 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-screen">
-      <div className="hidden w-1/2 gradient-hero lg:flex lg:items-center lg:justify-center">
-        <div className="text-center px-12">
-          <GraduationCap className="mx-auto h-16 w-16 text-accent" />
+      <div className="hidden w-1/2 gradient-hero lg:flex lg:items-center lg:justify-center relative overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.07]" style={{ backgroundImage: "radial-gradient(circle at 30% 40%, hsl(265 70% 58%) 0%, transparent 50%), radial-gradient(circle at 70% 60%, hsl(230 75% 55%) 0%, transparent 50%)" }} />
+        <div className="relative text-center px-12">
+          <GraduationCap className="mx-auto h-16 w-16 text-primary" />
           <h2 className="mt-6 font-display text-3xl font-bold text-primary-foreground">Welcome to EduGrant AI</h2>
-          <p className="mt-4 text-primary-foreground/70 max-w-md mx-auto">Discover scholarships tailored to your profile with AI-powered matching and explainable recommendations.</p>
+          <p className="mt-4 text-primary-foreground/60 max-w-md mx-auto">Discover scholarships tailored to your profile with AI-powered matching and strategic recommendations.</p>
         </div>
       </div>
       <div className="flex w-full items-center justify-center px-6 lg:w-1/2">
         <div className="w-full max-w-sm">
           <Link to="/" className="mb-8 flex items-center gap-2 lg:hidden">
-            <GraduationCap className="h-7 w-7 text-accent" />
+            <GraduationCap className="h-7 w-7 text-primary" />
             <span className="font-display text-xl font-bold">EduGrant AI</span>
           </Link>
           <h1 className="font-display text-2xl font-bold text-foreground">Log in</h1>
@@ -61,11 +62,11 @@ export default function LoginPage() {
                 </button>
               </div>
             </div>
-            <Button type="submit" className="w-full gradient-gold text-accent-foreground font-semibold shadow-gold">Log in</Button>
+            <Button type="submit" className="w-full gradient-primary text-primary-foreground font-semibold shadow-glow">Log in</Button>
           </form>
           <p className="mt-6 text-center text-sm text-muted-foreground">
             Don't have an account?{" "}
-            <Link to="/signup" className="font-medium text-accent hover:underline">Sign up</Link>
+            <Link to="/signup" className="font-medium text-primary hover:underline">Sign up</Link>
           </p>
         </div>
       </div>

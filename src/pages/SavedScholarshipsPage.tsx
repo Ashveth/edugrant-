@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Bookmark, Target, ExternalLink, Clock, Sparkles, IndianRupee, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useApp } from "@/context/AppContext";
 import { scholarships } from "@/data/scholarships";
@@ -15,7 +15,7 @@ export default function SavedScholarshipsPage() {
     <div className="max-w-4xl">
       <div className="mb-6">
         <h1 className="font-display text-2xl font-bold text-foreground flex items-center gap-2">
-          <Bookmark className="h-6 w-6 text-accent" /> Saved Scholarships
+          <Bookmark className="h-6 w-6 text-primary" /> Saved Scholarships
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">{saved.length} scholarship{saved.length !== 1 ? "s" : ""} saved</p>
       </div>
@@ -25,7 +25,7 @@ export default function SavedScholarshipsPage() {
           <Bookmark className="mx-auto h-12 w-12 text-muted-foreground/40" />
           <p className="mt-4 text-muted-foreground">No saved scholarships yet.</p>
           <Link to="/dashboard/scholarships">
-            <Button className="mt-4 gradient-gold text-accent-foreground font-semibold">
+            <Button className="mt-4 gradient-primary text-primary-foreground font-semibold">
               <Target className="mr-2 h-4 w-4" /> Browse Scholarships
             </Button>
           </Link>
@@ -38,21 +38,24 @@ export default function SavedScholarshipsPage() {
               <motion.div key={s.id} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.05 }}>
                 <Card className="shadow-card hover:shadow-card-hover transition-all">
                   <CardContent className="flex items-center gap-4 p-4">
-                    <div className="hidden sm:flex shrink-0 rounded-xl gradient-gold p-3">
-                      <Sparkles className="h-5 w-5 text-accent-foreground" />
+                    <div className="hidden sm:flex shrink-0 rounded-xl gradient-primary p-3">
+                      <Sparkles className="h-5 w-5 text-primary-foreground" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <h3 className="font-display font-semibold text-foreground truncate">{s.name}</h3>
                       <p className="text-xs text-muted-foreground">{s.provider}</p>
                       <div className="flex items-center gap-3 mt-2">
-                        <span className="flex items-center gap-1 text-sm font-semibold text-foreground"><IndianRupee className="h-3.5 w-3.5 text-accent" />₹{s.amount.toLocaleString()}</span>
+                        <span className="flex items-center gap-1 text-sm font-semibold text-foreground"><IndianRupee className="h-3.5 w-3.5 text-primary" />₹{s.amount.toLocaleString()}</span>
                         <Badge variant={daysLeft <= 14 ? "destructive" : "secondary"}>
                           <Clock className="mr-1 h-3 w-3" /> {daysLeft}d left
                         </Badge>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Button size="sm" className="gradient-gold text-accent-foreground font-semibold shadow-gold">
+                      <Link to={`/dashboard/scholarship/${s.id}`}>
+                        <Button size="sm" variant="outline">View</Button>
+                      </Link>
+                      <Button size="sm" className="gradient-primary text-primary-foreground font-semibold shadow-glow">
                         <ExternalLink className="mr-1 h-3 w-3" /> Apply
                       </Button>
                       <Button size="sm" variant="ghost" onClick={() => toggleSaved(s.id)} className="text-destructive hover:text-destructive">
