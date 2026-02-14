@@ -19,15 +19,10 @@ export default function ProfilePage() {
 
   const [form, setForm] = useState<StudentProfile>(
     profile || {
-      fullName: "",
-      age: 18,
-      gender: "Male",
-      category: "General",
-      annualFamilyIncome: 300000,
-      academicPercentage: 75,
-      educationLevel: "Undergraduate",
-      fieldOfStudy: "Engineering",
-      state: "Maharashtra",
+      fullName: "", age: 18, gender: "Male", category: "General",
+      annualFamilyIncome: 300000, academicPercentage: 75,
+      educationLevel: "Undergraduate", fieldOfStudy: "Engineering",
+      state: "Maharashtra", targetCourseCost: 500000,
     }
   );
 
@@ -48,16 +43,14 @@ export default function ProfilePage() {
     <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl">
       <div className="mb-6">
         <h1 className="font-display text-2xl font-bold text-foreground flex items-center gap-2">
-          <User className="h-6 w-6 text-accent" /> Student Profile
+          <User className="h-6 w-6 text-primary" /> Student Profile
         </h1>
         <p className="mt-1 text-muted-foreground text-sm">Fill in your details to get AI-powered scholarship matches</p>
       </div>
 
       <form onSubmit={handleSave}>
         <Card className="shadow-card">
-          <CardHeader>
-            <CardTitle className="font-display text-lg">Personal Information</CardTitle>
-          </CardHeader>
+          <CardHeader><CardTitle className="font-display text-lg">Personal Information</CardTitle></CardHeader>
           <CardContent className="grid gap-4 sm:grid-cols-2">
             <div className="sm:col-span-2">
               <Label>Full Name</Label>
@@ -71,18 +64,14 @@ export default function ProfilePage() {
               <Label>Gender</Label>
               <Select value={form.gender} onValueChange={(v) => update("gender", v)}>
                 <SelectTrigger className="mt-1.5"><SelectValue /></SelectTrigger>
-                <SelectContent>
-                  {["Male", "Female", "Other"].map((g) => <SelectItem key={g} value={g}>{g}</SelectItem>)}
-                </SelectContent>
+                <SelectContent>{["Male","Female","Other"].map((g) => <SelectItem key={g} value={g}>{g}</SelectItem>)}</SelectContent>
               </Select>
             </div>
             <div>
               <Label>Category</Label>
               <Select value={form.category} onValueChange={(v) => update("category", v)}>
                 <SelectTrigger className="mt-1.5"><SelectValue /></SelectTrigger>
-                <SelectContent>
-                  {["General", "OBC", "SC", "ST"].map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
-                </SelectContent>
+                <SelectContent>{["General","OBC","SC","ST"].map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}</SelectContent>
               </Select>
             </div>
             <div>
@@ -93,9 +82,7 @@ export default function ProfilePage() {
         </Card>
 
         <Card className="mt-4 shadow-card">
-          <CardHeader>
-            <CardTitle className="font-display text-lg">Academic Details</CardTitle>
-          </CardHeader>
+          <CardHeader><CardTitle className="font-display text-lg">Academic Details</CardTitle></CardHeader>
           <CardContent className="grid gap-4 sm:grid-cols-2">
             <div>
               <Label>Academic Percentage (%)</Label>
@@ -105,33 +92,31 @@ export default function ProfilePage() {
               <Label>Education Level</Label>
               <Select value={form.educationLevel} onValueChange={(v) => update("educationLevel", v)}>
                 <SelectTrigger className="mt-1.5"><SelectValue /></SelectTrigger>
-                <SelectContent>
-                  {["High School", "Undergraduate", "Postgraduate", "Doctorate"].map((l) => <SelectItem key={l} value={l}>{l}</SelectItem>)}
-                </SelectContent>
+                <SelectContent>{["High School","Undergraduate","Postgraduate","Doctorate"].map((l) => <SelectItem key={l} value={l}>{l}</SelectItem>)}</SelectContent>
               </Select>
             </div>
             <div>
               <Label>Field of Study</Label>
               <Select value={form.fieldOfStudy} onValueChange={(v) => update("fieldOfStudy", v)}>
                 <SelectTrigger className="mt-1.5"><SelectValue /></SelectTrigger>
-                <SelectContent>
-                  {fieldsOfStudy.map((f) => <SelectItem key={f} value={f}>{f}</SelectItem>)}
-                </SelectContent>
+                <SelectContent>{fieldsOfStudy.map((f) => <SelectItem key={f} value={f}>{f}</SelectItem>)}</SelectContent>
               </Select>
             </div>
             <div>
               <Label>State</Label>
               <Select value={form.state} onValueChange={(v) => update("state", v)}>
                 <SelectTrigger className="mt-1.5"><SelectValue /></SelectTrigger>
-                <SelectContent>
-                  {indianStates.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}
-                </SelectContent>
+                <SelectContent>{indianStates.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
               </Select>
+            </div>
+            <div className="sm:col-span-2">
+              <Label>Target Course Cost (₹)</Label>
+              <Input className="mt-1.5" type="number" min={0} value={form.targetCourseCost} onChange={(e) => update("targetCourseCost", parseInt(e.target.value) || 0)} />
             </div>
           </CardContent>
         </Card>
 
-        <Button type="submit" className="mt-6 gradient-gold text-accent-foreground font-semibold shadow-gold">
+        <Button type="submit" className="mt-6 gradient-primary text-primary-foreground font-semibold shadow-glow">
           <Save className="mr-2 h-4 w-4" /> Save Profile & Find Scholarships
         </Button>
       </form>

@@ -8,6 +8,7 @@ export interface StudentProfile {
   educationLevel: "High School" | "Undergraduate" | "Postgraduate" | "Doctorate";
   fieldOfStudy: string;
   state: string;
+  targetCourseCost: number;
 }
 
 export interface Scholarship {
@@ -27,6 +28,9 @@ export interface Scholarship {
     genders?: string[];
   };
   applicationUrl: string;
+  requiredDocuments: string[];
+  competitionLevel: "Low" | "Medium" | "High";
+  providerType: "Government" | "NGO" | "CSR" | "Private";
 }
 
 export interface MatchResult {
@@ -36,4 +40,5 @@ export interface MatchResult {
   meritScore: number;
   approvalProbability: number;
   reasons: string[];
+  badges: string[];
 }
