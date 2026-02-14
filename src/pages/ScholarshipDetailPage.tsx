@@ -68,9 +68,11 @@ export default function ScholarshipDetailPage() {
               </div>
 
               <div className="flex gap-2">
-                <Button className="flex-1 gradient-primary text-primary-foreground font-semibold shadow-glow">
-                  <ExternalLink className="mr-2 h-4 w-4" /> Apply Now
-                </Button>
+                <a href={scholarship.applicationUrl} target="_blank" rel="noopener noreferrer" className="flex-1">
+                  <Button className="w-full gradient-primary text-primary-foreground font-semibold shadow-glow">
+                    <ExternalLink className="mr-2 h-4 w-4" /> Apply Now
+                  </Button>
+                </a>
                 <Button variant="outline" onClick={() => toggleSaved(scholarship.id)}>
                   {isSaved ? "Unsave" : "Save"}
                 </Button>

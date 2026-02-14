@@ -55,9 +55,11 @@ export default function SavedScholarshipsPage() {
                       <Link to={`/dashboard/scholarship/${s.id}`}>
                         <Button size="sm" variant="outline">View</Button>
                       </Link>
-                      <Button size="sm" className="gradient-primary text-primary-foreground font-semibold shadow-glow">
-                        <ExternalLink className="mr-1 h-3 w-3" /> Apply
-                      </Button>
+                      <a href={s.applicationUrl} target="_blank" rel="noopener noreferrer">
+                        <Button size="sm" className="gradient-primary text-primary-foreground font-semibold shadow-glow">
+                          <ExternalLink className="mr-1 h-3 w-3" /> Apply
+                        </Button>
+                      </a>
                       <Button size="sm" variant="ghost" onClick={() => toggleSaved(s.id)} className="text-destructive hover:text-destructive">
                         <Trash2 className="h-4 w-4" />
                       </Button>
