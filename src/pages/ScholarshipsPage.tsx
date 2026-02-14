@@ -8,7 +8,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { useApp } from "@/context/AppContext";
 import { scholarships, fieldsOfStudy, indianStates } from "@/data/scholarships";
@@ -19,6 +18,14 @@ function getDeadlineDays(deadline: string) {
   return Math.max(0, Math.ceil((new Date(deadline).getTime() - Date.now()) / 86400000));
 }
 
+function getBadgeEmoji(badge: string) {
+  if (badge.includes("High Approval")) return "🔥";
+  if (badge.includes("Coverage") || badge.includes("Funding")) return "💰";
+  if (badge.includes("Match")) return "🎯";
+  if (badge.includes("Competitive")) return "⚠️";
+  return "✨";
+}
+
 function ScholarshipCard({ match, isSaved, onToggleSave }: { match: MatchResult; isSaved: boolean; onToggleSave: () => void }) {
   const [expanded, setExpanded] = useState(false);
   const { scholarship: s, matchPercentage, financialNeedScore, meritScore, approvalProbability, reasons, badges } = match;
@@ -26,28 +33,27 @@ function ScholarshipCard({ match, isSaved, onToggleSave }: { match: MatchResult;
 
   return (
     <motion.div layout initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-      <Card className="shadow-card hover:shadow-card-hover transition-all overflow-hidden">
+      <Card className="shadow-card hover-lift rounded-2xl transition-all overflow-hidden">
         <CardHeader className="pb-3">
           <div className="flex items-start justify-between gap-2">
             <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-1 flex-wrap">
+              <div className="flex items-center gap-2 mb-2 flex-wrap">
                 <span className="inline-flex items-center gap-1 rounded-full gradient-primary px-2.5 py-0.5 text-xs font-bold text-primary-foreground">
                   <Sparkles className="h-3 w-3" /> {matchPercentage}%
                 </span>
-                <Badge variant={days <= 14 ? "destructive" : "secondary"} className={days <= 30 && days > 14 ? "bg-warning/10 text-warning border-warning/30" : ""}>
+                <Badge variant={days <= 14 ? "destructive" : "secondary"} className={`rounded-lg ${days <= 30 && days > 14 ? "bg-warning/10 text-warning border-warning/30" : ""}`}>
                   <Clock className="mr-1 h-3 w-3" /> {days === 0 ? "Today!" : `${days}d left`}
                 </Badge>
-                <Badge variant="outline" className="text-[10px]">{s.competitionLevel} Competition</Badge>
               </div>
               <CardTitle className="text-base font-display leading-tight">{s.name}</CardTitle>
               <p className="text-xs text-muted-foreground mt-1">{s.provider}</p>
               {badges.length > 0 && (
                 <div className="flex flex-wrap gap-1 mt-2">
-                  {badges.map(b => <span key={b} className="text-[10px] bg-muted px-1.5 py-0.5 rounded-full">{b}</span>)}
+                  {badges.map(b => <span key={b} className="text-[10px] font-medium bg-muted px-2 py-0.5 rounded-full">{getBadgeEmoji(b)} {b}</span>)}
                 </div>
               )}
             </div>
-            <button onClick={onToggleSave} className="shrink-0 text-primary hover:scale-110 transition-transform">
+            <button onClick={onToggleSave} className="shrink-0 text-primary hover:scale-110 transition-transform p-1">
               {isSaved ? <BookmarkCheck className="h-5 w-5" /> : <Bookmark className="h-5 w-5" />}
             </button>
           </div>
@@ -69,7 +75,7 @@ function ScholarshipCard({ match, isSaved, onToggleSave }: { match: MatchResult;
                   <span className="text-muted-foreground">{label}</span>
                   <span className="font-semibold">{value}%</span>
                 </div>
-                <Progress value={value} className="h-1.5" />
+                <Progress value={value} className="h-1.5 rounded-full" />
               </div>
             ))}
           </div>
@@ -79,7 +85,7 @@ function ScholarshipCard({ match, isSaved, onToggleSave }: { match: MatchResult;
           <AnimatePresence>
             {expanded && (
               <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
-                <div className="rounded-lg bg-muted p-3 space-y-1.5">
+                <div className="rounded-xl bg-muted/60 p-3 space-y-1.5">
                   {reasons.map((r, i) => (
                     <div key={i} className="flex items-start gap-2 text-xs text-muted-foreground">
                       <span className="text-primary mt-0.5">✓</span><span>{r}</span>
@@ -91,12 +97,12 @@ function ScholarshipCard({ match, isSaved, onToggleSave }: { match: MatchResult;
           </AnimatePresence>
           <div className="flex gap-2">
             <a href={s.applicationUrl} target="_blank" rel="noopener noreferrer" className="flex-1">
-              <Button className="w-full gradient-primary text-primary-foreground font-semibold shadow-glow" size="sm">
+              <Button className="w-full gradient-primary text-primary-foreground font-semibold shadow-glow rounded-xl" size="sm">
                 <ExternalLink className="mr-2 h-3.5 w-3.5" /> Apply Now
               </Button>
             </a>
             <Link to={`/dashboard/scholarship/${s.id}`}>
-              <Button variant="outline" size="sm">Details</Button>
+              <Button variant="outline" size="sm" className="rounded-xl">Details</Button>
             </Link>
           </div>
         </CardContent>
@@ -138,12 +144,14 @@ export default function ScholarshipsPage() {
 
   if (!profile) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 text-center">
-        <AlertCircle className="h-12 w-12 text-primary mb-4" />
+      <div className="flex flex-col items-center justify-center py-24 text-center">
+        <div className="w-16 h-16 rounded-2xl bg-muted/60 flex items-center justify-center mb-5">
+          <AlertCircle className="h-7 w-7 text-primary" />
+        </div>
         <h2 className="font-display text-xl font-bold text-foreground">Profile Required</h2>
-        <p className="mt-2 text-muted-foreground max-w-md">Complete your student profile first so our AI can match you with the best scholarships.</p>
+        <p className="mt-2 text-muted-foreground max-w-sm">Complete your student profile so our AI can match you with scholarships you're most likely to get.</p>
         <Link to="/dashboard/profile">
-          <Button className="mt-6 gradient-primary text-primary-foreground font-semibold shadow-glow">Complete Profile</Button>
+          <Button className="mt-6 gradient-primary text-primary-foreground font-semibold shadow-glow rounded-xl">Complete Profile</Button>
         </Link>
       </div>
     );
@@ -161,20 +169,19 @@ export default function ScholarshipsPage() {
         <div className="flex gap-2">
           <div className="relative w-full sm:w-64">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <Input placeholder="Search..." className="pl-10" value={search} onChange={(e) => setSearch(e.target.value)} />
+            <Input placeholder="Search..." className="pl-10 rounded-xl" value={search} onChange={(e) => setSearch(e.target.value)} />
           </div>
-          <Button variant={showFilters ? "default" : "outline"} size="icon" onClick={() => setShowFilters(!showFilters)}>
+          <Button variant={showFilters ? "default" : "outline"} size="icon" onClick={() => setShowFilters(!showFilters)} className="rounded-xl">
             <Filter className="h-4 w-4" />
           </Button>
         </div>
       </div>
 
       <div className="flex gap-6">
-        {/* Filters Sidebar */}
         <AnimatePresence>
           {showFilters && (
             <motion.div initial={{ width: 0, opacity: 0 }} animate={{ width: 240, opacity: 1 }} exit={{ width: 0, opacity: 0 }} className="shrink-0 overflow-hidden hidden md:block">
-              <Card className="shadow-card sticky top-6">
+              <Card className="shadow-card sticky top-6 rounded-2xl">
                 <CardHeader className="pb-2">
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-sm font-display">Filters</CardTitle>
@@ -182,72 +189,39 @@ export default function ScholarshipsPage() {
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-4 text-sm">
-                  <div>
-                    <Label className="text-xs text-muted-foreground">Category</Label>
-                    <Select value={filterCategory} onValueChange={setFilterCategory}>
-                      <SelectTrigger className="mt-1 h-8 text-xs"><SelectValue /></SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">All Categories</SelectItem>
-                        {["General","OBC","SC","ST"].map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div>
-                    <Label className="text-xs text-muted-foreground">Field of Study</Label>
-                    <Select value={filterField} onValueChange={setFilterField}>
-                      <SelectTrigger className="mt-1 h-8 text-xs"><SelectValue /></SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">All Fields</SelectItem>
-                        {fieldsOfStudy.map(f => <SelectItem key={f} value={f}>{f}</SelectItem>)}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div>
-                    <Label className="text-xs text-muted-foreground">Education Level</Label>
-                    <Select value={filterEducation} onValueChange={setFilterEducation}>
-                      <SelectTrigger className="mt-1 h-8 text-xs"><SelectValue /></SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">All Levels</SelectItem>
-                        {["High School","Undergraduate","Postgraduate","Doctorate"].map(l => <SelectItem key={l} value={l}>{l}</SelectItem>)}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div>
-                    <Label className="text-xs text-muted-foreground">Competition Level</Label>
-                    <Select value={filterCompetition} onValueChange={setFilterCompetition}>
-                      <SelectTrigger className="mt-1 h-8 text-xs"><SelectValue /></SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">All Levels</SelectItem>
-                        {["Low","Medium","High"].map(l => <SelectItem key={l} value={l}>{l}</SelectItem>)}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div>
-                    <Label className="text-xs text-muted-foreground">State</Label>
-                    <Select value={filterState} onValueChange={setFilterState}>
-                      <SelectTrigger className="mt-1 h-8 text-xs"><SelectValue /></SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">All States</SelectItem>
-                        {indianStates.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}
-                      </SelectContent>
-                    </Select>
-                  </div>
+                  {[
+                    { label: "Category", value: filterCategory, onChange: setFilterCategory, options: ["General","OBC","SC","ST"] },
+                    { label: "Field of Study", value: filterField, onChange: setFilterField, options: fieldsOfStudy },
+                    { label: "Education Level", value: filterEducation, onChange: setFilterEducation, options: ["High School","Undergraduate","Postgraduate","Doctorate"] },
+                    { label: "Competition", value: filterCompetition, onChange: setFilterCompetition, options: ["Low","Medium","High"] },
+                    { label: "State", value: filterState, onChange: setFilterState, options: indianStates },
+                  ].map(f => (
+                    <div key={f.label}>
+                      <Label className="text-xs text-muted-foreground">{f.label}</Label>
+                      <Select value={f.value} onValueChange={f.onChange}>
+                        <SelectTrigger className="mt-1 h-8 text-xs rounded-xl"><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="all">All {f.label}s</SelectItem>
+                          {f.options.map(o => <SelectItem key={o} value={o}>{o}</SelectItem>)}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  ))}
                 </CardContent>
               </Card>
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* Results */}
         <div className="flex-1">
           {hasActiveFilters && (
             <div className="flex items-center gap-2 mb-4 flex-wrap">
-              <span className="text-xs text-muted-foreground">Active filters:</span>
-              {filterCategory !== "all" && <Badge variant="secondary" className="text-xs gap-1">{filterCategory} <X className="h-3 w-3 cursor-pointer" onClick={() => setFilterCategory("all")} /></Badge>}
-              {filterField !== "all" && <Badge variant="secondary" className="text-xs gap-1">{filterField} <X className="h-3 w-3 cursor-pointer" onClick={() => setFilterField("all")} /></Badge>}
-              {filterEducation !== "all" && <Badge variant="secondary" className="text-xs gap-1">{filterEducation} <X className="h-3 w-3 cursor-pointer" onClick={() => setFilterEducation("all")} /></Badge>}
-              {filterCompetition !== "all" && <Badge variant="secondary" className="text-xs gap-1">{filterCompetition} <X className="h-3 w-3 cursor-pointer" onClick={() => setFilterCompetition("all")} /></Badge>}
-              {filterState !== "all" && <Badge variant="secondary" className="text-xs gap-1">{filterState} <X className="h-3 w-3 cursor-pointer" onClick={() => setFilterState("all")} /></Badge>}
+              <span className="text-xs text-muted-foreground">Active:</span>
+              {filterCategory !== "all" && <Badge variant="secondary" className="text-xs gap-1 rounded-lg">{filterCategory} <X className="h-3 w-3 cursor-pointer" onClick={() => setFilterCategory("all")} /></Badge>}
+              {filterField !== "all" && <Badge variant="secondary" className="text-xs gap-1 rounded-lg">{filterField} <X className="h-3 w-3 cursor-pointer" onClick={() => setFilterField("all")} /></Badge>}
+              {filterEducation !== "all" && <Badge variant="secondary" className="text-xs gap-1 rounded-lg">{filterEducation} <X className="h-3 w-3 cursor-pointer" onClick={() => setFilterEducation("all")} /></Badge>}
+              {filterCompetition !== "all" && <Badge variant="secondary" className="text-xs gap-1 rounded-lg">{filterCompetition} <X className="h-3 w-3 cursor-pointer" onClick={() => setFilterCompetition("all")} /></Badge>}
+              {filterState !== "all" && <Badge variant="secondary" className="text-xs gap-1 rounded-lg">{filterState} <X className="h-3 w-3 cursor-pointer" onClick={() => setFilterState("all")} /></Badge>}
             </div>
           )}
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -256,7 +230,13 @@ export default function ScholarshipsPage() {
             ))}
           </div>
           {filtered.length === 0 && (
-            <div className="text-center py-12 text-muted-foreground">No scholarships found matching your filters.</div>
+            <div className="text-center py-16">
+              <div className="w-14 h-14 rounded-2xl bg-muted/60 flex items-center justify-center mx-auto mb-4">
+                <Search className="h-6 w-6 text-muted-foreground/40" />
+              </div>
+              <p className="font-display font-semibold text-foreground mb-1">No matches found</p>
+              <p className="text-sm text-muted-foreground">Let's refine your filters to find better matches.</p>
+            </div>
           )}
         </div>
       </div>
