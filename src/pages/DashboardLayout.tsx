@@ -15,19 +15,19 @@ export default function DashboardLayout() {
       <div className="flex min-h-screen w-full">
         <AppSidebar />
         <div className="flex flex-1 flex-col">
-          <header className="flex h-14 items-center justify-between gap-3 border-b border-border bg-card px-4">
+          <header className="flex h-14 items-center justify-between gap-3 border-b border-border/60 bg-card/80 backdrop-blur-md px-5">
             <div className="flex items-center gap-3">
               <SidebarTrigger />
               <div className="flex items-center gap-2">
                 <GraduationCap className="h-5 w-5 text-primary" />
-                <span className="font-display text-sm font-semibold text-foreground">EduGrant AI</span>
+                <span className="font-display text-sm font-semibold text-foreground tracking-tight">EduGrant AI</span>
               </div>
             </div>
-            <Button variant="ghost" size="icon" onClick={toggleDarkMode} className="h-8 w-8">
+            <Button variant="ghost" size="icon" onClick={toggleDarkMode} className="h-8 w-8 rounded-xl">
               {darkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </Button>
           </header>
-          <main className="flex-1 overflow-auto bg-background p-6">
+          <main className="flex-1 overflow-auto bg-background p-5 md:p-8">
             <Outlet />
           </main>
         </div>

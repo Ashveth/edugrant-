@@ -21,11 +21,14 @@ export default function SavedScholarshipsPage() {
       </div>
 
       {saved.length === 0 ? (
-        <div className="text-center py-20">
-          <Bookmark className="mx-auto h-12 w-12 text-muted-foreground/40" />
-          <p className="mt-4 text-muted-foreground">No saved scholarships yet.</p>
+        <div className="text-center py-24">
+          <div className="mx-auto w-16 h-16 rounded-2xl bg-muted/60 flex items-center justify-center mb-5">
+            <Bookmark className="h-7 w-7 text-muted-foreground/40" />
+          </div>
+          <p className="font-display font-semibold text-foreground text-lg mb-1">No saved scholarships yet</p>
+          <p className="text-sm text-muted-foreground max-w-xs mx-auto">Start bookmarking scholarships you're interested in — they'll appear here for quick access.</p>
           <Link to="/dashboard/scholarships">
-            <Button className="mt-4 gradient-primary text-primary-foreground font-semibold">
+            <Button className="mt-6 gradient-primary text-primary-foreground font-semibold rounded-xl">
               <Target className="mr-2 h-4 w-4" /> Browse Scholarships
             </Button>
           </Link>
@@ -36,7 +39,7 @@ export default function SavedScholarshipsPage() {
             const daysLeft = Math.max(0, Math.ceil((new Date(s.deadline).getTime() - Date.now()) / 86400000));
             return (
               <motion.div key={s.id} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.05 }}>
-                <Card className="shadow-card hover:shadow-card-hover transition-all">
+                <Card className="shadow-card hover-lift rounded-2xl transition-all">
                   <CardContent className="flex items-center gap-4 p-4">
                     <div className="hidden sm:flex shrink-0 rounded-xl gradient-primary p-3">
                       <Sparkles className="h-5 w-5 text-primary-foreground" />
@@ -46,21 +49,21 @@ export default function SavedScholarshipsPage() {
                       <p className="text-xs text-muted-foreground">{s.provider}</p>
                       <div className="flex items-center gap-3 mt-2">
                         <span className="flex items-center gap-1 text-sm font-semibold text-foreground"><IndianRupee className="h-3.5 w-3.5 text-primary" />₹{s.amount.toLocaleString()}</span>
-                        <Badge variant={daysLeft <= 14 ? "destructive" : "secondary"}>
+                        <Badge variant={daysLeft <= 14 ? "destructive" : "secondary"} className="rounded-lg">
                           <Clock className="mr-1 h-3 w-3" /> {daysLeft}d left
                         </Badge>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
                       <Link to={`/dashboard/scholarship/${s.id}`}>
-                        <Button size="sm" variant="outline">View</Button>
+                        <Button size="sm" variant="outline" className="rounded-xl">View</Button>
                       </Link>
                       <a href={s.applicationUrl} target="_blank" rel="noopener noreferrer">
-                        <Button size="sm" className="gradient-primary text-primary-foreground font-semibold shadow-glow">
+                        <Button size="sm" className="gradient-primary text-primary-foreground font-semibold shadow-glow rounded-xl">
                           <ExternalLink className="mr-1 h-3 w-3" /> Apply
                         </Button>
                       </a>
-                      <Button size="sm" variant="ghost" onClick={() => toggleSaved(s.id)} className="text-destructive hover:text-destructive">
+                      <Button size="sm" variant="ghost" onClick={() => toggleSaved(s.id)} className="text-destructive hover:text-destructive rounded-xl">
                         <Trash2 className="h-4 w-4" />
                       </Button>
                     </div>
