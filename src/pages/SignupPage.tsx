@@ -55,8 +55,8 @@ export default function SignupPage() {
       state,
       targetCourseCost: parseInt(courseCost) || 500000,
     });
-    toast({ title: "Account created!", description: "Please check your email to verify your account, then log in." });
-    navigate("/login");
+    toast({ title: "Account created! Welcome to EduGrant AI." });
+    navigate("/dashboard");
   };
 
   return (
