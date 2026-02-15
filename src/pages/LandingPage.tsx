@@ -32,9 +32,9 @@ const steps = [
 ];
 
 const stats = [
-  { value: 12, suffix: "Cr+", prefix: "₹", label: "Potential Aid Matched" },
-  { value: 10000, suffix: "+", prefix: "", label: "Scholarships Indexed" },
-  { value: 28, suffix: "%", prefix: "+", label: "Avg Approval Boost" },
+  { value: 500, suffix: "+", prefix: "", label: "Active Scholarships" },
+  { value: 95, suffix: "%", prefix: "", label: "Match Accuracy" },
+  { value: 3, suffix: " Min", prefix: "<", label: "Profile Setup Time" },
 ];
 
 const trustLogos = [
