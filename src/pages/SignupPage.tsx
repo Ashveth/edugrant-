@@ -14,6 +14,7 @@ export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPw, setShowPw] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [educationLevel, setEducationLevel] = useState("Undergraduate");
   const [fieldOfStudy, setFieldOfStudy] = useState("Engineering");
   const [percentage, setPercentage] = useState("75");
@@ -25,13 +26,23 @@ export default function SignupPage() {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !email || !password) {
       toast({ title: "Please fill in all required fields", variant: "destructive" });
       return;
     }
-    signup(email, password, name);
+    if (password.length < 6) {
+      toast({ title: "Password must be at least 6 characters", variant: "destructive" });
+      return;
+    }
+    setLoading(true);
+    const result = await signup(email, password, name);
+    setLoading(false);
+    if (result.error) {
+      toast({ title: "Signup failed", description: result.error, variant: "destructive" });
+      return;
+    }
     setProfile({
       fullName: name,
       age: 18,
@@ -44,8 +55,8 @@ export default function SignupPage() {
       state,
       targetCourseCost: parseInt(courseCost) || 500000,
     });
-    toast({ title: "Account created! Welcome to EduGrant AI." });
-    navigate("/dashboard");
+    toast({ title: "Account created!", description: "Please check your email to verify your account, then log in." });
+    navigate("/login");
   };
 
   return (
@@ -83,7 +94,7 @@ export default function SignupPage() {
                 </div>
               </div>
               <div>
-                <Label htmlFor="password">Password *</Label>
+                <Label htmlFor="password">Password * (min 6)</Label>
                 <div className="relative mt-1">
                   <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                   <Input id="password" type={showPw ? "text" : "password"} placeholder="••••••••" className="pl-10 pr-10" value={password} onChange={(e) => setPassword(e.target.value)} />
@@ -139,7 +150,9 @@ export default function SignupPage() {
                 <Input className="mt-1" type="number" min={0} value={courseCost} onChange={(e) => setCourseCost(e.target.value)} />
               </div>
             </div>
-            <Button type="submit" className="w-full gradient-primary text-primary-foreground font-semibold shadow-glow mt-2">Create Account</Button>
+            <Button type="submit" disabled={loading} className="w-full gradient-primary text-primary-foreground font-semibold shadow-glow mt-2">
+              {loading ? "Creating account..." : "Create Account"}
+            </Button>
           </form>
           <p className="mt-4 text-center text-sm text-muted-foreground">
             Already have an account?{" "}
