@@ -234,11 +234,6 @@ export default function DocumentsPage() {
                   </button>
                   <div className="flex-1 min-w-0">
                     <p className="font-medium text-sm text-foreground">{doc}</p>
-                    <div className="flex flex-wrap gap-1.5 mt-2">
-                      {neededBy.map(name => (
-                        <Badge key={name} variant="secondary" className="text-[10px] font-normal">{name}</Badge>
-                      ))}
-                    </div>
 
                     {/* Uploaded file info */}
                     {uploaded && (
