@@ -145,6 +145,103 @@ export const scholarships: Scholarship[] = [
     eligibility: { maxIncome: 600000, minPercentage: 60, categories: ["General","OBC","SC","ST"], educationLevels: ["Undergraduate","Postgraduate"], fieldsOfStudy: ["Law"], states: [] },
     applicationUrl: "https://www.barcouncilofindia.org/", requiredDocuments: ["Law Admission Proof","Marksheets","Income Certificate","Aadhaar Card"], competitionLevel: "Low", providerType: "Government",
   },
+  // ===== NEW SCHOLARSHIPS (25-40) =====
+  {
+    id: "25", name: "Wipro Earthian Scholarship", provider: "Wipro Foundation", amount: 100000,
+    deadline: "2026-07-15", description: "For students demonstrating excellence in sustainability and environmental awareness alongside academics.",
+    eligibility: { maxIncome: 700000, minPercentage: 70, categories: ["General","OBC","SC","ST"], educationLevels: ["Undergraduate","Postgraduate"], fieldsOfStudy: ["Science","Engineering","Agriculture"], states: [] },
+    applicationUrl: "https://www.wipro.com/wipro-earthian/", requiredDocuments: ["Marksheets","Income Certificate","Sustainability Project Report","Aadhaar Card"], competitionLevel: "Medium", providerType: "CSR",
+  },
+  {
+    id: "26", name: "Maulana Azad National Fellowship", provider: "UGC – Ministry of Minority Affairs", amount: 250000,
+    deadline: "2026-08-31", description: "Fellowship for minority community students pursuing M.Phil and Ph.D programmes in recognised institutions.",
+    eligibility: { maxIncome: 600000, minPercentage: 55, categories: ["General","OBC"], educationLevels: ["Postgraduate","Doctorate"], fieldsOfStudy: [], states: [] },
+    applicationUrl: "https://scholarships.gov.in/", requiredDocuments: ["Minority Certificate","Admission Letter","Marksheets","Income Certificate","Research Proposal"], competitionLevel: "High", providerType: "Government",
+  },
+  {
+    id: "27", name: "Swami Vivekananda Merit-cum-Means Scholarship", provider: "Govt. of West Bengal", amount: 60000,
+    deadline: "2026-05-31", description: "For meritorious students of West Bengal from economically weaker sections pursuing higher education.",
+    eligibility: { maxIncome: 250000, minPercentage: 75, categories: ["General","OBC","SC","ST"], educationLevels: ["Undergraduate","Postgraduate"], fieldsOfStudy: [], states: ["West Bengal"] },
+    applicationUrl: "https://svmcm.wbhed.gov.in/", requiredDocuments: ["Domicile Certificate","Income Certificate","Marksheets","Aadhaar Card","Bank Details"], competitionLevel: "Medium", providerType: "Government",
+  },
+  {
+    id: "28", name: "Aditya Birla Group Scholarship", provider: "Aditya Birla Group", amount: 175000,
+    deadline: "2026-08-01", description: "For top performers admitted to premier institutions like IITs, IIMs, BITS, and leading law and medical colleges.",
+    eligibility: { maxIncome: 1000000, minPercentage: 90, categories: ["General","OBC","SC","ST"], educationLevels: ["Undergraduate","Postgraduate"], fieldsOfStudy: ["Engineering","Medicine","Law","Commerce"], states: [] },
+    applicationUrl: "https://www.adityabirlascholars.net/", requiredDocuments: ["Marksheets","Admission Letter","Statement of Purpose","Recommendation Letter","ID Proof"], competitionLevel: "High", providerType: "CSR",
+  },
+  {
+    id: "29", name: "Kerala State Merit Scholarship", provider: "Govt. of Kerala – Directorate of Education", amount: 45000,
+    deadline: "2026-06-30", description: "Merit-based scholarship for Kerala domicile students excelling in board examinations.",
+    eligibility: { maxIncome: 500000, minPercentage: 80, categories: ["General","OBC","SC","ST"], educationLevels: ["Undergraduate"], fieldsOfStudy: [], states: ["Kerala"] },
+    applicationUrl: "https://dcescholarship.kerala.gov.in/", requiredDocuments: ["Board Marksheet","Domicile Certificate","Income Certificate","Aadhaar Card"], competitionLevel: "Medium", providerType: "Government",
+  },
+  {
+    id: "30", name: "L&T Build India Scholarship", provider: "Larsen & Toubro", amount: 130000,
+    deadline: "2026-07-31", description: "For engineering students specialising in civil, mechanical, and electrical engineering from Tier-2 and Tier-3 cities.",
+    eligibility: { maxIncome: 600000, minPercentage: 70, categories: ["General","OBC","SC","ST"], educationLevels: ["Undergraduate"], fieldsOfStudy: ["Engineering"], states: [] },
+    applicationUrl: "https://www.larsentoubro.com/corporate/careers/lt-build-india-scholarship/", requiredDocuments: ["Marksheets","Income Certificate","Admission Proof","Aadhaar Card","Bank Details"], competitionLevel: "Medium", providerType: "CSR",
+  },
+  {
+    id: "31", name: "Begum Hazrat Mahal National Scholarship", provider: "Maulana Azad Education Foundation", amount: 25000,
+    deadline: "2026-04-30", description: "For meritorious girls belonging to minority communities studying in Classes 9 to 12.",
+    eligibility: { maxIncome: 200000, minPercentage: 50, categories: ["General","OBC"], educationLevels: ["High School"], fieldsOfStudy: [], genders: ["Female"], states: [] },
+    applicationUrl: "https://www.maef.nic.in/", requiredDocuments: ["Minority Certificate","Marksheets","Income Certificate","Aadhaar Card","School Verification"], competitionLevel: "Low", providerType: "Government",
+  },
+  {
+    id: "32", name: "ONGC Foundation Scholarship", provider: "ONGC", amount: 95000,
+    deadline: "2026-06-15", description: "For students from economically weaker sections pursuing professional courses in engineering, medicine, and MBA.",
+    eligibility: { maxIncome: 450000, minPercentage: 60, categories: ["General","OBC","SC","ST"], educationLevels: ["Undergraduate","Postgraduate"], fieldsOfStudy: ["Engineering","Medicine","Commerce"], states: [] },
+    applicationUrl: "https://www.ongcindia.com/wps/wcm/connect/en/csr/scholarship/", requiredDocuments: ["Income Certificate","Marksheets","Admission Proof","Aadhaar Card","Fee Receipt"], competitionLevel: "Medium", providerType: "CSR",
+  },
+  {
+    id: "33", name: "Kishore Vaigyanik Protsahan Yojana (KVPY)", provider: "DST – IISc Bangalore", amount: 80000,
+    deadline: "2026-07-01", description: "National fellowship to encourage students to take up research careers in basic sciences.",
+    eligibility: { maxIncome: 1500000, minPercentage: 80, categories: ["General","OBC","SC","ST"], educationLevels: ["High School","Undergraduate"], fieldsOfStudy: ["Science","Mathematics"], states: [] },
+    applicationUrl: "https://kvpy.iisc.ac.in/", requiredDocuments: ["Board Marksheet","KVPY Admit Card","ID Proof","Aadhaar Card"], competitionLevel: "High", providerType: "Government",
+  },
+  {
+    id: "34", name: "Mahindra All India Talent Scholarship", provider: "KC Mahindra Education Trust", amount: 35000,
+    deadline: "2026-05-15", description: "For students who have passed SSC/HSC examinations and wish to pursue diploma or degree courses.",
+    eligibility: { maxIncome: 350000, minPercentage: 60, categories: ["General","OBC","SC","ST"], educationLevels: ["High School","Undergraduate"], fieldsOfStudy: [], states: [] },
+    applicationUrl: "https://www.kcmet.org/what-we-do-scholarship.aspx", requiredDocuments: ["Board Marksheet","Income Certificate","Aadhaar Card","Bank Details"], competitionLevel: "Low", providerType: "CSR",
+  },
+  {
+    id: "35", name: "CSIR Junior Research Fellowship", provider: "CSIR – HRDG", amount: 310000,
+    deadline: "2026-09-01", description: "For NET-qualified candidates to pursue doctoral research in science and technology at recognised institutions.",
+    eligibility: { maxIncome: 1500000, minPercentage: 75, categories: ["General","OBC","SC","ST"], educationLevels: ["Postgraduate","Doctorate"], fieldsOfStudy: ["Science","Engineering","Technology"], states: [] },
+    applicationUrl: "https://csirhrdg.res.in/", requiredDocuments: ["NET Scorecard","Marksheets","Research Proposal","Admission Letter","ID Proof"], competitionLevel: "High", providerType: "Government",
+  },
+  {
+    id: "36", name: "Deen Dayal Sparsh Yojana", provider: "Department of Posts – India Post", amount: 6000,
+    deadline: "2026-04-15", description: "Scholarship to promote philately among children studying in Classes 6 to 9 in recognised schools.",
+    eligibility: { maxIncome: 500000, minPercentage: 60, categories: ["General","OBC","SC","ST"], educationLevels: ["High School"], fieldsOfStudy: [], states: [] },
+    applicationUrl: "https://www.indiapost.gov.in/", requiredDocuments: ["Marksheets","School ID","Aadhaar Card","Philately Club Certificate"], competitionLevel: "Low", providerType: "Government",
+  },
+  {
+    id: "37", name: "Colgate Keep India Smiling Scholarship", provider: "Colgate-Palmolive India", amount: 75000,
+    deadline: "2026-06-30", description: "For economically disadvantaged students pursuing undergraduate or postgraduate studies in any field.",
+    eligibility: { maxIncome: 500000, minPercentage: 50, categories: ["General","OBC","SC","ST"], educationLevels: ["Undergraduate","Postgraduate"], fieldsOfStudy: [], states: [] },
+    applicationUrl: "https://www.buddy4study.com/page/colgate-keep-india-smiling-foundational-scholarship", requiredDocuments: ["Income Certificate","Marksheets","Admission Proof","Aadhaar Card","Fee Receipt"], competitionLevel: "Medium", providerType: "CSR",
+  },
+  {
+    id: "38", name: "Samsung Star Scholar Programme", provider: "Samsung India", amount: 200000,
+    deadline: "2026-08-15", description: "For high-achieving students in top technology institutes across India pursuing CS, EE, or IT.",
+    eligibility: { maxIncome: 900000, minPercentage: 85, categories: ["General","OBC","SC","ST"], educationLevels: ["Undergraduate"], fieldsOfStudy: ["Engineering","Technology","Computer Science"], states: [] },
+    applicationUrl: "https://www.samsung.com/in/aboutsamsung/sustainability/corporate-citizenship/", requiredDocuments: ["Marksheets","Admission Letter","Statement of Purpose","Recommendation Letter","ID Proof"], competitionLevel: "High", providerType: "CSR",
+  },
+  {
+    id: "39", name: "Gujarat Saraswati Sadhana Yojana", provider: "Govt. of Gujarat", amount: 20000,
+    deadline: "2026-05-31", description: "Incentive for SC/ST girl students entering Class 9 in government and grant-in-aid schools of Gujarat.",
+    eligibility: { maxIncome: 200000, minPercentage: 45, categories: ["SC","ST"], educationLevels: ["High School"], fieldsOfStudy: [], genders: ["Female"], states: ["Gujarat"] },
+    applicationUrl: "https://digitalgujarat.gov.in/", requiredDocuments: ["Caste Certificate","School Admission Proof","Marksheets","Aadhaar Card","Bank Details"], competitionLevel: "Low", providerType: "Government",
+  },
+  {
+    id: "40", name: "IIT Kanpur SURGE Fellowship", provider: "IIT Kanpur", amount: 50000,
+    deadline: "2026-03-15", description: "Summer research fellowship for undergraduate students from any recognised institution to work on research projects at IIT Kanpur.",
+    eligibility: { maxIncome: 1500000, minPercentage: 75, categories: ["General","OBC","SC","ST"], educationLevels: ["Undergraduate"], fieldsOfStudy: ["Engineering","Science","Mathematics","Technology"], states: [] },
+    applicationUrl: "https://surge.iitk.ac.in/", requiredDocuments: ["Marksheets","Recommendation Letter","Research Interest Statement","ID Proof","NOC from Institute"], competitionLevel: "High", providerType: "Government",
+  },
 ];
 
 export const indianStates = [
