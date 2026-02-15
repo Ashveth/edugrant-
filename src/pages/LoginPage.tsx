@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { GraduationCap, Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { motion } from "framer-motion";
+import { GraduationCap, Mail, Lock, Eye, EyeOff, ArrowRight, Target, Sparkles, TrendingUp, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -27,48 +28,163 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen">
-      <div className="hidden w-1/2 gradient-hero lg:flex lg:items-center lg:justify-center relative overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.07]" style={{ backgroundImage: "radial-gradient(circle at 30% 40%, hsl(265 70% 58%) 0%, transparent 50%), radial-gradient(circle at 70% 60%, hsl(230 75% 55%) 0%, transparent 50%)" }} />
-        <div className="relative text-center px-12">
-          <GraduationCap className="mx-auto h-16 w-16 text-primary" />
-          <h2 className="mt-6 font-display text-3xl font-bold text-primary-foreground">Welcome to EduGrant AI</h2>
-          <p className="mt-4 text-primary-foreground/60 max-w-md mx-auto">Discover scholarships tailored to your profile with AI-powered matching and strategic recommendations.</p>
+    <div className="flex min-h-screen bg-background">
+      {/* Left panel — immersive brand experience */}
+      <div className="hidden w-[55%] gradient-hero lg:flex lg:flex-col lg:justify-between relative overflow-hidden p-10">
+        {/* Abstract background elements */}
+        <div className="absolute top-[-15%] right-[-10%] w-[600px] h-[600px] rounded-full opacity-[0.05]" style={{ background: "radial-gradient(circle, hsl(258 50% 58%), transparent 65%)" }} />
+        <div className="absolute bottom-[-10%] left-[-8%] w-[500px] h-[500px] rounded-full opacity-[0.04]" style={{ background: "radial-gradient(circle, hsl(230 72% 52%), transparent 65%)" }} />
+        <div className="absolute top-[40%] left-[20%] w-[300px] h-[300px] rounded-full opacity-[0.03]" style={{ background: "radial-gradient(circle, hsl(162 55% 38%), transparent 70%)" }} />
+
+        {/* Top — brand */}
+        <Link to="/" className="relative flex items-center gap-2.5 z-10">
+          <GraduationCap className="h-7 w-7 text-primary" />
+          <span className="font-display text-lg font-bold text-primary-foreground/90 tracking-tight">EduGrant AI</span>
+        </Link>
+
+        {/* Center — hero message */}
+        <div className="relative z-10 max-w-lg">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <h2 className="font-display text-4xl font-extrabold text-primary-foreground leading-[1.12] tracking-tight">
+              Your Scholarship<br />
+              Strategy Starts<br />
+              <span className="text-gradient">Right Here.</span>
+            </h2>
+            <p className="mt-5 text-primary-foreground/45 text-base leading-relaxed max-w-md">
+              AI-powered matching with approval prediction, funding gap analysis, and smart application prioritization.
+            </p>
+          </motion.div>
+
+          {/* Floating card */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-10"
+          >
+            <div className="rounded-2xl border border-primary-foreground/8 bg-primary-foreground/[0.04] backdrop-blur-md p-5 max-w-sm">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="h-9 w-9 rounded-xl gradient-primary flex items-center justify-center shadow-glow">
+                  <Target className="h-4 w-4 text-primary-foreground" />
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-primary-foreground">Top Match Found</p>
+                  <p className="text-[11px] text-primary-foreground/35">National Merit Scholarship</p>
+                </div>
+              </div>
+              <div className="space-y-2.5">
+                <div className="flex justify-between items-center">
+                  <span className="text-xs text-primary-foreground/35">Match Score</span>
+                  <span className="text-sm font-bold text-primary-foreground">94%</span>
+                </div>
+                <div className="h-1.5 rounded-full bg-primary-foreground/8 overflow-hidden">
+                  <motion.div initial={{ width: 0 }} animate={{ width: "94%" }} transition={{ duration: 1.2, delay: 0.6 }} className="h-full rounded-full gradient-primary" />
+                </div>
+                <div className="flex gap-2 pt-1">
+                  <span className="text-[10px] font-medium bg-success/15 text-success px-2 py-0.5 rounded-full">🔥 High Approval</span>
+                  <span className="text-[10px] font-medium bg-primary/15 text-primary px-2 py-0.5 rounded-full">💰 ₹50,000</span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
+
+        {/* Bottom — trust signals */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+          className="relative z-10 flex items-center gap-8"
+        >
+          {[
+            { icon: Shield, label: "40+ Scholarships" },
+            { icon: Sparkles, label: "AI-Matched" },
+            { icon: TrendingUp, label: "Approval Prediction" },
+          ].map((t) => (
+            <div key={t.label} className="flex items-center gap-2 text-primary-foreground/30">
+              <t.icon className="h-3.5 w-3.5" />
+              <span className="text-xs font-medium">{t.label}</span>
+            </div>
+          ))}
+        </motion.div>
       </div>
-      <div className="flex w-full items-center justify-center px-6 lg:w-1/2">
-        <div className="w-full max-w-sm">
-          <Link to="/" className="mb-8 flex items-center gap-2 lg:hidden">
+
+      {/* Right panel — login form */}
+      <div className="flex w-full items-center justify-center px-6 lg:w-[45%]">
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.15 }}
+          className="w-full max-w-sm"
+        >
+          {/* Mobile brand */}
+          <Link to="/" className="mb-10 flex items-center gap-2.5 lg:hidden">
             <GraduationCap className="h-7 w-7 text-primary" />
-            <span className="font-display text-xl font-bold">EduGrant AI</span>
+            <span className="font-display text-xl font-bold text-foreground">EduGrant AI</span>
           </Link>
-          <h1 className="font-display text-2xl font-bold text-foreground">Log in</h1>
-          <p className="mt-1 text-sm text-muted-foreground">Enter your credentials to continue</p>
-          <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+
+          <div className="mb-8">
+            <h1 className="font-display text-2xl font-extrabold text-foreground tracking-tight">Welcome back</h1>
+            <p className="mt-2 text-sm text-muted-foreground">Sign in to your scholarship dashboard</p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <Label htmlFor="email">Email</Label>
-              <div className="relative mt-1.5">
-                <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input id="email" type="email" placeholder="you@example.com" className="pl-10" value={email} onChange={(e) => setEmail(e.target.value)} />
+              <Label htmlFor="email" className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Email</Label>
+              <div className="relative mt-2">
+                <Mail className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/50" />
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  className="pl-11 h-11 rounded-xl border-border/60 bg-card focus:border-primary/40 focus:shadow-search transition-all"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </div>
             </div>
             <div>
-              <Label htmlFor="password">Password</Label>
-              <div className="relative mt-1.5">
-                <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input id="password" type={showPw ? "text" : "password"} placeholder="••••••••" className="pl-10 pr-10" value={password} onChange={(e) => setPassword(e.target.value)} />
-                <button type="button" onClick={() => setShowPw(!showPw)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
+              <div className="flex items-center justify-between">
+                <Label htmlFor="password" className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Password</Label>
+                <button type="button" className="text-xs text-primary hover:underline font-medium">Forgot?</button>
+              </div>
+              <div className="relative mt-2">
+                <Lock className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/50" />
+                <Input
+                  id="password"
+                  type={showPw ? "text" : "password"}
+                  placeholder="••••••••"
+                  className="pl-11 pr-11 h-11 rounded-xl border-border/60 bg-card focus:border-primary/40 focus:shadow-search transition-all"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <button type="button" onClick={() => setShowPw(!showPw)} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted-foreground/40 hover:text-foreground transition-colors">
                   {showPw ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
             </div>
-            <Button type="submit" className="w-full gradient-primary text-primary-foreground font-semibold shadow-glow">Log in</Button>
+            <Button type="submit" className="w-full h-11 gradient-primary text-primary-foreground font-semibold shadow-glow rounded-xl text-sm group">
+              Sign In <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+            </Button>
           </form>
-          <p className="mt-6 text-center text-sm text-muted-foreground">
-            Don't have an account?{" "}
-            <Link to="/signup" className="font-medium text-primary hover:underline">Sign up</Link>
-          </p>
-        </div>
+
+          <div className="mt-8 text-center">
+            <p className="text-sm text-muted-foreground">
+              Don't have an account?{" "}
+              <Link to="/signup" className="font-semibold text-primary hover:underline">Create one free</Link>
+            </p>
+          </div>
+
+          {/* Bottom trust note */}
+          <div className="mt-12 flex items-center justify-center gap-2 text-muted-foreground/40">
+            <Shield className="h-3.5 w-3.5" />
+            <span className="text-[11px]">Your data is encrypted and secure</span>
+          </div>
+        </motion.div>
       </div>
     </div>
   );
