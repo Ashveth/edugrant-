@@ -1,4 +1,4 @@
-import { GraduationCap, LayoutDashboard, User, Target, BookOpen, Bookmark, LogOut, PieChart, Search } from "lucide-react";
+import { GraduationCap, LayoutDashboard, User, Target, BookOpen, Bookmark, LogOut, PieChart, Search, FileText } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useApp } from "@/context/AppContext";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +14,7 @@ const navItems = [
   { title: "Financial Strategy", url: "/dashboard/strategy", icon: PieChart },
   { title: "Essay Generator", url: "/dashboard/essay", icon: BookOpen },
   { title: "Saved", url: "/dashboard/saved", icon: Bookmark },
+  { title: "My Documents", url: "/dashboard/documents", icon: FileText },
 ];
 
 export function AppSidebar() {

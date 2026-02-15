@@ -15,6 +15,7 @@ import ScholarshipDetailPage from "./pages/ScholarshipDetailPage";
 import FinancialStrategyPage from "./pages/FinancialStrategyPage";
 import EssayGeneratorPage from "./pages/EssayGeneratorPage";
 import SavedScholarshipsPage from "./pages/SavedScholarshipsPage";
+import DocumentsPage from "./pages/DocumentsPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -38,6 +39,7 @@ const App = () => (
               <Route path="strategy" element={<FinancialStrategyPage />} />
               <Route path="essay" element={<EssayGeneratorPage />} />
               <Route path="saved" element={<SavedScholarshipsPage />} />
+              <Route path="documents" element={<DocumentsPage />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
