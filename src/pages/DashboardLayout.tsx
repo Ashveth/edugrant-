@@ -4,6 +4,7 @@ import { AppSidebar } from "@/components/AppSidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { GraduationCap, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import AIChatbot from "@/components/AIChatbot";
 
 export default function DashboardLayout() {
   const { isLoggedIn, darkMode, toggleDarkMode } = useApp();
@@ -32,6 +33,7 @@ export default function DashboardLayout() {
           </main>
         </div>
       </div>
+      <AIChatbot />
     </SidebarProvider>
   );
 }
