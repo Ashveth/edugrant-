@@ -13,7 +13,7 @@ import ProfilePage from "./pages/ProfilePage";
 import ScholarshipsPage from "./pages/ScholarshipsPage";
 import ScholarshipDetailPage from "./pages/ScholarshipDetailPage";
 import FinancialStrategyPage from "./pages/FinancialStrategyPage";
-import EssayGeneratorPage from "./pages/EssayGeneratorPage";
+
 import SavedScholarshipsPage from "./pages/SavedScholarshipsPage";
 import DocumentsPage from "./pages/DocumentsPage";
 import NotFound from "./pages/NotFound";
@@ -37,7 +37,7 @@ const App = () => (
               <Route path="scholarships" element={<ScholarshipsPage />} />
               <Route path="scholarship/:id" element={<ScholarshipDetailPage />} />
               <Route path="strategy" element={<FinancialStrategyPage />} />
-              <Route path="essay" element={<EssayGeneratorPage />} />
+              
               <Route path="saved" element={<SavedScholarshipsPage />} />
               <Route path="documents" element={<DocumentsPage />} />
             </Route>

@@ -153,10 +153,6 @@ export default function ScholarshipDetailPage() {
             </CardContent>
           </Card>
 
-          {/* Generate Essay */}
-          <Link to={`/dashboard/essay`}>
-            <Button variant="outline" className="w-full">Generate Application Draft</Button>
-          </Link>
         </div>
       </div>
     </motion.div>
