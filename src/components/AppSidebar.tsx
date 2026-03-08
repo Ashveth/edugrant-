@@ -14,6 +14,7 @@ const navItems = [
   { title: "Financial Strategy", url: "/dashboard/strategy", icon: PieChart },
   
   { title: "Saved", url: "/dashboard/saved", icon: Bookmark },
+  { title: "Applications", url: "/dashboard/applications", icon: ClipboardList },
   { title: "My Documents", url: "/dashboard/documents", icon: FileText },
 ];
 
