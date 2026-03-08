@@ -15,6 +15,7 @@ import ScholarshipDetailPage from "./pages/ScholarshipDetailPage";
 import FinancialStrategyPage from "./pages/FinancialStrategyPage";
 
 import SavedScholarshipsPage from "./pages/SavedScholarshipsPage";
+import ApplicationsPage from "./pages/ApplicationsPage";
 import DocumentsPage from "./pages/DocumentsPage";
 import NotFound from "./pages/NotFound";
 
@@ -39,6 +40,7 @@ const App = () => (
               <Route path="strategy" element={<FinancialStrategyPage />} />
               
               <Route path="saved" element={<SavedScholarshipsPage />} />
+              <Route path="applications" element={<ApplicationsPage />} />
               <Route path="documents" element={<DocumentsPage />} />
             </Route>
             <Route path="*" element={<NotFound />} />
