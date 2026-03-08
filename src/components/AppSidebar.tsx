@@ -1,4 +1,4 @@
-import { GraduationCap, LayoutDashboard, User, Target, Bookmark, LogOut, PieChart, Search, FileText } from "lucide-react";
+import { GraduationCap, LayoutDashboard, User, Target, Bookmark, LogOut, PieChart, Search, FileText, ClipboardList } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useApp } from "@/context/AppContext";
 import { useNavigate } from "react-router-dom";
