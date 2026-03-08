@@ -60,6 +60,7 @@ const App = () => (
               <Route path="ai/scam-detector" element={<ScamDetectorPage />} />
               <Route path="ai/application-assistant" element={<ApplicationAssistantPage />} />
               <Route path="ai/document-analyzer" element={<DocumentAnalyzerPage />} />
+              <Route path="provider" element={<ProviderDashboardPage />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>

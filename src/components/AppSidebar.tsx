@@ -18,6 +18,7 @@ const navItems = [
   { title: "Saved", url: "/dashboard/saved", icon: Bookmark },
   { title: "Applications", url: "/dashboard/applications", icon: ClipboardList },
   { title: "My Documents", url: "/dashboard/documents", icon: FileText },
+  { title: "Provider Panel", url: "/dashboard/provider", icon: Building2 },
 ];
 
 const aiTools = [
