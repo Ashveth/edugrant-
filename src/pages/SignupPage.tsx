@@ -16,6 +16,7 @@ export default function SignupPage() {
   const [password, setPassword] = useState("");
   const [showPw, setShowPw] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
   const [educationLevel, setEducationLevel] = useState("Undergraduate");
   const [fieldOfStudy, setFieldOfStudy] = useState("Engineering");
   const [percentage, setPercentage] = useState("75");
