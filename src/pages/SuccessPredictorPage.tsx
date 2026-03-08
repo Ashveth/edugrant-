@@ -8,7 +8,7 @@ import { Progress } from "@/components/ui/progress";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useApp } from "@/context/AppContext";
 import { useToast } from "@/hooks/use-toast";
-import { scholarships } from "@/data/scholarships";
+import { useScholarshipsFromDB } from "@/hooks/useScholarshipsFromDB";
 
 interface PredictionResult {
   prediction: "high" | "moderate" | "low";
@@ -22,6 +22,7 @@ interface PredictionResult {
 
 export default function SuccessPredictorPage() {
   const { profile } = useApp();
+  const { scholarships } = useScholarshipsFromDB();
   const { toast } = useToast();
   const [selectedScholarship, setSelectedScholarship] = useState("");
   const [loading, setLoading] = useState(false);

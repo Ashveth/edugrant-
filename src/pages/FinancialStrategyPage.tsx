@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { PieChart, IndianRupee, TrendingUp } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useApp } from "@/context/AppContext";
-import { scholarships } from "@/data/scholarships";
+import { useScholarshipsFromDB } from "@/hooks/useScholarshipsFromDB";
 import { matchScholarships } from "@/lib/matchingEngine";
 import { PieChart as RePieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from "recharts";
 
@@ -10,7 +10,8 @@ const COLORS = ["hsl(230, 75%, 55%)", "hsl(265, 70%, 58%)", "hsl(152, 60%, 42%)"
 
 export default function FinancialStrategyPage() {
   const { profile } = useApp();
-  const matches = profile ? matchScholarships(profile, scholarships) : [];
+  const { scholarships } = useScholarshipsFromDB();
+  const matches = profile && scholarships.length > 0 ? matchScholarships(profile, scholarships) : [];
 
   const totalCost = profile?.targetCourseCost || 500000;
   const scholarshipPotential = matches.filter(m => m.matchPercentage > 50).reduce((s, m) => s + m.scholarship.amount, 0);

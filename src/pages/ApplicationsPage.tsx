@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useApp, Application } from "@/context/AppContext";
-import { scholarships } from "@/data/scholarships";
+import { useScholarshipsFromDB } from "@/hooks/useScholarshipsFromDB";
 import { useToast } from "@/hooks/use-toast";
 
 const statusConfig: Record<string, { label: string; variant: "default" | "secondary" | "destructive" | "outline"; color?: string }> = {
@@ -23,6 +23,7 @@ const statusConfig: Record<string, { label: string; variant: "default" | "second
 
 export default function ApplicationsPage() {
   const { applications, updateApplication, deleteApplication, savedScholarships, addApplication } = useApp();
+  const { scholarships } = useScholarshipsFromDB();
   const { toast } = useToast();
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editNotes, setEditNotes] = useState("");

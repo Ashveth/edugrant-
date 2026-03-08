@@ -273,14 +273,18 @@ export type Database = {
         Row: {
           accepts_direct_apply: boolean
           amount: number
+          application_process: string | null
           application_url: string | null
           categories: string[] | null
           competition_level: string
+          country: string
           created_at: string
           deadline: string
           description: string
           education_levels: string[] | null
+          eligibility_criteria: string | null
           fields_of_study: string[] | null
+          funding_type: string
           genders: string[] | null
           id: string
           is_active: boolean
@@ -292,19 +296,25 @@ export type Database = {
           provider_user_id: string | null
           required_documents: string[] | null
           states: string[] | null
+          tags: string[] | null
+          university: string | null
           updated_at: string
         }
         Insert: {
           accepts_direct_apply?: boolean
           amount?: number
+          application_process?: string | null
           application_url?: string | null
           categories?: string[] | null
           competition_level?: string
+          country?: string
           created_at?: string
           deadline: string
           description?: string
           education_levels?: string[] | null
+          eligibility_criteria?: string | null
           fields_of_study?: string[] | null
+          funding_type?: string
           genders?: string[] | null
           id: string
           is_active?: boolean
@@ -316,19 +326,25 @@ export type Database = {
           provider_user_id?: string | null
           required_documents?: string[] | null
           states?: string[] | null
+          tags?: string[] | null
+          university?: string | null
           updated_at?: string
         }
         Update: {
           accepts_direct_apply?: boolean
           amount?: number
+          application_process?: string | null
           application_url?: string | null
           categories?: string[] | null
           competition_level?: string
+          country?: string
           created_at?: string
           deadline?: string
           description?: string
           education_levels?: string[] | null
+          eligibility_criteria?: string | null
           fields_of_study?: string[] | null
+          funding_type?: string
           genders?: string[] | null
           id?: string
           is_active?: boolean
@@ -340,6 +356,8 @@ export type Database = {
           provider_user_id?: string | null
           required_documents?: string[] | null
           states?: string[] | null
+          tags?: string[] | null
+          university?: string | null
           updated_at?: string
         }
         Relationships: []

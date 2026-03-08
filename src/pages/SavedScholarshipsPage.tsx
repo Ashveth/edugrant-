@@ -5,10 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useApp } from "@/context/AppContext";
-import { scholarships } from "@/data/scholarships";
+import { useScholarshipsFromDB } from "@/hooks/useScholarshipsFromDB";
 
 export default function SavedScholarshipsPage() {
   const { savedScholarships, toggleSaved } = useApp();
+  const { scholarships } = useScholarshipsFromDB();
   const saved = scholarships.filter((s) => savedScholarships.includes(s.id));
 
   return (

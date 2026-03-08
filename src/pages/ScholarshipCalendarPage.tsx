@@ -12,7 +12,8 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SuccessBadge } from "@/components/SuccessBadge";
 import { useApp } from "@/context/AppContext";
-import { scholarships, fieldsOfStudy } from "@/data/scholarships";
+import { useScholarshipsFromDB } from "@/hooks/useScholarshipsFromDB";
+import { fieldsOfStudy } from "@/data/scholarships";
 import { matchScholarships } from "@/lib/matchingEngine";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -56,7 +57,8 @@ export default function ScholarshipCalendarPage() {
   const currentYear = currentDate.getFullYear();
   const currentMonth = currentDate.getMonth();
 
-  const matches = useMemo(() => profile ? matchScholarships(profile, scholarships) : [], [profile]);
+  const { scholarships } = useScholarshipsFromDB();
+  const matches = useMemo(() => profile && scholarships.length > 0 ? matchScholarships(profile, scholarships) : [], [profile, scholarships]);
 
   // Filter scholarships
   const filteredMatches = useMemo(() => {

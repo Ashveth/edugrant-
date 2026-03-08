@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { useApp } from "@/context/AppContext";
-import { scholarships } from "@/data/scholarships";
+import { useScholarshipsFromDB } from "@/hooks/useScholarshipsFromDB";
 import { supabase } from "@/integrations/supabase/client";
 import { useState, useMemo, useEffect, useRef } from "react";
 import { useToast } from "@/hooks/use-toast";
@@ -22,6 +22,7 @@ interface UploadedDoc {
 
 export default function DocumentsPage() {
   const { savedScholarships, documentChecklist, toggleDocument, userId } = useApp();
+  const { scholarships } = useScholarshipsFromDB();
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<"all" | "pending" | "ready">("all");
   const [uploadedDocs, setUploadedDocs] = useState<UploadedDoc[]>([]);

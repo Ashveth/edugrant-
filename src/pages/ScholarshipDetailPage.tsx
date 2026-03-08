@@ -8,10 +8,10 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { SuccessBadge } from "@/components/SuccessBadge";
 import { useApp } from "@/context/AppContext";
-import { scholarships } from "@/data/scholarships";
 import { matchScholarships } from "@/lib/matchingEngine";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { Scholarship } from "@/types/scholarship";
 
 interface DocCheckItem {
   document_name: string;
@@ -24,19 +24,56 @@ export default function ScholarshipDetailPage() {
   const { profile, savedScholarships, toggleSaved, userId } = useApp();
   const { toast } = useToast();
 
-  const scholarship = scholarships.find(s => s.id === id);
+  const [scholarship, setScholarship] = useState<Scholarship | null>(null);
+  const [loadingScholarship, setLoadingScholarship] = useState(true);
+
+  useEffect(() => {
+    if (!id) return;
+    supabase.from("scholarships").select("*").eq("id", id).maybeSingle().then(({ data }) => {
+      if (data) {
+        setScholarship({
+          id: data.id,
+          name: data.name,
+          provider: data.provider,
+          amount: data.amount,
+          deadline: data.deadline,
+          description: data.description,
+          eligibility: {
+            maxIncome: data.max_income ?? undefined,
+            minPercentage: data.min_percentage ?? undefined,
+            categories: data.categories ?? [],
+            educationLevels: data.education_levels ?? [],
+            fieldsOfStudy: data.fields_of_study ?? [],
+            states: data.states ?? [],
+            genders: data.genders ?? [],
+          },
+          applicationUrl: data.application_url || "",
+          requiredDocuments: data.required_documents ?? [],
+          competitionLevel: data.competition_level as Scholarship["competitionLevel"],
+          providerType: data.provider_type as Scholarship["providerType"],
+          country: data.country || "India",
+          fundingType: data.funding_type || "Partial",
+          university: data.university || "",
+          eligibilityCriteria: data.eligibility_criteria || "",
+          applicationProcess: data.application_process || "",
+          tags: data.tags ?? [],
+        });
+      }
+      setLoadingScholarship(false);
+    });
+  }, [id]);
 
   const match = scholarship && profile ? matchScholarships(profile, [scholarship])[0] : null;
   const days = scholarship ? Math.max(0, Math.ceil((new Date(scholarship.deadline).getTime() - Date.now()) / 86400000)) : 0;
   const isSaved = scholarship ? savedScholarships.includes(scholarship.id) : false;
 
-  // Check if scholarship accepts direct apply (from DB)
+  // Direct apply status is now loaded from the scholarship data itself
   const [acceptsDirectApply, setAcceptsDirectApply] = useState(false);
   useEffect(() => {
-    if (!scholarship) return;
-    supabase.from("scholarships").select("accepts_direct_apply").eq("id", scholarship.id).maybeSingle()
+    if (!id) return;
+    supabase.from("scholarships").select("accepts_direct_apply").eq("id", id).maybeSingle()
       .then(({ data }) => { if (data?.accepts_direct_apply) setAcceptsDirectApply(true); });
-  }, [scholarship?.id]);
+  }, [id]);
 
   const competitionPercent = scholarship ? (scholarship.competitionLevel === "High" ? 85 : scholarship.competitionLevel === "Medium" ? 55 : 25) : 0;
 
@@ -64,6 +101,7 @@ export default function ScholarshipDetailPage() {
     load();
   }, [userId, id, scholarship?.requiredDocuments]);
 
+  if (loadingScholarship) return <div className="flex items-center justify-center py-20"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>;
   if (!scholarship) return <div className="text-center py-20 text-muted-foreground">Scholarship not found.</div>;
 
   const completedCount = docChecklist.filter(d => d.is_completed).length;

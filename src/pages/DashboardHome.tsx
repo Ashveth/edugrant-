@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Target, BookOpen, User, Bookmark, Sparkles, TrendingUp, Clock, AlertCircle, CheckCircle2, Circle, FileText, IndianRupee, Flame, GraduationCap } from "lucide-react";
 import { useApp } from "@/context/AppContext";
-import { scholarships } from "@/data/scholarships";
+import { useScholarshipsFromDB } from "@/hooks/useScholarshipsFromDB";
 import { matchScholarships } from "@/lib/matchingEngine";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -33,8 +33,9 @@ function SemiCircleGauge({ value, label, color }: { value: number; label: string
 
 export default function DashboardHome() {
   const { profile, savedScholarships, toggleSaved, documentChecklist, toggleDocument } = useApp();
+  const { scholarships: dbScholarships } = useScholarshipsFromDB();
 
-  const matches = useMemo(() => profile ? matchScholarships(profile, scholarships) : [], [profile]);
+  const matches = useMemo(() => profile && dbScholarships.length > 0 ? matchScholarships(profile, dbScholarships) : [], [profile, dbScholarships]);
   const topMatches = matches.slice(0, 8);
   const avgMatch = matches.length > 0 ? Math.round(matches.reduce((s, m) => s + m.matchPercentage, 0) / matches.length) : 0;
 

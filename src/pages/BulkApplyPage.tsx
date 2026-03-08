@@ -9,7 +9,7 @@ import { Progress } from "@/components/ui/progress";
 import { Checkbox } from "@/components/ui/checkbox";
 import { SuccessBadge } from "@/components/SuccessBadge";
 import { useApp } from "@/context/AppContext";
-import { scholarships } from "@/data/scholarships";
+import { useScholarshipsFromDB } from "@/hooks/useScholarshipsFromDB";
 import { matchScholarships } from "@/lib/matchingEngine";
 import { useToast } from "@/hooks/use-toast";
 
@@ -21,6 +21,7 @@ type Step = "select" | "review" | "applying" | "done";
 
 export default function BulkApplyPage() {
   const { profile, savedScholarships, applications, addApplication, documentChecklist } = useApp();
+  const { scholarships } = useScholarshipsFromDB();
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -29,7 +30,7 @@ export default function BulkApplyPage() {
   const [applyProgress, setApplyProgress] = useState(0);
   const [appliedIds, setAppliedIds] = useState<string[]>([]);
 
-  const matches = useMemo(() => profile ? matchScholarships(profile, scholarships) : [], [profile]);
+  const matches = useMemo(() => profile && scholarships.length > 0 ? matchScholarships(profile, scholarships) : [], [profile, scholarships]);
 
   // Filter out already-applied scholarships
   const appliedScholarshipIds = new Set(applications.map(a => a.scholarship_id));
