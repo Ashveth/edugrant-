@@ -17,6 +17,9 @@ import FinancialStrategyPage from "./pages/FinancialStrategyPage";
 import SavedScholarshipsPage from "./pages/SavedScholarshipsPage";
 import ApplicationsPage from "./pages/ApplicationsPage";
 import DocumentsPage from "./pages/DocumentsPage";
+import ProfileAnalyzerPage from "./pages/ProfileAnalyzerPage";
+import SuccessPredictorPage from "./pages/SuccessPredictorPage";
+import ScamDetectorPage from "./pages/ScamDetectorPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
