@@ -17,6 +17,9 @@ import FinancialStrategyPage from "./pages/FinancialStrategyPage";
 import SavedScholarshipsPage from "./pages/SavedScholarshipsPage";
 import ApplicationsPage from "./pages/ApplicationsPage";
 import DocumentsPage from "./pages/DocumentsPage";
+import ProfileAnalyzerPage from "./pages/ProfileAnalyzerPage";
+import SuccessPredictorPage from "./pages/SuccessPredictorPage";
+import ScamDetectorPage from "./pages/ScamDetectorPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -42,6 +45,9 @@ const App = () => (
               <Route path="saved" element={<SavedScholarshipsPage />} />
               <Route path="applications" element={<ApplicationsPage />} />
               <Route path="documents" element={<DocumentsPage />} />
+              <Route path="ai/profile-analyzer" element={<ProfileAnalyzerPage />} />
+              <Route path="ai/success-predictor" element={<SuccessPredictorPage />} />
+              <Route path="ai/scam-detector" element={<ScamDetectorPage />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
