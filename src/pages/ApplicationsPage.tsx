@@ -128,7 +128,7 @@ export default function ApplicationsPage() {
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
                           <h3 className="font-display font-semibold text-foreground truncate">{s.name}</h3>
-                          <Badge variant={cfg.variant} className="rounded-lg shrink-0">{cfg.label}</Badge>
+                          <Badge variant={cfg.variant} className={`rounded-lg shrink-0 ${cfg.color || ""}`}>{cfg.label}</Badge>
                         </div>
                         <p className="text-xs text-muted-foreground">{s.provider} · ₹{s.amount.toLocaleString()}</p>
 
