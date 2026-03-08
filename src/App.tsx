@@ -45,6 +45,9 @@ const App = () => (
               <Route path="saved" element={<SavedScholarshipsPage />} />
               <Route path="applications" element={<ApplicationsPage />} />
               <Route path="documents" element={<DocumentsPage />} />
+              <Route path="ai/profile-analyzer" element={<ProfileAnalyzerPage />} />
+              <Route path="ai/success-predictor" element={<SuccessPredictorPage />} />
+              <Route path="ai/scam-detector" element={<ScamDetectorPage />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
