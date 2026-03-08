@@ -56,6 +56,7 @@ const App = () => (
               <Route path="ai/success-predictor" element={<SuccessPredictorPage />} />
               <Route path="ai/scam-detector" element={<ScamDetectorPage />} />
               <Route path="ai/application-assistant" element={<ApplicationAssistantPage />} />
+              <Route path="ai/document-analyzer" element={<DocumentAnalyzerPage />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>

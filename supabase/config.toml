@@ -17,3 +17,6 @@ verify_jwt = false
 
 [functions.application-assistant]
 verify_jwt = false
+
+[functions.document-analyzer]
+verify_jwt = false
