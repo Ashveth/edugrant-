@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Target, BookOpen, User, Bookmark, Sparkles, TrendingUp, Clock, AlertCircle, CheckCircle2, Circle, FileText, IndianRupee, Flame, GraduationCap } from "lucide-react";
 import { useApp } from "@/context/AppContext";
-import { scholarships } from "@/data/scholarships";
+import { useScholarshipsFromDB } from "@/hooks/useScholarshipsFromDB";
 import { matchScholarships } from "@/lib/matchingEngine";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
