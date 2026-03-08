@@ -31,6 +31,12 @@ export interface Scholarship {
   requiredDocuments: string[];
   competitionLevel: "Low" | "Medium" | "High";
   providerType: "Government" | "NGO" | "CSR" | "Private";
+  country?: string;
+  fundingType?: string;
+  university?: string;
+  eligibilityCriteria?: string;
+  applicationProcess?: string;
+  tags?: string[];
 }
 
 export interface MatchResult {
