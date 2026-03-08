@@ -21,6 +21,7 @@ type Step = "select" | "review" | "applying" | "done";
 
 export default function BulkApplyPage() {
   const { profile, savedScholarships, applications, addApplication, documentChecklist } = useApp();
+  const { scholarships } = useScholarshipsFromDB();
   const { toast } = useToast();
   const navigate = useNavigate();
 
