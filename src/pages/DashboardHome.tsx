@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { ScholarshipScrollSection } from "@/components/ScholarshipScrollSection";
+import ProfileCompletionPrompt from "@/components/ProfileCompletionPrompt";
 
 const allDocs = ["Income Certificate", "Marksheets", "Aadhaar Card", "Recommendation Letter", "Caste Certificate", "Domicile Certificate"];
 
@@ -70,6 +71,9 @@ export default function DashboardHome() {
 
   return (
     <div className="space-y-8 max-w-[1200px]">
+      {/* Profile Completion for new Google signups */}
+      <ProfileCompletionPrompt />
+
       {/* Welcome */}
       <div>
         <h1 className="font-display text-2xl md:text-3xl font-extrabold text-foreground tracking-tight">
