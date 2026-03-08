@@ -12,6 +12,7 @@ const navItems = [
   { title: "My Profile", url: "/dashboard/profile", icon: User },
   { title: "Find Scholarships", url: "/dashboard/scholarships", icon: Search },
   { title: "Bulk Apply", url: "/dashboard/bulk-apply", icon: Zap },
+  { title: "Calendar", url: "/dashboard/calendar", icon: CalendarDays },
   { title: "Financial Strategy", url: "/dashboard/strategy", icon: PieChart },
   { title: "Saved", url: "/dashboard/saved", icon: Bookmark },
   { title: "Applications", url: "/dashboard/applications", icon: ClipboardList },
