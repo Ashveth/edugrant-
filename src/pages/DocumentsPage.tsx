@@ -22,6 +22,7 @@ interface UploadedDoc {
 
 export default function DocumentsPage() {
   const { savedScholarships, documentChecklist, toggleDocument, userId } = useApp();
+  const { scholarships } = useScholarshipsFromDB();
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<"all" | "pending" | "ready">("all");
   const [uploadedDocs, setUploadedDocs] = useState<UploadedDoc[]>([]);

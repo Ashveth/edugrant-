@@ -57,7 +57,8 @@ export default function ScholarshipCalendarPage() {
   const currentYear = currentDate.getFullYear();
   const currentMonth = currentDate.getMonth();
 
-  const matches = useMemo(() => profile ? matchScholarships(profile, scholarships) : [], [profile]);
+  const { scholarships } = useScholarshipsFromDB();
+  const matches = useMemo(() => profile && scholarships.length > 0 ? matchScholarships(profile, scholarships) : [], [profile, scholarships]);
 
   // Filter scholarships
   const filteredMatches = useMemo(() => {

@@ -148,6 +148,7 @@ const compareFields: CompareField[] = [
 
 export default function ScholarshipComparePage() {
   const { savedScholarships, toggleSaved } = useApp();
+  const { scholarships } = useScholarshipsFromDB();
   const [selected, setSelected] = useState<(string | null)[]>([null, null]);
 
   const selectedScholarships = selected.map((id) =>

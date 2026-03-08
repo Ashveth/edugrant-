@@ -22,6 +22,7 @@ interface PredictionResult {
 
 export default function SuccessPredictorPage() {
   const { profile } = useApp();
+  const { scholarships } = useScholarshipsFromDB();
   const { toast } = useToast();
   const [selectedScholarship, setSelectedScholarship] = useState("");
   const [loading, setLoading] = useState(false);
