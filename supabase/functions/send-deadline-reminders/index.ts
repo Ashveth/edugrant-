@@ -6,7 +6,6 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-// Scholarship data (mirrored from frontend for deadline lookup)
 const SCHOLARSHIP_DEADLINES: Record<string, { name: string; deadline: string }> = {
   "1": { name: "National Merit Scholarship", deadline: "2026-06-30" },
   "2": { name: "SC/ST Empowerment Fellowship", deadline: "2026-05-15" },
@@ -26,12 +25,15 @@ serve(async (req) => {
   try {
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const resendApiKey = Deno.env.get("RESEND_API_KEY");
+    
+    if (!resendApiKey) {
+      throw new Error("RESEND_API_KEY is not configured");
+    }
+
     const supabase = createClient(supabaseUrl, serviceRoleKey);
-
     const now = new Date();
-    const remindDays = [7, 3, 1];
 
-    // Fetch all active reminders
     const { data: reminders, error } = await supabase
       .from("scholarship_reminders")
       .select("*");
@@ -44,6 +46,7 @@ serve(async (req) => {
     }
 
     let sentCount = 0;
+    const errors: string[] = [];
 
     for (const reminder of reminders) {
       const scholarship = SCHOLARSHIP_DEADLINES[reminder.scholarship_id];
@@ -52,7 +55,6 @@ serve(async (req) => {
       const deadline = new Date(scholarship.deadline);
       const daysUntilDeadline = Math.ceil((deadline.getTime() - now.getTime()) / 86400000);
 
-      // Check if we should send a reminder
       let shouldSend = false;
       if (daysUntilDeadline === 7 && reminder.remind_7_days) shouldSend = true;
       if (daysUntilDeadline === 3 && reminder.remind_3_days) shouldSend = true;
@@ -60,47 +62,82 @@ serve(async (req) => {
 
       if (!shouldSend) continue;
 
-      // Check if already reminded today
       if (reminder.last_reminded_at) {
         const lastReminded = new Date(reminder.last_reminded_at);
         if (lastReminded.toDateString() === now.toDateString()) continue;
       }
 
-      // Send email via Lovable AI gateway (generate personalized reminder)
-      const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-      if (!LOVABLE_API_KEY) {
-        console.error("LOVABLE_API_KEY not configured");
-        continue;
+      const deadlineFormatted = deadline.toLocaleDateString("en-IN", {
+        day: "numeric", month: "long", year: "numeric",
+      });
+
+      const htmlContent = `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <div style="background: linear-gradient(135deg, #6366f1, #8b5cf6); padding: 24px; border-radius: 12px 12px 0 0;">
+            <h1 style="color: white; margin: 0; font-size: 24px;">⏰ Deadline Reminder</h1>
+          </div>
+          <div style="background: #ffffff; padding: 24px; border: 1px solid #e5e7eb; border-top: none; border-radius: 0 0 12px 12px;">
+            <h2 style="color: #1f2937; margin-top: 0;">${scholarship.name}</h2>
+            <p style="color: #4b5563; font-size: 16px;">
+              You have <strong style="color: #ef4444;">${daysUntilDeadline} day${daysUntilDeadline > 1 ? "s" : ""}</strong> left to apply!
+            </p>
+            <div style="background: #f9fafb; padding: 16px; border-radius: 8px; margin: 16px 0;">
+              <p style="margin: 0; color: #6b7280;">📅 <strong>Deadline:</strong> ${deadlineFormatted}</p>
+            </div>
+            <p style="color: #4b5563;">Don't miss this opportunity! Log in to EduGrant AI to review and complete your application.</p>
+            <a href="https://edugrantai.lovable.app/dashboard/scholarships" 
+               style="display: inline-block; background: #6366f1; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 8px;">
+              Apply Now →
+            </a>
+          </div>
+          <p style="color: #9ca3af; font-size: 12px; text-align: center; margin-top: 16px;">
+            EduGrant AI — Never miss a scholarship deadline
+          </p>
+        </div>
+      `;
+
+      try {
+        const res = await fetch("https://api.resend.com/emails", {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${resendApiKey}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            from: "EduGrant AI <onboarding@resend.dev>",
+            to: [reminder.email],
+            subject: `⏰ ${daysUntilDeadline} day${daysUntilDeadline > 1 ? "s" : ""} left – ${scholarship.name}`,
+            html: htmlContent,
+          }),
+        });
+
+        const resData = await res.json();
+
+        if (!res.ok) {
+          console.error(`Resend API error for ${reminder.email}:`, resData);
+          errors.push(`Failed to send to ${reminder.email}: ${JSON.stringify(resData)}`);
+          continue;
+        }
+
+        console.log(`Email sent to ${reminder.email} for ${scholarship.name} (${daysUntilDeadline} days left)`);
+
+        await supabase
+          .from("scholarship_reminders")
+          .update({ last_reminded_at: now.toISOString() })
+          .eq("id", reminder.id);
+
+        sentCount++;
+      } catch (emailErr) {
+        console.error(`Email send error for ${reminder.email}:`, emailErr);
+        errors.push(`Error sending to ${reminder.email}: ${emailErr instanceof Error ? emailErr.message : "Unknown"}`);
       }
-
-      const emailContent = `
-Subject: ⏰ ${daysUntilDeadline} day${daysUntilDeadline > 1 ? 's' : ''} left – ${scholarship.name}
-
-Dear Student,
-
-This is a friendly reminder that the deadline for "${scholarship.name}" is in ${daysUntilDeadline} day${daysUntilDeadline > 1 ? 's' : ''}.
-
-Deadline: ${deadline.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}
-
-Don't miss this opportunity! Log in to EduGrant AI to review and complete your application.
-
-Best regards,
-EduGrant AI Team
-      `.trim();
-
-      // Log the reminder (email delivery infrastructure can be added later)
-      console.log(`REMINDER EMAIL to ${reminder.email}:\n${emailContent}\n---`);
-
-      // Update last reminded timestamp
-      await supabase
-        .from("scholarship_reminders")
-        .update({ last_reminded_at: now.toISOString() })
-        .eq("id", reminder.id);
-
-      sentCount++;
     }
 
-    return new Response(JSON.stringify({ sent: sentCount, message: `Processed ${sentCount} reminders` }), {
+    return new Response(JSON.stringify({ 
+      sent: sentCount, 
+      errors: errors.length > 0 ? errors : undefined,
+      message: `Sent ${sentCount} reminder emails` 
+    }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (e) {
