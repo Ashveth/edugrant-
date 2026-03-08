@@ -15,6 +15,7 @@ import ScholarshipDetailPage from "./pages/ScholarshipDetailPage";
 import FinancialStrategyPage from "./pages/FinancialStrategyPage";
 
 import SavedScholarshipsPage from "./pages/SavedScholarshipsPage";
+import ApplicationsPage from "./pages/ApplicationsPage";
 import DocumentsPage from "./pages/DocumentsPage";
 import NotFound from "./pages/NotFound";
 
