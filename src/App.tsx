@@ -47,6 +47,7 @@ const App = () => (
               <Route path="profile" element={<ProfilePage />} />
               <Route path="scholarships" element={<ScholarshipsPage />} />
               <Route path="scholarship/:id" element={<ScholarshipDetailPage />} />
+              <Route path="scholarship/:id/apply" element={<DirectApplyPage />} />
               <Route path="compare" element={<ScholarshipComparePage />} />
               <Route path="strategy" element={<FinancialStrategyPage />} />
               <Route path="bulk-apply" element={<BulkApplyPage />} />
