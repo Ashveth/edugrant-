@@ -42,7 +42,7 @@ const App = () => (
               <Route path="scholarships" element={<ScholarshipsPage />} />
               <Route path="scholarship/:id" element={<ScholarshipDetailPage />} />
               <Route path="strategy" element={<FinancialStrategyPage />} />
-              
+              <Route path="bulk-apply" element={<BulkApplyPage />} />
               <Route path="saved" element={<SavedScholarshipsPage />} />
               <Route path="applications" element={<ApplicationsPage />} />
               <Route path="documents" element={<DocumentsPage />} />
