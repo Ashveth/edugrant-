@@ -101,6 +101,7 @@ export default function ScholarshipDetailPage() {
     load();
   }, [userId, id, scholarship?.requiredDocuments]);
 
+  if (loadingScholarship) return <div className="flex items-center justify-center py-20"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>;
   if (!scholarship) return <div className="text-center py-20 text-muted-foreground">Scholarship not found.</div>;
 
   const completedCount = docChecklist.filter(d => d.is_completed).length;
