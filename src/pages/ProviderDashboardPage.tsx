@@ -47,6 +47,7 @@ const statusConfig: Record<string, { label: string; color: string }> = {
 export default function ProviderDashboardPage() {
   const { userId } = useApp();
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const [isProvider, setIsProvider] = useState<boolean | null>(null);
   const [scholarships, setScholarships] = useState<ProviderScholarship[]>([]);
