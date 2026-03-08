@@ -13,6 +13,7 @@ import { useApp } from "@/context/AppContext";
 import { scholarships, fieldsOfStudy, indianStates } from "@/data/scholarships";
 import { matchScholarships } from "@/lib/matchingEngine";
 import { MatchResult } from "@/types/scholarship";
+import { SuccessBadge } from "@/components/SuccessBadge";
 
 function getDeadlineDays(deadline: string) {
   return Math.max(0, Math.ceil((new Date(deadline).getTime() - Date.now()) / 86400000));
