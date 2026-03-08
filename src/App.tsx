@@ -62,6 +62,7 @@ const App = () => (
               <Route path="ai/application-assistant" element={<ApplicationAssistantPage />} />
               <Route path="ai/document-analyzer" element={<DocumentAnalyzerPage />} />
               <Route path="provider" element={<ProviderDashboardPage />} />
+              <Route path="provider/register" element={<ProviderRegistrationPage />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>

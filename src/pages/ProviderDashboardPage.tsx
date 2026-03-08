@@ -134,9 +134,11 @@ export default function ProviderDashboardPage() {
         <Building2 className="h-12 w-12 mx-auto text-muted-foreground/30 mb-4" />
         <h2 className="font-display text-xl font-bold text-foreground mb-2">Provider Dashboard</h2>
         <p className="text-muted-foreground mb-4">
-          This dashboard is for scholarship providers to manage applications. If you're an organization offering scholarships, contact us to get provider access.
+          Register as a scholarship provider to create scholarships, receive applications, and manage candidates — all from EduGrant AI.
         </p>
-        <p className="text-xs text-muted-foreground">Contact: admin@edugrantai.com</p>
+        <Button onClick={() => navigate("/dashboard/provider/register")} className="gradient-primary text-primary-foreground font-semibold shadow-glow">
+          Register as Provider
+        </Button>
       </div>
     );
   }
