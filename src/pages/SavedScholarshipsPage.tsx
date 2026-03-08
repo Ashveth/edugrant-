@@ -9,6 +9,7 @@ import { useScholarshipsFromDB } from "@/hooks/useScholarshipsFromDB";
 
 export default function SavedScholarshipsPage() {
   const { savedScholarships, toggleSaved } = useApp();
+  const { scholarships } = useScholarshipsFromDB();
   const saved = scholarships.filter((s) => savedScholarships.includes(s.id));
 
   return (

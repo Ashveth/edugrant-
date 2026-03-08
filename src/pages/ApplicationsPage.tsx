@@ -23,6 +23,7 @@ const statusConfig: Record<string, { label: string; variant: "default" | "second
 
 export default function ApplicationsPage() {
   const { applications, updateApplication, deleteApplication, savedScholarships, addApplication } = useApp();
+  const { scholarships } = useScholarshipsFromDB();
   const { toast } = useToast();
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editNotes, setEditNotes] = useState("");
