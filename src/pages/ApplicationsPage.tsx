@@ -14,8 +14,9 @@ import { useToast } from "@/hooks/use-toast";
 const statusConfig: Record<string, { label: string; variant: "default" | "secondary" | "destructive" | "outline"; color?: string }> = {
   draft: { label: "Draft", variant: "outline" },
   applied: { label: "Applied", variant: "default" },
-  pending: { label: "In Review", variant: "secondary" },
+  pending: { label: "Under Review", variant: "secondary" },
   shortlisted: { label: "Shortlisted", variant: "default", color: "bg-amber-500 text-white border-amber-500" },
+  interview: { label: "Interview Stage", variant: "default", color: "bg-purple-500 text-white border-purple-500" },
   accepted: { label: "Accepted", variant: "default", color: "bg-emerald-500 text-white border-emerald-500" },
   rejected: { label: "Rejected", variant: "destructive" },
 };
