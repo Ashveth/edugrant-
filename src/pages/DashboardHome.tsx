@@ -1,6 +1,7 @@
+import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Target, BookOpen, User, Bookmark, Sparkles, TrendingUp, Clock, AlertCircle, CheckCircle2, Circle, FileText, IndianRupee } from "lucide-react";
+import { Target, BookOpen, User, Bookmark, Sparkles, TrendingUp, Clock, AlertCircle, CheckCircle2, Circle, FileText, IndianRupee, Flame, GraduationCap } from "lucide-react";
 import { useApp } from "@/context/AppContext";
 import { scholarships } from "@/data/scholarships";
 import { matchScholarships } from "@/lib/matchingEngine";
@@ -8,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
+import { ScholarshipScrollSection } from "@/components/ScholarshipScrollSection";
 
 const allDocs = ["Income Certificate", "Marksheets", "Aadhaar Card", "Recommendation Letter", "Caste Certificate", "Domicile Certificate"];
 
@@ -28,19 +30,11 @@ function SemiCircleGauge({ value, label, color }: { value: number; label: string
   );
 }
 
-function getBadgeEmoji(badge: string) {
-  if (badge.includes("High Approval")) return "🔥";
-  if (badge.includes("Coverage") || badge.includes("Funding")) return "💰";
-  if (badge.includes("Match")) return "🎯";
-  if (badge.includes("Competitive")) return "⚠️";
-  return "✨";
-}
-
 export default function DashboardHome() {
-  const { profile, savedScholarships, documentChecklist, toggleDocument } = useApp();
+  const { profile, savedScholarships, toggleSaved, documentChecklist, toggleDocument } = useApp();
 
-  const matches = profile ? matchScholarships(profile, scholarships) : [];
-  const topMatches = matches.slice(0, 4);
+  const matches = useMemo(() => profile ? matchScholarships(profile, scholarships) : [], [profile]);
+  const topMatches = matches.slice(0, 8);
   const avgMatch = matches.length > 0 ? Math.round(matches.reduce((s, m) => s + m.matchPercentage, 0) / matches.length) : 0;
 
   const profileFields = profile ? [profile.fullName, profile.age, profile.gender, profile.category, profile.annualFamilyIncome, profile.academicPercentage, profile.educationLevel, profile.fieldOfStudy, profile.state, profile.targetCourseCost] : [];
@@ -51,12 +45,28 @@ export default function DashboardHome() {
   const scholarshipPotential = matches.reduce((s, m) => s + (m.matchPercentage > 50 ? m.scholarship.amount : 0), 0);
   const fundingGap = Math.max(0, totalCost - scholarshipPotential);
 
-  const upcomingDeadlines = matches
+  const upcomingDeadlines = useMemo(() => matches
     .filter(m => { const d = new Date(m.scholarship.deadline); return d > new Date() && d < new Date(Date.now() + 60 * 86400000); })
     .sort((a, b) => new Date(a.scholarship.deadline).getTime() - new Date(b.scholarship.deadline).getTime())
-    .slice(0, 5);
+    .slice(0, 5), [matches]);
 
   const avgApproval = matches.length > 0 ? Math.round(matches.reduce((s, m) => s + m.approvalProbability, 0) / matches.length) : 0;
+
+  // Netflix-style sections
+  const expiringSoon = useMemo(() => matches
+    .filter(m => {
+      const d = Math.ceil((new Date(m.scholarship.deadline).getTime() - Date.now()) / 86400000);
+      return d > 0 && d <= 30;
+    })
+    .sort((a, b) => new Date(a.scholarship.deadline).getTime() - new Date(b.scholarship.deadline).getTime())
+    .slice(0, 10), [matches]);
+
+  const topForField = useMemo(() => {
+    if (!profile?.fieldOfStudy) return [];
+    return matches
+      .filter(m => m.scholarship.eligibility.fieldsOfStudy?.includes(profile.fieldOfStudy) || (m.scholarship.eligibility.fieldsOfStudy?.length === 0))
+      .slice(0, 10);
+  }, [matches, profile?.fieldOfStudy]);
 
   return (
     <div className="space-y-8 max-w-[1200px]">
@@ -92,10 +102,9 @@ export default function DashboardHome() {
         </motion.div>
       )}
 
-      {/* Top row: Gauge + Profile Strength + Financial Gap — asymmetric layout */}
+      {/* Top row: Gauge + Profile Strength + Financial Gap */}
       {profile && (
         <div className="grid gap-5 md:grid-cols-12">
-          {/* Approval Gauge — larger card */}
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="md:col-span-4">
             <Card className="shadow-card rounded-2xl h-full">
               <CardContent className="flex flex-col items-center justify-center py-8 px-6">
@@ -115,7 +124,6 @@ export default function DashboardHome() {
             </Card>
           </motion.div>
 
-          {/* Profile Strength — animated bar */}
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }} className="md:col-span-4">
             <Card className="shadow-card rounded-2xl h-full">
               <CardHeader className="pb-3">
@@ -138,7 +146,6 @@ export default function DashboardHome() {
             </Card>
           </motion.div>
 
-          {/* Financial Gap — floating card feel */}
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="md:col-span-4">
             <Card className="shadow-float rounded-2xl h-full border-primary/10 bg-card">
               <CardHeader className="pb-3">
@@ -152,7 +159,7 @@ export default function DashboardHome() {
                   </div>
                   <div className="flex justify-between text-xs">
                     <span className="text-muted-foreground">Scholarship Potential</span>
-                    <span className="font-semibold text-success">₹{(scholarshipPotential / 100000).toFixed(1)}L</span>
+                    <span className="font-semibold text-emerald-600">₹{(scholarshipPotential / 100000).toFixed(1)}L</span>
                   </div>
                   <div className="h-px bg-border my-1" />
                   <div className="flex justify-between text-xs">
@@ -168,14 +175,14 @@ export default function DashboardHome() {
         </div>
       )}
 
-      {/* Quick Stats — compact row */}
+      {/* Quick Stats */}
       {profile && (
         <div className="grid gap-3 grid-cols-2 lg:grid-cols-4">
           {[
             { icon: Target, label: "Matched", value: matches.length, accent: "bg-primary/8" },
-            { icon: TrendingUp, label: "Avg Match", value: `${avgMatch}%`, accent: "bg-success/8" },
+            { icon: TrendingUp, label: "Avg Match", value: `${avgMatch}%`, accent: "bg-emerald-500/8" },
             { icon: Bookmark, label: "Saved", value: savedScholarships.length, accent: "bg-accent/8" },
-            { icon: Clock, label: "Deadlines", value: upcomingDeadlines.length, accent: "bg-warning/8" },
+            { icon: Clock, label: "Deadlines", value: upcomingDeadlines.length, accent: "bg-amber-500/8" },
           ].map((s, i) => (
             <motion.div key={s.label} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 + i * 0.04 }}>
               <Card className="shadow-card rounded-2xl">
@@ -194,79 +201,39 @@ export default function DashboardHome() {
         </div>
       )}
 
-      {/* Top Matches — featured first card, varied sizes */}
+      {/* Netflix-style Recommendation Sections */}
       {topMatches.length > 0 && (
-        <div>
-          <div className="flex items-center justify-between mb-5">
-            <h2 className="font-display text-lg font-bold text-foreground">Recommended Scholarships</h2>
-            <Link to="/dashboard/scholarships"><Button variant="ghost" size="sm" className="text-primary font-medium">View All →</Button></Link>
-          </div>
-          <div className="grid gap-4 md:grid-cols-12">
-            {/* Featured card — larger */}
-            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="md:col-span-5">
-              <Card className="shadow-card hover-lift rounded-2xl h-full border-primary/10 gradient-subtle">
-                <CardHeader className="pb-3">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="inline-flex items-center gap-1 rounded-full gradient-primary px-3 py-1 text-xs font-bold text-primary-foreground">
-                      <Sparkles className="h-3 w-3" /> {topMatches[0].matchPercentage}% Match
-                    </span>
-                    {topMatches[0].badges.slice(0, 1).map(b => (
-                      <span key={b} className="text-[10px] font-medium bg-muted px-2 py-0.5 rounded-full">{getBadgeEmoji(b)} {b}</span>
-                    ))}
-                  </div>
-                  <CardTitle className="font-display text-base leading-snug">{topMatches[0].scholarship.name}</CardTitle>
-                  <p className="text-xs text-muted-foreground mt-1">{topMatches[0].scholarship.provider}</p>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">{topMatches[0].scholarship.description}</p>
-                  <div className="flex items-baseline gap-1">
-                    <span className="font-display text-2xl font-extrabold text-foreground">₹{(topMatches[0].scholarship.amount / 1000).toFixed(0)}K</span>
-                    <span className="text-xs text-muted-foreground">scholarship amount</span>
-                  </div>
-                  <div className="flex gap-4 text-xs">
-                    <div><span className="text-muted-foreground">Approval</span><p className="font-bold text-success">{topMatches[0].approvalProbability}%</p></div>
-                    <div><span className="text-muted-foreground">Merit</span><p className="font-bold">{topMatches[0].meritScore}%</p></div>
-                    <div><span className="text-muted-foreground">Competition</span><p className="font-bold">{topMatches[0].scholarship.competitionLevel}</p></div>
-                  </div>
-                  <Link to={`/dashboard/scholarship/${topMatches[0].scholarship.id}`}>
-                    <Button className="w-full gradient-primary text-primary-foreground font-semibold shadow-glow rounded-xl" size="sm">View Details</Button>
-                  </Link>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            {/* Remaining cards — smaller, grid */}
-            <div className="md:col-span-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 content-start">
-              {topMatches.slice(1).map((m, i) => (
-                <motion.div key={m.scholarship.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 + i * 0.06 }}>
-                  <Link to={`/dashboard/scholarship/${m.scholarship.id}`}>
-                    <Card className="shadow-card hover-lift rounded-2xl cursor-pointer h-full">
-                      <CardContent className="p-4 space-y-3">
-                        <div className="flex items-center justify-between">
-                          <span className="inline-flex items-center gap-1 text-xs font-bold text-primary">
-                            <Sparkles className="h-3 w-3" /> {m.matchPercentage}%
-                          </span>
-                          <span className="text-xs text-muted-foreground">₹{(m.scholarship.amount / 1000).toFixed(0)}K</span>
-                        </div>
-                        <p className="font-display text-sm font-semibold text-card-foreground leading-snug line-clamp-2">{m.scholarship.name}</p>
-                        <p className="text-[11px] text-muted-foreground">{m.scholarship.provider}</p>
-                        {m.badges.length > 0 && (
-                          <div className="flex flex-wrap gap-1">
-                            {m.badges.slice(0, 2).map(b => <span key={b} className="text-[9px] font-medium bg-muted px-1.5 py-0.5 rounded-full">{getBadgeEmoji(b)} {b}</span>)}
-                          </div>
-                        )}
-                        <Progress value={m.matchPercentage} className="h-1 rounded-full" />
-                      </CardContent>
-                    </Card>
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
+        <ScholarshipScrollSection
+          title="Recommended for You"
+          icon={<Sparkles className="h-5 w-5 text-primary" />}
+          matches={topMatches}
+          savedScholarships={savedScholarships}
+          onToggleSave={toggleSaved}
+          viewAllLink="/dashboard/scholarships"
+        />
       )}
 
-      {/* Document Checklist + Deadline Tracker — asymmetric */}
+      {expiringSoon.length > 0 && (
+        <ScholarshipScrollSection
+          title="Expiring Soon"
+          icon={<Flame className="h-5 w-5 text-destructive" />}
+          matches={expiringSoon}
+          savedScholarships={savedScholarships}
+          onToggleSave={toggleSaved}
+        />
+      )}
+
+      {topForField.length > 0 && (
+        <ScholarshipScrollSection
+          title={`Top for ${profile?.fieldOfStudy || "Your Field"}`}
+          icon={<GraduationCap className="h-5 w-5 text-primary" />}
+          matches={topForField}
+          savedScholarships={savedScholarships}
+          onToggleSave={toggleSaved}
+        />
+      )}
+
+      {/* Document Checklist + Deadline Tracker */}
       <div className="grid gap-5 md:grid-cols-12">
         <Card className="shadow-card rounded-2xl md:col-span-5">
           <CardHeader className="pb-3">
@@ -276,7 +243,7 @@ export default function DashboardHome() {
             {allDocs.map((doc) => (
               <button key={doc} onClick={() => toggleDocument(doc)} className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm hover:bg-muted/60 transition-colors text-left group">
                 {documentChecklist[doc]
-                  ? <CheckCircle2 className="h-4 w-4 text-success shrink-0 transition-transform group-hover:scale-110" />
+                  ? <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0 transition-transform group-hover:scale-110" />
                   : <Circle className="h-4 w-4 text-muted-foreground/40 shrink-0 transition-transform group-hover:scale-110" />
                 }
                 <span className={documentChecklist[doc] ? "text-foreground font-medium" : "text-muted-foreground"}>{doc}</span>

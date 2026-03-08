@@ -221,6 +221,35 @@ export default function ScamDetectorPage() {
           )}
         </motion.div>
       )}
+
+      {/* Static Safety Tips */}
+      <Card className="shadow-card mt-6 border-primary/10">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-sm font-display flex items-center gap-2">
+            <ShieldAlert className="h-4 w-4 text-primary" /> Common Scholarship Scam Warning Signs
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {[
+              { icon: "💰", title: "Application Fees", desc: "Legitimate scholarships rarely charge application fees. Be cautious of any that ask for upfront payment." },
+              { icon: "📧", title: "Suspicious Emails", desc: "Watch out for emails from free providers (Gmail, Yahoo) claiming to be official scholarship bodies." },
+              { icon: "🏦", title: "Banking Details", desc: "Never share your bank PIN, passwords, or credit card details for a scholarship application." },
+              { icon: "🎯", title: "Guaranteed Awards", desc: "No scholarship can guarantee you'll win. Claims of 'guaranteed' funding are a major red flag." },
+              { icon: "⏰", title: "Pressure Tactics", desc: "Scammers often create urgency — 'Apply in 24 hours!' Real scholarships have clear, published deadlines." },
+              { icon: "🔗", title: "Suspicious URLs", desc: "Check for misspelled domains, HTTP instead of HTTPS, and URLs that don't match the organization name." },
+            ].map((tip) => (
+              <div key={tip.title} className="flex items-start gap-3 rounded-xl bg-muted/50 p-3">
+                <span className="text-lg shrink-0">{tip.icon}</span>
+                <div>
+                  <p className="text-xs font-semibold text-foreground">{tip.title}</p>
+                  <p className="text-[11px] text-muted-foreground mt-0.5">{tip.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }

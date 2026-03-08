@@ -95,6 +95,36 @@ export type Database = {
         }
         Relationships: []
       }
+      scholarship_doc_checklist: {
+        Row: {
+          created_at: string
+          document_name: string
+          file_path: string | null
+          id: string
+          is_completed: boolean
+          scholarship_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          document_name: string
+          file_path?: string | null
+          id?: string
+          is_completed?: boolean
+          scholarship_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          document_name?: string
+          file_path?: string | null
+          id?: string
+          is_completed?: boolean
+          scholarship_id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       student_profiles: {
         Row: {
           academic_percentage: number

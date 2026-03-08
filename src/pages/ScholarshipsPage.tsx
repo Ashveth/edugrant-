@@ -13,6 +13,7 @@ import { useApp } from "@/context/AppContext";
 import { scholarships, fieldsOfStudy, indianStates } from "@/data/scholarships";
 import { matchScholarships } from "@/lib/matchingEngine";
 import { MatchResult } from "@/types/scholarship";
+import { SuccessBadge } from "@/components/SuccessBadge";
 
 function getDeadlineDays(deadline: string) {
   return Math.max(0, Math.ceil((new Date(deadline).getTime() - Date.now()) / 86400000));
@@ -51,8 +52,9 @@ function ScholarshipCard({ match, isSaved, onToggleSave }: { match: MatchResult;
                 <div className="flex flex-wrap gap-1 mt-2">
                   {badges.map(b => <span key={b} className="text-[10px] font-medium bg-muted/80 text-muted-foreground px-2 py-0.5 rounded-full">{getBadgeEmoji(b)} {b}</span>)}
                 </div>
-              )}
-            </div>
+                )}
+                <SuccessBadge probability={approvalProbability} showLabel={false} />
+              </div>
             <button onClick={onToggleSave} className="shrink-0 text-primary hover:scale-110 transition-transform p-1">
               {isSaved ? <BookmarkCheck className="h-5 w-5" /> : <Bookmark className="h-5 w-5" />}
             </button>
