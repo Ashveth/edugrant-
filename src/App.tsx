@@ -20,6 +20,7 @@ import DocumentsPage from "./pages/DocumentsPage";
 import ProfileAnalyzerPage from "./pages/ProfileAnalyzerPage";
 import SuccessPredictorPage from "./pages/SuccessPredictorPage";
 import ScamDetectorPage from "./pages/ScamDetectorPage";
+import ApplicationAssistantPage from "./pages/ApplicationAssistantPage";
 import BulkApplyPage from "./pages/BulkApplyPage";
 import ScholarshipCalendarPage from "./pages/ScholarshipCalendarPage";
 import NotFound from "./pages/NotFound";
@@ -51,6 +52,7 @@ const App = () => (
               <Route path="ai/profile-analyzer" element={<ProfileAnalyzerPage />} />
               <Route path="ai/success-predictor" element={<SuccessPredictorPage />} />
               <Route path="ai/scam-detector" element={<ScamDetectorPage />} />
+              <Route path="ai/application-assistant" element={<ApplicationAssistantPage />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
