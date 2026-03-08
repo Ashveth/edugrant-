@@ -11,11 +11,12 @@ import { useApp, Application } from "@/context/AppContext";
 import { scholarships } from "@/data/scholarships";
 import { useToast } from "@/hooks/use-toast";
 
-const statusConfig: Record<string, { label: string; variant: "default" | "secondary" | "destructive" | "outline" }> = {
+const statusConfig: Record<string, { label: string; variant: "default" | "secondary" | "destructive" | "outline"; color?: string }> = {
   draft: { label: "Draft", variant: "outline" },
   applied: { label: "Applied", variant: "default" },
-  pending: { label: "Pending", variant: "secondary" },
-  accepted: { label: "Accepted", variant: "default" },
+  pending: { label: "In Review", variant: "secondary" },
+  shortlisted: { label: "Shortlisted", variant: "default", color: "bg-amber-500 text-white border-amber-500" },
+  accepted: { label: "Accepted", variant: "default", color: "bg-emerald-500 text-white border-emerald-500" },
   rejected: { label: "Rejected", variant: "destructive" },
 };
 
