@@ -455,6 +455,15 @@ export type Database = {
         }
         Returns: boolean
       }
+      register_as_provider: {
+        Args: {
+          _contact_email?: string
+          _description?: string
+          _organization_name: string
+          _website?: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       app_role: "admin" | "provider" | "user"
