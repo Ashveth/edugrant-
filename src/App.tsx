@@ -20,6 +20,7 @@ import DocumentsPage from "./pages/DocumentsPage";
 import ProfileAnalyzerPage from "./pages/ProfileAnalyzerPage";
 import SuccessPredictorPage from "./pages/SuccessPredictorPage";
 import ScamDetectorPage from "./pages/ScamDetectorPage";
+import ApplicationAssistantPage from "./pages/ApplicationAssistantPage";
 import BulkApplyPage from "./pages/BulkApplyPage";
 import ScholarshipCalendarPage from "./pages/ScholarshipCalendarPage";
 import NotFound from "./pages/NotFound";
