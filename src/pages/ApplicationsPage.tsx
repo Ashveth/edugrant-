@@ -165,8 +165,9 @@ export default function ApplicationsPage() {
                           <SelectContent>
                             <SelectItem value="draft">Draft</SelectItem>
                             <SelectItem value="applied">Applied</SelectItem>
-                            <SelectItem value="pending">In Review</SelectItem>
+                            <SelectItem value="pending">Under Review</SelectItem>
                             <SelectItem value="shortlisted">Shortlisted</SelectItem>
+                            <SelectItem value="interview">Interview</SelectItem>
                             <SelectItem value="accepted">Accepted</SelectItem>
                             <SelectItem value="rejected">Rejected</SelectItem>
                           </SelectContent>
