@@ -71,6 +71,9 @@ export default function DashboardHome() {
 
   return (
     <div className="space-y-8 max-w-[1200px]">
+      {/* Profile Completion for new Google signups */}
+      <ProfileCompletionPrompt />
+
       {/* Welcome */}
       <div>
         <h1 className="font-display text-2xl md:text-3xl font-extrabold text-foreground tracking-tight">
