@@ -11,11 +11,12 @@ import { useApp, Application } from "@/context/AppContext";
 import { scholarships } from "@/data/scholarships";
 import { useToast } from "@/hooks/use-toast";
 
-const statusConfig: Record<string, { label: string; variant: "default" | "secondary" | "destructive" | "outline" }> = {
+const statusConfig: Record<string, { label: string; variant: "default" | "secondary" | "destructive" | "outline"; color?: string }> = {
   draft: { label: "Draft", variant: "outline" },
   applied: { label: "Applied", variant: "default" },
-  pending: { label: "Pending", variant: "secondary" },
-  accepted: { label: "Accepted", variant: "default" },
+  pending: { label: "In Review", variant: "secondary" },
+  shortlisted: { label: "Shortlisted", variant: "default", color: "bg-amber-500 text-white border-amber-500" },
+  accepted: { label: "Accepted", variant: "default", color: "bg-emerald-500 text-white border-emerald-500" },
   rejected: { label: "Rejected", variant: "destructive" },
 };
 
@@ -68,7 +69,8 @@ export default function ApplicationsPage() {
             <SelectItem value="all">All Status</SelectItem>
             <SelectItem value="draft">Draft</SelectItem>
             <SelectItem value="applied">Applied</SelectItem>
-            <SelectItem value="pending">Pending</SelectItem>
+            <SelectItem value="pending">In Review</SelectItem>
+            <SelectItem value="shortlisted">Shortlisted</SelectItem>
             <SelectItem value="accepted">Accepted</SelectItem>
             <SelectItem value="rejected">Rejected</SelectItem>
           </SelectContent>
@@ -126,7 +128,7 @@ export default function ApplicationsPage() {
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
                           <h3 className="font-display font-semibold text-foreground truncate">{s.name}</h3>
-                          <Badge variant={cfg.variant} className="rounded-lg shrink-0">{cfg.label}</Badge>
+                          <Badge variant={cfg.variant} className={`rounded-lg shrink-0 ${cfg.color || ""}`}>{cfg.label}</Badge>
                         </div>
                         <p className="text-xs text-muted-foreground">{s.provider} · ₹{s.amount.toLocaleString()}</p>
 
@@ -161,7 +163,8 @@ export default function ApplicationsPage() {
                           <SelectContent>
                             <SelectItem value="draft">Draft</SelectItem>
                             <SelectItem value="applied">Applied</SelectItem>
-                            <SelectItem value="pending">Pending</SelectItem>
+                            <SelectItem value="pending">In Review</SelectItem>
+                            <SelectItem value="shortlisted">Shortlisted</SelectItem>
                             <SelectItem value="accepted">Accepted</SelectItem>
                             <SelectItem value="rejected">Rejected</SelectItem>
                           </SelectContent>
