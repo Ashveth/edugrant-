@@ -25,18 +25,18 @@ export default function ScholarshipDetailPage() {
   const { toast } = useToast();
 
   const scholarship = scholarships.find(s => s.id === id);
-  if (!scholarship) return <div className="text-center py-20 text-muted-foreground">Scholarship not found.</div>;
 
-  const match = profile ? matchScholarships(profile, [scholarship])[0] : null;
-  const days = Math.max(0, Math.ceil((new Date(scholarship.deadline).getTime() - Date.now()) / 86400000));
-  const isSaved = savedScholarships.includes(scholarship.id);
+  const match = scholarship && profile ? matchScholarships(profile, [scholarship])[0] : null;
+  const days = scholarship ? Math.max(0, Math.ceil((new Date(scholarship.deadline).getTime() - Date.now()) / 86400000)) : 0;
+  const isSaved = scholarship ? savedScholarships.includes(scholarship.id) : false;
 
   // Check if scholarship accepts direct apply (from DB)
   const [acceptsDirectApply, setAcceptsDirectApply] = useState(false);
   useEffect(() => {
+    if (!scholarship) return;
     supabase.from("scholarships").select("accepts_direct_apply").eq("id", scholarship.id).maybeSingle()
       .then(({ data }) => { if (data?.accepts_direct_apply) setAcceptsDirectApply(true); });
-  }, [scholarship.id]);
+  }, [scholarship?.id]);
 
   const competitionPercent = scholarship.competitionLevel === "High" ? 85 : scholarship.competitionLevel === "Medium" ? 55 : 25;
 
