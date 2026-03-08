@@ -52,6 +52,7 @@ const App = () => (
               <Route path="ai/profile-analyzer" element={<ProfileAnalyzerPage />} />
               <Route path="ai/success-predictor" element={<SuccessPredictorPage />} />
               <Route path="ai/scam-detector" element={<ScamDetectorPage />} />
+              <Route path="ai/application-assistant" element={<ApplicationAssistantPage />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>

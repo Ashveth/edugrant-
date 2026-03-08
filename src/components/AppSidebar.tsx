@@ -21,6 +21,7 @@ const navItems = [
 
 const aiTools = [
   { title: "Profile Analyzer", url: "/dashboard/ai/profile-analyzer", icon: FileSearch },
+  { title: "Application Assistant", url: "/dashboard/ai/application-assistant", icon: FileText },
   { title: "Success Predictor", url: "/dashboard/ai/success-predictor", icon: TrendingUp },
   { title: "Scam Detector", url: "/dashboard/ai/scam-detector", icon: ShieldAlert },
 ];
