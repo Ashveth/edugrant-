@@ -125,6 +125,42 @@ export type Database = {
         }
         Relationships: []
       }
+      scholarship_reminders: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          last_reminded_at: string | null
+          remind_1_day: boolean
+          remind_3_days: boolean
+          remind_7_days: boolean
+          scholarship_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          last_reminded_at?: string | null
+          remind_1_day?: boolean
+          remind_3_days?: boolean
+          remind_7_days?: boolean
+          scholarship_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          last_reminded_at?: string | null
+          remind_1_day?: boolean
+          remind_3_days?: boolean
+          remind_7_days?: boolean
+          scholarship_id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       student_profiles: {
         Row: {
           academic_percentage: number
