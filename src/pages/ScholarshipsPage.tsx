@@ -54,6 +54,7 @@ function ScholarshipCard({ match, isSaved, onToggleSave }: { match: MatchResult;
                 </div>
                 )}
                 <SuccessBadge probability={approvalProbability} showLabel={false} />
+              </div>
             <button onClick={onToggleSave} className="shrink-0 text-primary hover:scale-110 transition-transform p-1">
               {isSaved ? <BookmarkCheck className="h-5 w-5" /> : <Bookmark className="h-5 w-5" />}
             </button>
