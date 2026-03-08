@@ -359,6 +359,3 @@ export default function BulkApplyPage() {
     </motion.div>
   );
 }
-
-// Need this import for the done step
-import { ClipboardList } from "lucide-react";
