@@ -27,6 +27,7 @@ import ScholarshipCalendarPage from "./pages/ScholarshipCalendarPage";
 import DocumentAnalyzerPage from "./pages/DocumentAnalyzerPage";
 import DirectApplyPage from "./pages/DirectApplyPage";
 import ProviderDashboardPage from "./pages/ProviderDashboardPage";
+import ProviderRegistrationPage from "./pages/ProviderRegistrationPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
