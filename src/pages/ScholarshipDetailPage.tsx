@@ -155,10 +155,17 @@ export default function ScholarshipDetailPage() {
                 </div>
               </div>
 
-              <div className="flex gap-2">
-                <a href={scholarship.applicationUrl} target="_blank" rel="noopener noreferrer" className="flex-1">
-                  <Button className="w-full gradient-primary text-primary-foreground font-semibold shadow-glow">
-                    <ExternalLink className="mr-2 h-4 w-4" /> Apply Now
+              <div className="flex gap-2 flex-wrap">
+                {acceptsDirectApply && (
+                  <Link to={`/dashboard/scholarship/${scholarship.id}/apply`} className="flex-1">
+                    <Button className="w-full gradient-primary text-primary-foreground font-semibold shadow-glow">
+                      <Send className="mr-2 h-4 w-4" /> Apply Directly
+                    </Button>
+                  </Link>
+                )}
+                <a href={scholarship.applicationUrl} target="_blank" rel="noopener noreferrer" className={acceptsDirectApply ? "" : "flex-1"}>
+                  <Button variant={acceptsDirectApply ? "outline" : "default"} className={acceptsDirectApply ? "" : "w-full gradient-primary text-primary-foreground font-semibold shadow-glow"}>
+                    <ExternalLink className="mr-2 h-4 w-4" /> {acceptsDirectApply ? "External Site" : "Apply Now"}
                   </Button>
                 </a>
                 <Button variant="outline" onClick={() => toggleSaved(scholarship.id)}>
