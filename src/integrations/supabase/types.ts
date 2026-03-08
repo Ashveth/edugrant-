@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      applications: {
+        Row: {
+          applied_at: string | null
+          created_at: string
+          id: string
+          notes: string | null
+          scholarship_id: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          applied_at?: string | null
+          created_at?: string
+          id?: string
+          notes?: string | null
+          scholarship_id: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          applied_at?: string | null
+          created_at?: string
+          id?: string
+          notes?: string | null
+          scholarship_id?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -36,6 +69,78 @@ export type Database = {
           email?: string | null
           full_name?: string | null
           id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      saved_scholarships: {
+        Row: {
+          id: string
+          saved_at: string
+          scholarship_id: string
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          saved_at?: string
+          scholarship_id: string
+          user_id: string
+        }
+        Update: {
+          id?: string
+          saved_at?: string
+          scholarship_id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      student_profiles: {
+        Row: {
+          academic_percentage: number
+          age: number
+          annual_family_income: number
+          category: string
+          created_at: string
+          education_level: string
+          field_of_study: string
+          full_name: string
+          gender: string
+          id: string
+          state: string
+          target_course_cost: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          academic_percentage?: number
+          age?: number
+          annual_family_income?: number
+          category?: string
+          created_at?: string
+          education_level?: string
+          field_of_study?: string
+          full_name?: string
+          gender?: string
+          id?: string
+          state?: string
+          target_course_cost?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          academic_percentage?: number
+          age?: number
+          annual_family_income?: number
+          category?: string
+          created_at?: string
+          education_level?: string
+          field_of_study?: string
+          full_name?: string
+          gender?: string
+          id?: string
+          state?: string
+          target_course_cost?: number
           updated_at?: string
           user_id?: string
         }
