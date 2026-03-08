@@ -31,6 +31,13 @@ export default function ScholarshipDetailPage() {
   const days = Math.max(0, Math.ceil((new Date(scholarship.deadline).getTime() - Date.now()) / 86400000));
   const isSaved = savedScholarships.includes(scholarship.id);
 
+  // Check if scholarship accepts direct apply (from DB)
+  const [acceptsDirectApply, setAcceptsDirectApply] = useState(false);
+  useEffect(() => {
+    supabase.from("scholarships").select("accepts_direct_apply").eq("id", scholarship.id).maybeSingle()
+      .then(({ data }) => { if (data?.accepts_direct_apply) setAcceptsDirectApply(true); });
+  }, [scholarship.id]);
+
   const competitionPercent = scholarship.competitionLevel === "High" ? 85 : scholarship.competitionLevel === "Medium" ? 55 : 25;
 
   // Document checklist state from DB
