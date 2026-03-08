@@ -24,6 +24,7 @@ import ApplicationAssistantPage from "./pages/ApplicationAssistantPage";
 import ScholarshipComparePage from "./pages/ScholarshipComparePage";
 import BulkApplyPage from "./pages/BulkApplyPage";
 import ScholarshipCalendarPage from "./pages/ScholarshipCalendarPage";
+import DocumentAnalyzerPage from "./pages/DocumentAnalyzerPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -55,6 +56,7 @@ const App = () => (
               <Route path="ai/success-predictor" element={<SuccessPredictorPage />} />
               <Route path="ai/scam-detector" element={<ScamDetectorPage />} />
               <Route path="ai/application-assistant" element={<ApplicationAssistantPage />} />
+              <Route path="ai/document-analyzer" element={<DocumentAnalyzerPage />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>

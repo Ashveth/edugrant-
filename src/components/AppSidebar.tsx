@@ -1,4 +1,4 @@
-import { GraduationCap, LayoutDashboard, User, Target, Bookmark, LogOut, PieChart, Search, FileText, ClipboardList, FileSearch, TrendingUp, ShieldAlert, Sparkles, Zap, CalendarDays, ArrowLeftRight } from "lucide-react";
+import { GraduationCap, LayoutDashboard, User, Target, Bookmark, LogOut, PieChart, Search, FileText, ClipboardList, FileSearch, TrendingUp, ShieldAlert, Sparkles, Zap, CalendarDays, ArrowLeftRight, ScanSearch } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useApp } from "@/context/AppContext";
 import { useNavigate } from "react-router-dom";
@@ -25,6 +25,7 @@ const aiTools = [
   { title: "Application Assistant", url: "/dashboard/ai/application-assistant", icon: FileText },
   { title: "Success Predictor", url: "/dashboard/ai/success-predictor", icon: TrendingUp },
   { title: "Scam Detector", url: "/dashboard/ai/scam-detector", icon: ShieldAlert },
+  { title: "Document Analyzer", url: "/dashboard/ai/document-analyzer", icon: ScanSearch },
 ];
 
 export function AppSidebar() {
