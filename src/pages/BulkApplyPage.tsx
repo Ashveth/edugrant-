@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Zap, CheckSquare, Square, IndianRupee, Clock, Sparkles, AlertCircle, Loader2, ArrowRight, ArrowLeft, User, FileText, GraduationCap } from "lucide-react";
+import { Zap, CheckSquare, Square, IndianRupee, Clock, Sparkles, AlertCircle, Loader2, ArrowRight, ArrowLeft, User, FileText, GraduationCap, ClipboardList } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
