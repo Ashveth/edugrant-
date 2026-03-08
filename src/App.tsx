@@ -21,6 +21,7 @@ import ProfileAnalyzerPage from "./pages/ProfileAnalyzerPage";
 import SuccessPredictorPage from "./pages/SuccessPredictorPage";
 import ScamDetectorPage from "./pages/ScamDetectorPage";
 import ApplicationAssistantPage from "./pages/ApplicationAssistantPage";
+import ScholarshipComparePage from "./pages/ScholarshipComparePage";
 import BulkApplyPage from "./pages/BulkApplyPage";
 import ScholarshipCalendarPage from "./pages/ScholarshipCalendarPage";
 import NotFound from "./pages/NotFound";
@@ -43,6 +44,7 @@ const App = () => (
               <Route path="profile" element={<ProfilePage />} />
               <Route path="scholarships" element={<ScholarshipsPage />} />
               <Route path="scholarship/:id" element={<ScholarshipDetailPage />} />
+              <Route path="compare" element={<ScholarshipComparePage />} />
               <Route path="strategy" element={<FinancialStrategyPage />} />
               <Route path="bulk-apply" element={<BulkApplyPage />} />
               <Route path="calendar" element={<ScholarshipCalendarPage />} />
