@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { ScholarshipScrollSection } from "@/components/ScholarshipScrollSection";
+import ProfileCompletionPrompt from "@/components/ProfileCompletionPrompt";
 
 const allDocs = ["Income Certificate", "Marksheets", "Aadhaar Card", "Recommendation Letter", "Caste Certificate", "Domicile Certificate"];
 
