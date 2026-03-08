@@ -9,7 +9,7 @@ import { Progress } from "@/components/ui/progress";
 import { Checkbox } from "@/components/ui/checkbox";
 import { SuccessBadge } from "@/components/SuccessBadge";
 import { useApp } from "@/context/AppContext";
-import { scholarships } from "@/data/scholarships";
+import { useScholarshipsFromDB } from "@/hooks/useScholarshipsFromDB";
 import { matchScholarships } from "@/lib/matchingEngine";
 import { useToast } from "@/hooks/use-toast";
 

@@ -8,7 +8,7 @@ import { Progress } from "@/components/ui/progress";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useApp } from "@/context/AppContext";
 import { useToast } from "@/hooks/use-toast";
-import { scholarships } from "@/data/scholarships";
+import { useScholarshipsFromDB } from "@/hooks/useScholarshipsFromDB";
 
 interface PredictionResult {
   prediction: "high" | "moderate" | "low";

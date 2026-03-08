@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { PieChart, IndianRupee, TrendingUp } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useApp } from "@/context/AppContext";
-import { scholarships } from "@/data/scholarships";
+import { useScholarshipsFromDB } from "@/hooks/useScholarshipsFromDB";
 import { matchScholarships } from "@/lib/matchingEngine";
 import { PieChart as RePieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from "recharts";
 
