@@ -1,8 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion, useInView } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 import { GraduationCap, Target, Brain, ArrowRight, Sparkles, TrendingUp, Users, Shield, Building2, Heart, Briefcase, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useApp } from "@/context/AppContext";
 
 function CountUp({ end, suffix = "", prefix = "" }: { end: number; suffix?: string; prefix?: string }) {
   const [count, setCount] = useState(0);
@@ -45,6 +46,15 @@ const trustLogos = [
 ];
 
 export default function LandingPage() {
+  const { isLoggedIn } = useApp();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/dashboard", { replace: true });
+    }
+  }, [isLoggedIn, navigate]);
+
   return (
     <div className="min-h-screen bg-background overflow-hidden">
       {/* Navbar */}
