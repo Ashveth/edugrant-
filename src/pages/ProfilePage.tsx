@@ -28,13 +28,13 @@ export default function ProfilePage() {
 
   const update = (key: keyof StudentProfile, value: any) => setForm((p) => ({ ...p, [key]: value }));
 
-  const handleSave = (e: React.FormEvent) => {
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.fullName.trim()) {
       toast({ title: "Please enter your name", variant: "destructive" });
       return;
     }
-    setProfile(form);
+    await setProfile(form);
     toast({ title: "Profile saved! Finding your scholarships..." });
     navigate("/dashboard/scholarships");
   };
