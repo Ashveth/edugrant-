@@ -46,6 +46,15 @@ const trustLogos = [
 ];
 
 export default function LandingPage() {
+  const { isLoggedIn } = useApp();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/dashboard", { replace: true });
+    }
+  }, [isLoggedIn, navigate]);
+
   return (
     <div className="min-h-screen bg-background overflow-hidden">
       {/* Navbar */}
