@@ -69,7 +69,8 @@ export default function ApplicationsPage() {
             <SelectItem value="all">All Status</SelectItem>
             <SelectItem value="draft">Draft</SelectItem>
             <SelectItem value="applied">Applied</SelectItem>
-            <SelectItem value="pending">Pending</SelectItem>
+            <SelectItem value="pending">In Review</SelectItem>
+            <SelectItem value="shortlisted">Shortlisted</SelectItem>
             <SelectItem value="accepted">Accepted</SelectItem>
             <SelectItem value="rejected">Rejected</SelectItem>
           </SelectContent>
