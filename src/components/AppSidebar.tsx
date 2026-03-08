@@ -1,4 +1,4 @@
-import { GraduationCap, LayoutDashboard, User, Target, Bookmark, LogOut, PieChart, Search, FileText, ClipboardList, FileSearch, TrendingUp, ShieldAlert, Sparkles, Zap, CalendarDays, ArrowLeftRight, ScanSearch } from "lucide-react";
+import { GraduationCap, LayoutDashboard, User, Target, Bookmark, LogOut, PieChart, Search, FileText, ClipboardList, FileSearch, TrendingUp, ShieldAlert, Sparkles, Zap, CalendarDays, ArrowLeftRight, ScanSearch, Building2 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useApp } from "@/context/AppContext";
 import { useNavigate } from "react-router-dom";
@@ -18,6 +18,7 @@ const navItems = [
   { title: "Saved", url: "/dashboard/saved", icon: Bookmark },
   { title: "Applications", url: "/dashboard/applications", icon: ClipboardList },
   { title: "My Documents", url: "/dashboard/documents", icon: FileText },
+  { title: "Provider Panel", url: "/dashboard/provider", icon: Building2 },
 ];
 
 const aiTools = [

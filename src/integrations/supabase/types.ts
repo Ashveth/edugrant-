@@ -14,33 +14,105 @@ export type Database = {
   }
   public: {
     Tables: {
+      application_documents: {
+        Row: {
+          application_id: string
+          created_at: string
+          document_id: string | null
+          document_type: string
+          id: string
+        }
+        Insert: {
+          application_id: string
+          created_at?: string
+          document_id?: string | null
+          document_type: string
+          id?: string
+        }
+        Update: {
+          application_id?: string
+          created_at?: string
+          document_id?: string | null
+          document_type?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "application_documents_application_id_fkey"
+            columns: ["application_id"]
+            isOneToOne: false
+            referencedRelation: "applications"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "application_documents_document_id_fkey"
+            columns: ["document_id"]
+            isOneToOne: false
+            referencedRelation: "user_documents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       applications: {
         Row: {
           applied_at: string | null
+          country: string | null
           created_at: string
+          date_of_birth: string | null
+          education_level: string | null
+          email: string | null
+          field_of_study: string | null
+          full_name: string | null
+          gpa_percentage: number | null
           id: string
+          institution_name: string | null
+          is_direct_apply: boolean | null
           notes: string | null
+          phone: string | null
           scholarship_id: string
+          statement_of_purpose: string | null
           status: string
           updated_at: string
           user_id: string
         }
         Insert: {
           applied_at?: string | null
+          country?: string | null
           created_at?: string
+          date_of_birth?: string | null
+          education_level?: string | null
+          email?: string | null
+          field_of_study?: string | null
+          full_name?: string | null
+          gpa_percentage?: number | null
           id?: string
+          institution_name?: string | null
+          is_direct_apply?: boolean | null
           notes?: string | null
+          phone?: string | null
           scholarship_id: string
+          statement_of_purpose?: string | null
           status?: string
           updated_at?: string
           user_id: string
         }
         Update: {
           applied_at?: string | null
+          country?: string | null
           created_at?: string
+          date_of_birth?: string | null
+          education_level?: string | null
+          email?: string | null
+          field_of_study?: string | null
+          full_name?: string | null
+          gpa_percentage?: number | null
           id?: string
+          institution_name?: string | null
+          is_direct_apply?: boolean | null
           notes?: string | null
+          phone?: string | null
           scholarship_id?: string
+          statement_of_purpose?: string | null
           status?: string
           updated_at?: string
           user_id?: string
@@ -71,6 +143,42 @@ export type Database = {
           id?: string
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      provider_profiles: {
+        Row: {
+          contact_email: string | null
+          created_at: string
+          description: string | null
+          id: string
+          logo_url: string | null
+          organization_name: string
+          updated_at: string
+          user_id: string
+          website: string | null
+        }
+        Insert: {
+          contact_email?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          logo_url?: string | null
+          organization_name: string
+          updated_at?: string
+          user_id: string
+          website?: string | null
+        }
+        Update: {
+          contact_email?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          logo_url?: string | null
+          organization_name?: string
+          updated_at?: string
+          user_id?: string
+          website?: string | null
         }
         Relationships: []
       }
@@ -161,6 +269,81 @@ export type Database = {
         }
         Relationships: []
       }
+      scholarships: {
+        Row: {
+          accepts_direct_apply: boolean
+          amount: number
+          application_url: string | null
+          categories: string[] | null
+          competition_level: string
+          created_at: string
+          deadline: string
+          description: string
+          education_levels: string[] | null
+          fields_of_study: string[] | null
+          genders: string[] | null
+          id: string
+          is_active: boolean
+          max_income: number | null
+          min_percentage: number | null
+          name: string
+          provider: string
+          provider_type: string
+          provider_user_id: string | null
+          required_documents: string[] | null
+          states: string[] | null
+          updated_at: string
+        }
+        Insert: {
+          accepts_direct_apply?: boolean
+          amount?: number
+          application_url?: string | null
+          categories?: string[] | null
+          competition_level?: string
+          created_at?: string
+          deadline: string
+          description?: string
+          education_levels?: string[] | null
+          fields_of_study?: string[] | null
+          genders?: string[] | null
+          id: string
+          is_active?: boolean
+          max_income?: number | null
+          min_percentage?: number | null
+          name: string
+          provider: string
+          provider_type?: string
+          provider_user_id?: string | null
+          required_documents?: string[] | null
+          states?: string[] | null
+          updated_at?: string
+        }
+        Update: {
+          accepts_direct_apply?: boolean
+          amount?: number
+          application_url?: string | null
+          categories?: string[] | null
+          competition_level?: string
+          created_at?: string
+          deadline?: string
+          description?: string
+          education_levels?: string[] | null
+          fields_of_study?: string[] | null
+          genders?: string[] | null
+          id?: string
+          is_active?: boolean
+          max_income?: number | null
+          min_percentage?: number | null
+          name?: string
+          provider?: string
+          provider_type?: string
+          provider_user_id?: string | null
+          required_documents?: string[] | null
+          states?: string[] | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       student_profiles: {
         Row: {
           academic_percentage: number
@@ -242,15 +425,39 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "provider" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -377,6 +584,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "provider", "user"],
+    },
   },
 } as const

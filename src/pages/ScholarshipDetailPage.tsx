@@ -1,7 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { ArrowLeft, IndianRupee, Clock, Brain, ExternalLink, CheckCircle2, Circle, FileText, Sparkles, TrendingUp, Users, Upload, Loader2 } from "lucide-react";
+import { ArrowLeft, IndianRupee, Clock, Brain, ExternalLink, CheckCircle2, Circle, FileText, Sparkles, TrendingUp, Users, Upload, Loader2, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -25,13 +25,20 @@ export default function ScholarshipDetailPage() {
   const { toast } = useToast();
 
   const scholarship = scholarships.find(s => s.id === id);
-  if (!scholarship) return <div className="text-center py-20 text-muted-foreground">Scholarship not found.</div>;
 
-  const match = profile ? matchScholarships(profile, [scholarship])[0] : null;
-  const days = Math.max(0, Math.ceil((new Date(scholarship.deadline).getTime() - Date.now()) / 86400000));
-  const isSaved = savedScholarships.includes(scholarship.id);
+  const match = scholarship && profile ? matchScholarships(profile, [scholarship])[0] : null;
+  const days = scholarship ? Math.max(0, Math.ceil((new Date(scholarship.deadline).getTime() - Date.now()) / 86400000)) : 0;
+  const isSaved = scholarship ? savedScholarships.includes(scholarship.id) : false;
 
-  const competitionPercent = scholarship.competitionLevel === "High" ? 85 : scholarship.competitionLevel === "Medium" ? 55 : 25;
+  // Check if scholarship accepts direct apply (from DB)
+  const [acceptsDirectApply, setAcceptsDirectApply] = useState(false);
+  useEffect(() => {
+    if (!scholarship) return;
+    supabase.from("scholarships").select("accepts_direct_apply").eq("id", scholarship.id).maybeSingle()
+      .then(({ data }) => { if (data?.accepts_direct_apply) setAcceptsDirectApply(true); });
+  }, [scholarship?.id]);
+
+  const competitionPercent = scholarship ? (scholarship.competitionLevel === "High" ? 85 : scholarship.competitionLevel === "Medium" ? 55 : 25) : 0;
 
   // Document checklist state from DB
   const [docChecklist, setDocChecklist] = useState<DocCheckItem[]>([]);
@@ -40,7 +47,7 @@ export default function ScholarshipDetailPage() {
   const fileInputRefs = useRef<Record<string, HTMLInputElement | null>>({});
 
   useEffect(() => {
-    if (!userId || !id) return;
+    if (!userId || !id || !scholarship) return;
     const load = async () => {
       setLoadingDocs(true);
       const { data } = await supabase
@@ -55,7 +62,9 @@ export default function ScholarshipDetailPage() {
       setLoadingDocs(false);
     };
     load();
-  }, [userId, id, scholarship.requiredDocuments]);
+  }, [userId, id, scholarship?.requiredDocuments]);
+
+  if (!scholarship) return <div className="text-center py-20 text-muted-foreground">Scholarship not found.</div>;
 
   const completedCount = docChecklist.filter(d => d.is_completed).length;
   const totalDocs = docChecklist.length;
@@ -148,10 +157,17 @@ export default function ScholarshipDetailPage() {
                 </div>
               </div>
 
-              <div className="flex gap-2">
-                <a href={scholarship.applicationUrl} target="_blank" rel="noopener noreferrer" className="flex-1">
-                  <Button className="w-full gradient-primary text-primary-foreground font-semibold shadow-glow">
-                    <ExternalLink className="mr-2 h-4 w-4" /> Apply Now
+              <div className="flex gap-2 flex-wrap">
+                {acceptsDirectApply && (
+                  <Link to={`/dashboard/scholarship/${scholarship.id}/apply`} className="flex-1">
+                    <Button className="w-full gradient-primary text-primary-foreground font-semibold shadow-glow">
+                      <Send className="mr-2 h-4 w-4" /> Apply Directly
+                    </Button>
+                  </Link>
+                )}
+                <a href={scholarship.applicationUrl} target="_blank" rel="noopener noreferrer" className={acceptsDirectApply ? "" : "flex-1"}>
+                  <Button variant={acceptsDirectApply ? "outline" : "default"} className={acceptsDirectApply ? "" : "w-full gradient-primary text-primary-foreground font-semibold shadow-glow"}>
+                    <ExternalLink className="mr-2 h-4 w-4" /> {acceptsDirectApply ? "External Site" : "Apply Now"}
                   </Button>
                 </a>
                 <Button variant="outline" onClick={() => toggleSaved(scholarship.id)}>

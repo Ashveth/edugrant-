@@ -25,6 +25,8 @@ import ScholarshipComparePage from "./pages/ScholarshipComparePage";
 import BulkApplyPage from "./pages/BulkApplyPage";
 import ScholarshipCalendarPage from "./pages/ScholarshipCalendarPage";
 import DocumentAnalyzerPage from "./pages/DocumentAnalyzerPage";
+import DirectApplyPage from "./pages/DirectApplyPage";
+import ProviderDashboardPage from "./pages/ProviderDashboardPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -45,6 +47,7 @@ const App = () => (
               <Route path="profile" element={<ProfilePage />} />
               <Route path="scholarships" element={<ScholarshipsPage />} />
               <Route path="scholarship/:id" element={<ScholarshipDetailPage />} />
+              <Route path="scholarship/:id/apply" element={<DirectApplyPage />} />
               <Route path="compare" element={<ScholarshipComparePage />} />
               <Route path="strategy" element={<FinancialStrategyPage />} />
               <Route path="bulk-apply" element={<BulkApplyPage />} />
@@ -57,6 +60,7 @@ const App = () => (
               <Route path="ai/scam-detector" element={<ScamDetectorPage />} />
               <Route path="ai/application-assistant" element={<ApplicationAssistantPage />} />
               <Route path="ai/document-analyzer" element={<DocumentAnalyzerPage />} />
+              <Route path="provider" element={<ProviderDashboardPage />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
