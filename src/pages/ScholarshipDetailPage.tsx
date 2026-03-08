@@ -38,7 +38,7 @@ export default function ScholarshipDetailPage() {
       .then(({ data }) => { if (data?.accepts_direct_apply) setAcceptsDirectApply(true); });
   }, [scholarship?.id]);
 
-  const competitionPercent = scholarship.competitionLevel === "High" ? 85 : scholarship.competitionLevel === "Medium" ? 55 : 25;
+  const competitionPercent = scholarship ? (scholarship.competitionLevel === "High" ? 85 : scholarship.competitionLevel === "Medium" ? 55 : 25) : 0;
 
   // Document checklist state from DB
   const [docChecklist, setDocChecklist] = useState<DocCheckItem[]>([]);
@@ -47,7 +47,7 @@ export default function ScholarshipDetailPage() {
   const fileInputRefs = useRef<Record<string, HTMLInputElement | null>>({});
 
   useEffect(() => {
-    if (!userId || !id) return;
+    if (!userId || !id || !scholarship) return;
     const load = async () => {
       setLoadingDocs(true);
       const { data } = await supabase
@@ -62,7 +62,9 @@ export default function ScholarshipDetailPage() {
       setLoadingDocs(false);
     };
     load();
-  }, [userId, id, scholarship.requiredDocuments]);
+  }, [userId, id, scholarship?.requiredDocuments]);
+
+  if (!scholarship) return <div className="text-center py-20 text-muted-foreground">Scholarship not found.</div>;
 
   const completedCount = docChecklist.filter(d => d.is_completed).length;
   const totalDocs = docChecklist.length;
