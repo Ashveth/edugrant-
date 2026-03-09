@@ -9,6 +9,7 @@ import { useApp } from "@/context/AppContext";
 import { useToast } from "@/hooks/use-toast";
 import { fieldsOfStudy, indianStates } from "@/data/scholarships";
 import { lovable } from "@/integrations/lovable/index";
+import { getGoogleAuthErrorMessage } from "@/lib/authErrors";
 
 export default function SignupPage() {
   const [name, setName] = useState("");
@@ -101,10 +102,12 @@ export default function SignupPage() {
                   },
                 });
                 if (error) {
-                  toast({ title: "Google signup failed", description: String(error), variant: "destructive" });
+                  const err = getGoogleAuthErrorMessage(error);
+                  toast({ title: err.title, description: err.description, variant: "destructive" });
                 }
-              } catch {
-                toast({ title: "Google signup failed. Please try again.", variant: "destructive" });
+              } catch (e) {
+                const err = getGoogleAuthErrorMessage(e);
+                toast({ title: err.title, description: err.description, variant: "destructive" });
               } finally {
                 setGoogleLoading(false);
               }

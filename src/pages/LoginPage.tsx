@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { useApp } from "@/context/AppContext";
 import { useToast } from "@/hooks/use-toast";
 import { lovable } from "@/integrations/lovable/index";
+import { getGoogleAuthErrorMessage } from "@/lib/authErrors";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -137,10 +138,12 @@ export default function LoginPage() {
                     },
                   });
                   if (error) {
-                    toast({ title: "Google login failed", description: String(error), variant: "destructive" });
+                    const err = getGoogleAuthErrorMessage(error);
+                    toast({ title: err.title, description: err.description, variant: "destructive" });
                   }
-                } catch {
-                  toast({ title: "Google login failed. Please try again.", variant: "destructive" });
+                } catch (e) {
+                  const err = getGoogleAuthErrorMessage(e);
+                  toast({ title: err.title, description: err.description, variant: "destructive" });
                 } finally {
                   setGoogleLoading(false);
                 }
