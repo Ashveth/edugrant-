@@ -112,50 +112,50 @@
 
 @layer utilities {
   .gradient-primary {
-    background: linear-gradient(135deg, hsl(172 50% 28%), hsl(172 42% 36%));
+    background: linear-gradient(135deg, hsl(268 55% 42%), hsl(268 48% 52%));
   }
 
   .gradient-hero {
-    background: linear-gradient(160deg, hsl(200 22% 10%) 0%, hsl(200 18% 7%) 50%, hsl(172 20% 8%) 100%);
+    background: linear-gradient(160deg, hsl(260 28% 10%) 0%, hsl(260 22% 7%) 50%, hsl(268 20% 8%) 100%);
   }
 
   .gradient-subtle {
-    background: linear-gradient(135deg, hsl(172 50% 28% / 0.04), hsl(28 80% 56% / 0.03));
+    background: linear-gradient(135deg, hsl(268 55% 42% / 0.04), hsl(174 60% 40% / 0.03));
   }
 
   .gradient-card {
-    background: linear-gradient(135deg, hsl(172 50% 28% / 0.02), hsl(28 80% 56% / 0.02));
+    background: linear-gradient(135deg, hsl(268 55% 42% / 0.02), hsl(174 60% 40% / 0.02));
   }
 
   .gradient-warm {
-    background: linear-gradient(135deg, hsl(172 50% 28% / 0.06), hsl(38 30% 92% / 0.5), hsl(28 80% 56% / 0.03));
+    background: linear-gradient(135deg, hsl(268 55% 42% / 0.06), hsl(270 18% 92% / 0.5), hsl(174 60% 40% / 0.03));
   }
 
   .text-gradient {
-    background: linear-gradient(135deg, hsl(172 50% 28%), hsl(28 80% 56%));
+    background: linear-gradient(135deg, hsl(268 55% 42%), hsl(174 60% 40%));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .shadow-glow {
-    box-shadow: 0 4px 24px -6px hsl(172 50% 28% / 0.22), 0 2px 8px -2px hsl(172 42% 36% / 0.08);
+    box-shadow: 0 4px 24px -6px hsl(268 55% 42% / 0.22), 0 2px 8px -2px hsl(268 48% 52% / 0.08);
   }
 
   .shadow-card {
-    box-shadow: 0 1px 3px hsl(200 22% 10% / 0.03), 0 4px 16px hsl(200 22% 10% / 0.02);
+    box-shadow: 0 1px 3px hsl(260 28% 10% / 0.03), 0 4px 16px hsl(260 28% 10% / 0.02);
   }
 
   .shadow-card-hover {
-    box-shadow: 0 4px 14px hsl(200 22% 10% / 0.06), 0 16px 36px hsl(200 22% 10% / 0.03);
+    box-shadow: 0 4px 14px hsl(260 28% 10% / 0.06), 0 16px 36px hsl(260 28% 10% / 0.03);
   }
 
   .shadow-float {
-    box-shadow: 0 8px 40px -12px hsl(200 22% 10% / 0.08), 0 2px 6px hsl(200 22% 10% / 0.03);
+    box-shadow: 0 8px 40px -12px hsl(260 28% 10% / 0.08), 0 2px 6px hsl(260 28% 10% / 0.03);
   }
 
   .shadow-search {
-    box-shadow: 0 2px 12px hsl(172 50% 28% / 0.06), 0 0 0 1px hsl(172 50% 28% / 0.05);
+    box-shadow: 0 2px 12px hsl(268 55% 42% / 0.06), 0 0 0 1px hsl(268 55% 42% / 0.05);
   }
 
   .animate-float {
