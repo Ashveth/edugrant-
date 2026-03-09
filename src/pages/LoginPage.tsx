@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { useApp } from "@/context/AppContext";
 import { useToast } from "@/hooks/use-toast";
 import { lovable } from "@/integrations/lovable/index";
+import { getGoogleAuthErrorMessage } from "@/lib/authErrors";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
