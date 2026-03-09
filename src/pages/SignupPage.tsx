@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GraduationCap, Mail, Lock, Eye, EyeOff, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -24,9 +24,15 @@ export default function SignupPage() {
   const [category, setCategory] = useState("General");
   const [state, setState] = useState("Maharashtra");
   const [courseCost, setCourseCost] = useState("500000");
-  const { signup, setProfile } = useApp();
+  const { signup, setProfile, isLoggedIn } = useApp();
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/dashboard", { replace: true });
+    }
+  }, [isLoggedIn, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -89,7 +95,10 @@ export default function SignupPage() {
               setGoogleLoading(true);
               try {
                 const { error } = await lovable.auth.signInWithOAuth("google", {
-                  redirect_uri: window.location.origin,
+                  redirect_uri: `${window.location.origin}/dashboard`,
+                  extraParams: {
+                    prompt: "select_account",
+                  },
                 });
                 if (error) {
                   toast({ title: "Google signup failed", description: String(error), variant: "destructive" });

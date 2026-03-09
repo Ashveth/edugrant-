@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { GraduationCap, Mail, Lock, Eye, EyeOff, ArrowRight, Target, Sparkles, TrendingUp, Shield } from "lucide-react";
@@ -15,9 +15,15 @@ export default function LoginPage() {
   const [showPw, setShowPw] = useState(false);
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
-  const { login } = useApp();
+  const { login, isLoggedIn } = useApp();
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/dashboard", { replace: true });
+    }
+  }, [isLoggedIn, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -125,7 +131,10 @@ export default function LoginPage() {
                 setGoogleLoading(true);
                 try {
                   const { error } = await lovable.auth.signInWithOAuth("google", {
-                    redirect_uri: window.location.origin,
+                    redirect_uri: `${window.location.origin}/dashboard`,
+                    extraParams: {
+                      prompt: "select_account",
+                    },
                   });
                   if (error) {
                     toast({ title: "Google login failed", description: String(error), variant: "destructive" });
