@@ -29,6 +29,8 @@ import DocumentAnalyzerPage from "./pages/DocumentAnalyzerPage";
 import DirectApplyPage from "./pages/DirectApplyPage";
 import ProviderDashboardPage from "./pages/ProviderDashboardPage";
 import ProviderRegistrationPage from "./pages/ProviderRegistrationPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -45,6 +47,8 @@ const App = () => (
             <Route path="/login" element={<LoginPage />} />
             <Route path="/auth/callback" element={<AuthCallbackPage />} />
             <Route path="/signup" element={<SignupPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/reset-password" element={<ResetPasswordPage />} />
             <Route path="/dashboard" element={<DashboardLayout />}>
               <Route index element={<DashboardHome />} />
               <Route path="profile" element={<ProfilePage />} />
