@@ -8,8 +8,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useApp } from "@/context/AppContext";
 import { useToast } from "@/hooks/use-toast";
 import { fieldsOfStudy, indianStates } from "@/data/scholarships";
-import { lovable } from "@/integrations/lovable/index";
-import { getGoogleAuthErrorMessage } from "@/lib/authErrors";
 
 export default function SignupPage() {
   const [name, setName] = useState("");
