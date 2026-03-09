@@ -145,8 +145,6 @@ export default function LoginPage() {
             </Button>
           </form>
 
-          <p className="mt-4 text-center text-xs text-muted-foreground/50">Sign in with Google to start finding scholarships instantly.</p>
-
           <div className="mt-8 text-center">
             <p className="text-sm text-muted-foreground">
               Don't have an account?{" "}
