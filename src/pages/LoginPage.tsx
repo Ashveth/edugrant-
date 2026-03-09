@@ -138,10 +138,12 @@ export default function LoginPage() {
                     },
                   });
                   if (error) {
-                    toast({ title: "Google login failed", description: String(error), variant: "destructive" });
+                    const err = getGoogleAuthErrorMessage(error);
+                    toast({ title: err.title, description: err.description, variant: "destructive" });
                   }
-                } catch {
-                  toast({ title: "Google login failed. Please try again.", variant: "destructive" });
+                } catch (e) {
+                  const err = getGoogleAuthErrorMessage(e);
+                  toast({ title: err.title, description: err.description, variant: "destructive" });
                 } finally {
                   setGoogleLoading(false);
                 }
