@@ -112,50 +112,50 @@
 
 @layer utilities {
   .gradient-primary {
-    background: linear-gradient(135deg, hsl(172 50% 28%), hsl(172 42% 36%));
+    background: linear-gradient(135deg, hsl(222 47% 11%), hsl(217 91% 53%));
   }
 
   .gradient-hero {
-    background: linear-gradient(160deg, hsl(200 22% 10%) 0%, hsl(200 18% 7%) 50%, hsl(172 20% 8%) 100%);
+    background: linear-gradient(160deg, hsl(222 47% 11%) 0%, hsl(222 47% 8%) 50%, hsl(217 50% 10%) 100%);
   }
 
   .gradient-subtle {
-    background: linear-gradient(135deg, hsl(172 50% 28% / 0.04), hsl(28 80% 56% / 0.03));
+    background: linear-gradient(135deg, hsl(217 91% 53% / 0.04), hsl(38 92% 50% / 0.03));
   }
 
   .gradient-card {
-    background: linear-gradient(135deg, hsl(172 50% 28% / 0.02), hsl(28 80% 56% / 0.02));
+    background: linear-gradient(135deg, hsl(217 91% 53% / 0.02), hsl(38 92% 50% / 0.02));
   }
 
   .gradient-warm {
-    background: linear-gradient(135deg, hsl(172 50% 28% / 0.06), hsl(38 30% 92% / 0.5), hsl(28 80% 56% / 0.03));
+    background: linear-gradient(135deg, hsl(217 91% 53% / 0.06), hsl(220 14% 96% / 0.5), hsl(38 92% 50% / 0.03));
   }
 
   .text-gradient {
-    background: linear-gradient(135deg, hsl(172 50% 28%), hsl(28 80% 56%));
+    background: linear-gradient(135deg, hsl(217 91% 53%), hsl(38 92% 50%));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .shadow-glow {
-    box-shadow: 0 4px 24px -6px hsl(172 50% 28% / 0.22), 0 2px 8px -2px hsl(172 42% 36% / 0.08);
+    box-shadow: 0 4px 24px -6px hsl(217 91% 53% / 0.25), 0 2px 8px -2px hsl(222 47% 11% / 0.1);
   }
 
   .shadow-card {
-    box-shadow: 0 1px 3px hsl(200 22% 10% / 0.03), 0 4px 16px hsl(200 22% 10% / 0.02);
+    box-shadow: 0 1px 3px hsl(222 47% 11% / 0.03), 0 4px 16px hsl(222 47% 11% / 0.02);
   }
 
   .shadow-card-hover {
-    box-shadow: 0 4px 14px hsl(200 22% 10% / 0.06), 0 16px 36px hsl(200 22% 10% / 0.03);
+    box-shadow: 0 4px 14px hsl(222 47% 11% / 0.06), 0 16px 36px hsl(222 47% 11% / 0.03);
   }
 
   .shadow-float {
-    box-shadow: 0 8px 40px -12px hsl(200 22% 10% / 0.08), 0 2px 6px hsl(200 22% 10% / 0.03);
+    box-shadow: 0 8px 40px -12px hsl(222 47% 11% / 0.08), 0 2px 6px hsl(222 47% 11% / 0.03);
   }
 
   .shadow-search {
-    box-shadow: 0 2px 12px hsl(172 50% 28% / 0.06), 0 0 0 1px hsl(172 50% 28% / 0.05);
+    box-shadow: 0 2px 12px hsl(217 91% 53% / 0.08), 0 0 0 1px hsl(217 91% 53% / 0.06);
   }
 
   .animate-float {
@@ -181,6 +181,6 @@
   }
   .hover-lift:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 30px -8px hsl(200 22% 10% / 0.08);
+    box-shadow: 0 8px 30px -8px hsl(222 47% 11% / 0.08);
   }
 }
