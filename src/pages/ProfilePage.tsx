@@ -11,6 +11,7 @@ import { useApp } from "@/context/AppContext";
 import { useToast } from "@/hooks/use-toast";
 import { indianStates, fieldsOfStudy } from "@/data/scholarships";
 import { StudentProfile } from "@/types/scholarship";
+import TwoFactorSetup from "@/components/TwoFactorSetup";
 
 export default function ProfilePage() {
   const { profile, setProfile } = useApp();
@@ -120,6 +121,8 @@ export default function ProfilePage() {
           <Save className="mr-2 h-4 w-4" /> Save Profile & Find Scholarships
         </Button>
       </form>
+
+      <TwoFactorSetup />
     </motion.div>
   );
 }
