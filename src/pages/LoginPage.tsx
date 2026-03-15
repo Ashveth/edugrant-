@@ -9,10 +9,6 @@ import { useApp } from "@/context/AppContext";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import MfaChallenge from "@/components/MfaChallenge";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useApp } from "@/context/AppContext";
-import { useToast } from "@/hooks/use-toast";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
