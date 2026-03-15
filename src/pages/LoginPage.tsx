@@ -132,36 +132,48 @@ export default function LoginPage() {
             <span className="font-display text-xl font-bold text-foreground">EduGrant AI</span>
           </Link>
 
-          <div className="mb-8">
-            <h1 className="font-display text-2xl font-extrabold text-foreground tracking-tight">Welcome back</h1>
-            <p className="mt-2 text-sm text-muted-foreground">Sign in to your scholarship dashboard</p>
-          </div>
+          {showMfa ? (
+            <>
+              <div className="mb-8">
+                <h1 className="font-display text-2xl font-extrabold text-foreground tracking-tight">Verify Identity</h1>
+                <p className="mt-2 text-sm text-muted-foreground">Complete two-factor authentication to continue</p>
+              </div>
+              <MfaChallenge onSuccess={handleMfaSuccess} onCancel={() => setShowMfa(false)} />
+            </>
+          ) : (
+            <>
+              <div className="mb-8">
+                <h1 className="font-display text-2xl font-extrabold text-foreground tracking-tight">Welcome back</h1>
+                <p className="mt-2 text-sm text-muted-foreground">Sign in to your scholarship dashboard</p>
+              </div>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
-            <div>
-              <Label htmlFor="email" className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Email</Label>
-              <div className="relative mt-2">
-                <Mail className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/50" />
-                <Input id="email" type="email" placeholder="you@example.com" className="pl-11 h-11 rounded-xl border-border/60 bg-card focus:border-primary/40 focus:shadow-search transition-all" value={email} onChange={(e) => setEmail(e.target.value)} />
-              </div>
-            </div>
-            <div>
-            <div className="flex items-center justify-between">
-                <Label htmlFor="password" className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Password</Label>
-                <Link to="/forgot-password" className="text-xs text-primary hover:underline">Forgot password?</Link>
-              </div>
-              <div className="relative mt-2">
-                <Lock className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/50" />
-                <Input id="password" type={showPw ? "text" : "password"} placeholder="••••••••" className="pl-11 pr-11 h-11 rounded-xl border-border/60 bg-card focus:border-primary/40 focus:shadow-search transition-all" value={password} onChange={(e) => setPassword(e.target.value)} />
-                <button type="button" onClick={() => setShowPw(!showPw)} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted-foreground/40 hover:text-foreground transition-colors">
-                  {showPw ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                </button>
-              </div>
-            </div>
-            <Button type="submit" disabled={loading} className="w-full h-11 gradient-primary text-primary-foreground font-semibold shadow-glow rounded-xl text-sm group">
-              {loading ? "Signing in..." : <>Sign In <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" /></>}
-            </Button>
-          </form>
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div>
+                  <Label htmlFor="email" className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Email</Label>
+                  <div className="relative mt-2">
+                    <Mail className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/50" />
+                    <Input id="email" type="email" placeholder="you@example.com" className="pl-11 h-11 rounded-xl border-border/60 bg-card focus:border-primary/40 focus:shadow-search transition-all" value={email} onChange={(e) => setEmail(e.target.value)} />
+                  </div>
+                </div>
+                <div>
+                <div className="flex items-center justify-between">
+                    <Label htmlFor="password" className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Password</Label>
+                    <Link to="/forgot-password" className="text-xs text-primary hover:underline">Forgot password?</Link>
+                  </div>
+                  <div className="relative mt-2">
+                    <Lock className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/50" />
+                    <Input id="password" type={showPw ? "text" : "password"} placeholder="••••••••" className="pl-11 pr-11 h-11 rounded-xl border-border/60 bg-card focus:border-primary/40 focus:shadow-search transition-all" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    <button type="button" onClick={() => setShowPw(!showPw)} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted-foreground/40 hover:text-foreground transition-colors">
+                      {showPw ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    </button>
+                  </div>
+                </div>
+                <Button type="submit" disabled={loading} className="w-full h-11 gradient-primary text-primary-foreground font-semibold shadow-glow rounded-xl text-sm group">
+                  {loading ? "Signing in..." : <>Sign In <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" /></>}
+                </Button>
+              </form>
+            </>
+          )}
 
           <div className="mt-8 text-center">
             <p className="text-sm text-muted-foreground">
