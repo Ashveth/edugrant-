@@ -15,6 +15,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [showPw, setShowPw] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showMfa, setShowMfa] = useState(false);
   const { login, isLoggedIn } = useApp();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -38,6 +39,21 @@ export default function LoginPage() {
       toast({ title: "Login failed", description: result.error, variant: "destructive" });
       return;
     }
+
+    // Check if MFA is required
+    const { data: { totp } } = await supabase.auth.mfa.listFactors();
+    const hasVerifiedFactor = totp?.some((f) => f.status === "verified");
+    
+    if (hasVerifiedFactor) {
+      setShowMfa(true);
+      return;
+    }
+
+    toast({ title: "Welcome back!" });
+    navigate("/dashboard");
+  };
+
+  const handleMfaSuccess = () => {
     toast({ title: "Welcome back!" });
     navigate("/dashboard");
   };
