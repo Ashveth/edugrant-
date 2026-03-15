@@ -11,6 +11,7 @@ import { useApp } from "@/context/AppContext";
 import { useToast } from "@/hooks/use-toast";
 import { indianStates, fieldsOfStudy } from "@/data/scholarships";
 import { StudentProfile } from "@/types/scholarship";
+import TwoFactorSetup from "@/components/TwoFactorSetup";
 
 export default function ProfilePage() {
   const { profile, setProfile } = useApp();
