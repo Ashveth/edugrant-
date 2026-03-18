@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { User, Save } from "lucide-react";
+import { User, Save, Download, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,6 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { indianStates, fieldsOfStudy } from "@/data/scholarships";
 import { StudentProfile } from "@/types/scholarship";
 import TwoFactorSetup from "@/components/TwoFactorSetup";
+import { usePwaInstall } from "@/hooks/usePwaInstall";
 
 export default function ProfilePage() {
   const { profile, setProfile } = useApp();
@@ -123,6 +124,41 @@ export default function ProfilePage() {
       </form>
 
       <TwoFactorSetup />
+
+      <DownloadAppCard />
     </motion.div>
+  );
+}
+
+function DownloadAppCard() {
+  const { canInstall, isInstalled, install } = usePwaInstall();
+
+  return (
+    <Card className="mt-4 shadow-card">
+      <CardHeader>
+        <CardTitle className="font-display text-lg flex items-center gap-2">
+          <Download className="h-5 w-5 text-primary" /> Download App
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <p className="text-sm text-muted-foreground mb-4">
+          Install EduGrant AI on your desktop for quick access, offline support, and a native app experience.
+        </p>
+        {isInstalled ? (
+          <div className="flex items-center gap-2 text-sm font-medium text-accent">
+            <Check className="h-4 w-4" />
+            App is installed on your device
+          </div>
+        ) : canInstall ? (
+          <Button onClick={install} className="gradient-primary text-primary-foreground font-semibold shadow-glow">
+            <Download className="mr-2 h-4 w-4" /> Install EduGrant AI
+          </Button>
+        ) : (
+          <p className="text-xs text-muted-foreground">
+            Open this app in Chrome or Edge and visit the published URL to enable installation.
+          </p>
+        )}
+      </CardContent>
+    </Card>
   );
 }
