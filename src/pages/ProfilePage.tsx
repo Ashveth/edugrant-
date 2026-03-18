@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { User, Save } from "lucide-react";
+import { User, Save, Download, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,6 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { indianStates, fieldsOfStudy } from "@/data/scholarships";
 import { StudentProfile } from "@/types/scholarship";
 import TwoFactorSetup from "@/components/TwoFactorSetup";
+import { usePwaInstall } from "@/hooks/usePwaInstall";
 
 export default function ProfilePage() {
   const { profile, setProfile } = useApp();
