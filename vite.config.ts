@@ -61,7 +61,7 @@ export default defineConfig(({ mode }) => ({
             },
           },
         ],
-        offlineFallbackPage: "offline.html",
+        navigateFallback: "offline.html",
       },
     }),
   ].filter(Boolean),
