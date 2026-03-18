@@ -6,6 +6,7 @@ import { GraduationCap, Moon, Sun, Download, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AIChatbot from "@/components/AIChatbot";
 import { usePwaInstall } from "@/hooks/usePwaInstall";
+import OfflineBanner from "@/components/OfflineBanner";
 
 export default function DashboardLayout() {
   const { isLoggedIn, darkMode, toggleDarkMode } = useApp();
@@ -18,6 +19,7 @@ export default function DashboardLayout() {
       <div className="flex min-h-screen w-full">
         <AppSidebar />
         <div className="flex flex-1 flex-col">
+          <OfflineBanner />
           <header className="flex h-14 items-center justify-between gap-3 border-b border-border/60 bg-card/80 backdrop-blur-md px-5">
             <div className="flex items-center gap-3">
               <SidebarTrigger />
