@@ -9,6 +9,7 @@ import { usePwaInstall } from "@/hooks/usePwaInstall";
 
 export default function DashboardLayout() {
   const { isLoggedIn, darkMode, toggleDarkMode } = useApp();
+  const { canInstall, isInstalled, install } = usePwaInstall();
 
   if (!isLoggedIn) return <Navigate to="/login" replace />;
 
