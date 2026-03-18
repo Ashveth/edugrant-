@@ -2,9 +2,10 @@ import { Outlet, Navigate } from "react-router-dom";
 import { useApp } from "@/context/AppContext";
 import { AppSidebar } from "@/components/AppSidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { GraduationCap, Moon, Sun } from "lucide-react";
+import { GraduationCap, Moon, Sun, Download, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AIChatbot from "@/components/AIChatbot";
+import { usePwaInstall } from "@/hooks/usePwaInstall";
 
 export default function DashboardLayout() {
   const { isLoggedIn, darkMode, toggleDarkMode } = useApp();
