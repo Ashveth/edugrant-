@@ -6,6 +6,7 @@ import { GraduationCap, Moon, Sun, Download, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AIChatbot from "@/components/AIChatbot";
 import { usePwaInstall } from "@/hooks/usePwaInstall";
+import OfflineBanner from "@/components/OfflineBanner";
 
 export default function DashboardLayout() {
   const { isLoggedIn, darkMode, toggleDarkMode } = useApp();
