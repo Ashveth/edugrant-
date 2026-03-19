@@ -120,11 +120,15 @@ export default function ProfilePage() {
   return (
     <div className="max-w-3xl">
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
-        {/* Header with avatar area */}
-        <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-          <div className="h-16 w-16 rounded-2xl gradient-primary flex items-center justify-center shadow-glow shrink-0">
-            <User className="h-7 w-7 text-primary-foreground" />
-          </div>
+        {/* Header with avatar */}
+        <div className="flex flex-col sm:flex-row sm:items-center gap-5">
+          {userId && (
+            <AvatarUpload
+              userId={userId}
+              currentUrl={avatarUrl}
+              onUploaded={setAvatarUrl}
+            />
+          )}
           <div className="flex-1 min-w-0">
             <h1 className="font-display text-2xl font-extrabold text-foreground tracking-tight">
               {form.fullName || "Student Profile"}
