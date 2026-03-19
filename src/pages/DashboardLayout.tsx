@@ -17,20 +17,21 @@ export default function DashboardLayout() {
     <SidebarProvider>
       <div className="flex min-h-screen w-full">
         <AppSidebar />
-        <div className="flex flex-1 flex-col">
-          <header className="flex h-14 items-center justify-between gap-3 border-b border-border/60 bg-card/80 backdrop-blur-md px-5">
+        <div className="flex flex-1 flex-col min-w-0">
+          {/* Header — sticky, consistent height */}
+          <header className="sticky top-0 z-30 flex h-14 items-center justify-between gap-4 border-b border-border/60 bg-card/80 backdrop-blur-xl px-4 md:px-6">
             <div className="flex items-center gap-3">
               <SidebarTrigger />
-              <div className="flex items-center gap-2">
+              <div className="hidden sm:flex items-center gap-2">
                 <GraduationCap className="h-5 w-5 text-primary" />
                 <span className="font-display text-sm font-semibold text-foreground tracking-tight">EduGrant AI</span>
               </div>
             </div>
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-2">
               {canInstall && (
-                <Button variant="outline" size="sm" onClick={install} className="h-8 gap-1.5 rounded-xl text-xs font-medium">
+                <Button variant="outline" size="sm" onClick={install} className="h-8 gap-1.5 rounded-xl text-xs font-medium border-border/60">
                   <Download className="h-3.5 w-3.5" />
-                  Install App
+                  <span className="hidden sm:inline">Install App</span>
                 </Button>
               )}
               {isInstalled && (
@@ -44,8 +45,11 @@ export default function DashboardLayout() {
               </Button>
             </div>
           </header>
-          <main className="flex-1 overflow-auto bg-background p-5 md:p-8">
-            <Outlet />
+          {/* Main content — consistent padding, max-width centered */}
+          <main className="flex-1 overflow-auto bg-background">
+            <div className="mx-auto max-w-[1200px] px-4 py-6 md:px-8 md:py-8">
+              <Outlet />
+            </div>
           </main>
         </div>
       </div>
