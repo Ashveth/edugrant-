@@ -267,7 +267,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <AppContext.Provider value={{ profile, setProfile, savedScholarships, toggleSaved, isLoggedIn, login, signup, logout, userEmail, userId, darkMode, toggleDarkMode, documentChecklist, toggleDocument, session, applications, addApplication, updateApplication, deleteApplication, loadingData }}>
+    <AppContext.Provider value={{ profile, setProfile, savedScholarships, toggleSaved, isLoggedIn, login, signup, logout, userEmail, userId, darkMode, toggleDarkMode, documentChecklist, toggleDocument, session, applications, addApplication, updateApplication, deleteApplication, loadingData, avatarUrl, setAvatarUrl }}>
       {children}
     </AppContext.Provider>
   );
