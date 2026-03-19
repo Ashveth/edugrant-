@@ -35,6 +35,8 @@ interface AppContextType {
   updateApplication: (id: string, updates: Partial<Pick<Application, "status" | "notes">>) => Promise<void>;
   deleteApplication: (id: string) => Promise<void>;
   loadingData: boolean;
+  avatarUrl: string | null;
+  setAvatarUrl: (url: string | null) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -48,6 +50,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [profile, setProfileState] = useState<StudentProfile | null>(null);
   const [savedScholarships, setSaved] = useState<string[]>([]);
   const [applications, setApplications] = useState<Application[]>([]);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem("edugrant_dark") === "true");
   const [documentChecklist, setDocumentChecklist] = useState<Record<string, boolean>>(() => {
     const d = localStorage.getItem("edugrant_docs");
@@ -77,6 +80,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       setProfileState(null);
       setSaved([]);
       setApplications([]);
+      setAvatarUrl(null);
       return;
     }
 
@@ -121,6 +125,15 @@ export function AppProvider({ children }: { children: ReactNode }) {
           .order("created_at", { ascending: false });
 
         if (apps) setApplications(apps as Application[]);
+
+        // Load avatar URL from profiles
+        const { data: prof } = await supabase
+          .from("profiles")
+          .select("avatar_url")
+          .eq("user_id", user.id)
+          .maybeSingle();
+
+        if (prof?.avatar_url) setAvatarUrl(prof.avatar_url);
       } finally {
         setLoadingData(false);
       }
@@ -254,7 +267,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <AppContext.Provider value={{ profile, setProfile, savedScholarships, toggleSaved, isLoggedIn, login, signup, logout, userEmail, userId, darkMode, toggleDarkMode, documentChecklist, toggleDocument, session, applications, addApplication, updateApplication, deleteApplication, loadingData }}>
+    <AppContext.Provider value={{ profile, setProfile, savedScholarships, toggleSaved, isLoggedIn, login, signup, logout, userEmail, userId, darkMode, toggleDarkMode, documentChecklist, toggleDocument, session, applications, addApplication, updateApplication, deleteApplication, loadingData, avatarUrl, setAvatarUrl }}>
       {children}
     </AppContext.Provider>
   );
