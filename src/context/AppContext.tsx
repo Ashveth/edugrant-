@@ -80,6 +80,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       setProfileState(null);
       setSaved([]);
       setApplications([]);
+      setAvatarUrl(null);
       return;
     }
 
