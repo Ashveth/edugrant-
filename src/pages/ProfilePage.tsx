@@ -14,6 +14,7 @@ import { useToast } from "@/hooks/use-toast";
 import { indianStates, fieldsOfStudy } from "@/data/scholarships";
 import { StudentProfile } from "@/types/scholarship";
 import TwoFactorSetup from "@/components/TwoFactorSetup";
+import AvatarUpload from "@/components/AvatarUpload";
 
 function ProfileStrengthBar({ profile }: { profile: StudentProfile }) {
   const fields = [
