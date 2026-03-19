@@ -125,6 +125,15 @@ export function AppProvider({ children }: { children: ReactNode }) {
           .order("created_at", { ascending: false });
 
         if (apps) setApplications(apps as Application[]);
+
+        // Load avatar URL from profiles
+        const { data: prof } = await supabase
+          .from("profiles")
+          .select("avatar_url")
+          .eq("user_id", user.id)
+          .maybeSingle();
+
+        if (prof?.avatar_url) setAvatarUrl(prof.avatar_url);
       } finally {
         setLoadingData(false);
       }
