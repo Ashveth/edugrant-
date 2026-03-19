@@ -118,7 +118,7 @@ export default function ProfilePage() {
   const inputClass = "mt-1.5 h-10 rounded-xl border-border/60 bg-card focus:border-primary/40 focus:shadow-search transition-all";
 
   return (
-    <div className="max-w-3xl">
+    <div className="w-full max-w-3xl mx-auto">
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
         {/* Header with avatar */}
         <div className="flex flex-col sm:flex-row sm:items-center gap-5">
