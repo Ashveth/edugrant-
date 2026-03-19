@@ -35,6 +35,8 @@ interface AppContextType {
   updateApplication: (id: string, updates: Partial<Pick<Application, "status" | "notes">>) => Promise<void>;
   deleteApplication: (id: string) => Promise<void>;
   loadingData: boolean;
+  avatarUrl: string | null;
+  setAvatarUrl: (url: string | null) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
