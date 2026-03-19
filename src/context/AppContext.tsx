@@ -50,6 +50,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [profile, setProfileState] = useState<StudentProfile | null>(null);
   const [savedScholarships, setSaved] = useState<string[]>([]);
   const [applications, setApplications] = useState<Application[]>([]);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem("edugrant_dark") === "true");
   const [documentChecklist, setDocumentChecklist] = useState<Record<string, boolean>>(() => {
     const d = localStorage.getItem("edugrant_docs");
