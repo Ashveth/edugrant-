@@ -81,7 +81,7 @@ function FormField({ label, icon, children, hint }: { label: string; icon?: Reac
 }
 
 export default function ProfilePage() {
-  const { profile, setProfile, userEmail } = useApp();
+  const { profile, setProfile, userEmail, userId, avatarUrl, setAvatarUrl } = useApp();
   const { toast } = useToast();
   const navigate = useNavigate();
 
