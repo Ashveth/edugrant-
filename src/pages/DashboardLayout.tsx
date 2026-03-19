@@ -45,9 +45,9 @@ export default function DashboardLayout() {
               </Button>
             </div>
           </header>
-          {/* Main content — consistent padding, max-width centered */}
-          <main className="flex-1 overflow-auto bg-background">
-            <div className="mx-auto max-w-[1200px] px-4 py-6 md:px-8 md:py-8">
+          {/* Main content — centered with balanced spacing */}
+          <main className="flex-1 overflow-auto bg-background flex justify-center">
+            <div className="w-full max-w-[1100px] px-6 py-6 md:px-10 md:py-8">
               <Outlet />
             </div>
           </main>
