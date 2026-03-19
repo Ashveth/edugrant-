@@ -15,9 +15,9 @@ const statusConfig: Record<string, { label: string; variant: "default" | "second
   draft: { label: "Draft", variant: "outline" },
   applied: { label: "Applied", variant: "default" },
   pending: { label: "Under Review", variant: "secondary" },
-  shortlisted: { label: "Shortlisted", variant: "default", color: "bg-amber-500 text-white border-amber-500" },
-  interview: { label: "Interview Stage", variant: "default", color: "bg-purple-500 text-white border-purple-500" },
-  accepted: { label: "Accepted", variant: "default", color: "bg-emerald-500 text-white border-emerald-500" },
+  shortlisted: { label: "Shortlisted", variant: "default", color: "bg-warning text-warning-foreground border-warning" },
+  interview: { label: "Interview Stage", variant: "default", color: "bg-primary text-primary-foreground border-primary" },
+  accepted: { label: "Accepted", variant: "default", color: "bg-success text-success-foreground border-success" },
   rejected: { label: "Rejected", variant: "destructive" },
 };
 
@@ -47,24 +47,23 @@ export default function ApplicationsPage() {
     toast({ title: "Notes saved!" });
   };
 
-  // Scholarships that are saved but not yet tracked
   const untrackedSaved = savedScholarships.filter(
     (sid) => !applications.find((a) => a.scholarship_id === sid)
   );
 
   return (
     <div className="max-w-4xl">
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="font-display text-2xl font-bold text-foreground flex items-center gap-2">
+          <h1 className="page-title">
             <ClipboardList className="h-6 w-6 text-primary" /> Application Tracker
           </h1>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <p className="page-subtitle">
             {applications.length} application{applications.length !== 1 ? "s" : ""} tracked
           </p>
         </div>
         <Select value={filterStatus} onValueChange={setFilterStatus}>
-          <SelectTrigger className="w-36">
+          <SelectTrigger className="w-40 h-9 rounded-xl text-sm">
             <SelectValue placeholder="Filter" />
           </SelectTrigger>
           <SelectContent>
@@ -80,17 +79,16 @@ export default function ApplicationsPage() {
         </Select>
       </div>
 
-      {/* Quick add from saved */}
       {untrackedSaved.length > 0 && (
-        <Card className="mb-6 border-dashed border-primary/30 bg-primary/5">
-          <CardContent className="p-4">
+        <Card className="mb-6 border-dashed border-primary/30 bg-primary/5 rounded-2xl">
+          <CardContent className="p-5">
             <p className="text-sm font-medium text-foreground mb-3">Start tracking saved scholarships:</p>
             <div className="flex flex-wrap gap-2">
               {untrackedSaved.slice(0, 5).map((sid) => {
                 const s = scholarships.find((x) => x.id === sid);
                 if (!s) return null;
                 return (
-                  <Button key={sid} size="sm" variant="outline" className="rounded-xl text-xs"
+                  <Button key={sid} size="sm" variant="outline" className="rounded-xl text-xs h-8"
                     onClick={() => handleStartTracking(sid)}>
                     <Plus className="mr-1 h-3 w-3" /> {s.name.slice(0, 30)}
                   </Button>
@@ -126,31 +124,30 @@ export default function ApplicationsPage() {
             return (
               <motion.div key={app.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.04 }}>
                 <Card className="shadow-card rounded-2xl">
-                  <CardContent className="p-4">
+                  <CardContent className="p-5">
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-1">
+                        <div className="flex items-center gap-2 mb-1.5 flex-wrap">
                           <h3 className="font-display font-semibold text-foreground truncate">{s.name}</h3>
-                          <Badge variant={cfg.variant} className={`rounded-lg shrink-0 ${cfg.color || ""}`}>{cfg.label}</Badge>
+                          <Badge variant={cfg.variant} className={`rounded-lg shrink-0 text-[11px] ${cfg.color || ""}`}>{cfg.label}</Badge>
                         </div>
                         <p className="text-xs text-muted-foreground">{s.provider} · ₹{s.amount.toLocaleString()}</p>
 
                         {app.applied_at && (
-                          <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
+                          <p className="text-xs text-muted-foreground mt-1.5 flex items-center gap-1">
                             <Clock className="h-3 w-3" /> Applied {new Date(app.applied_at).toLocaleDateString()}
                           </p>
                         )}
 
-                        {/* Notes */}
                         {editingId === app.id ? (
                           <div className="mt-3">
                             <Textarea value={editNotes} onChange={(e) => setEditNotes(e.target.value)}
-                              placeholder="Add notes about this application..." className="text-sm" rows={2} />
+                              placeholder="Add notes about this application..." className="text-sm rounded-xl" rows={2} />
                             <div className="flex gap-2 mt-2">
-                              <Button size="sm" onClick={() => handleSaveNotes(app.id)} className="rounded-lg">
+                              <Button size="sm" onClick={() => handleSaveNotes(app.id)} className="rounded-xl h-8">
                                 <Check className="mr-1 h-3 w-3" /> Save
                               </Button>
-                              <Button size="sm" variant="ghost" onClick={() => setEditingId(null)} className="rounded-lg">
+                              <Button size="sm" variant="ghost" onClick={() => setEditingId(null)} className="rounded-xl h-8">
                                 <X className="mr-1 h-3 w-3" /> Cancel
                               </Button>
                             </div>
@@ -162,7 +159,7 @@ export default function ApplicationsPage() {
 
                       <div className="flex flex-col gap-2 shrink-0">
                         <Select value={app.status} onValueChange={(v) => handleStatusChange(app, v)}>
-                          <SelectTrigger className="w-28 h-8 text-xs"><SelectValue /></SelectTrigger>
+                          <SelectTrigger className="w-32 h-8 text-xs rounded-xl"><SelectValue /></SelectTrigger>
                           <SelectContent>
                             <SelectItem value="draft">Draft</SelectItem>
                             <SelectItem value="applied">Applied</SelectItem>
@@ -174,16 +171,16 @@ export default function ApplicationsPage() {
                           </SelectContent>
                         </Select>
                         <div className="flex gap-1">
-                          <Button size="sm" variant="ghost" className="h-8 w-8 p-0"
+                          <Button size="sm" variant="ghost" className="h-8 w-8 p-0 rounded-lg"
                             onClick={() => { setEditingId(app.id); setEditNotes(app.notes || ""); }}>
                             <Edit2 className="h-3.5 w-3.5" />
                           </Button>
                           <a href={s.applicationUrl} target="_blank" rel="noopener noreferrer">
-                            <Button size="sm" variant="ghost" className="h-8 w-8 p-0">
+                            <Button size="sm" variant="ghost" className="h-8 w-8 p-0 rounded-lg">
                               <ExternalLink className="h-3.5 w-3.5" />
                             </Button>
                           </a>
-                          <Button size="sm" variant="ghost" className="h-8 w-8 p-0 text-destructive hover:text-destructive"
+                          <Button size="sm" variant="ghost" className="h-8 w-8 p-0 rounded-lg text-destructive hover:text-destructive"
                             onClick={() => deleteApplication(app.id)}>
                             <Trash2 className="h-3.5 w-3.5" />
                           </Button>

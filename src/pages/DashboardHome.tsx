@@ -54,7 +54,6 @@ export default function DashboardHome() {
 
   const avgApproval = matches.length > 0 ? Math.round(matches.reduce((s, m) => s + m.approvalProbability, 0) / matches.length) : 0;
 
-  // Netflix-style sections
   const expiringSoon = useMemo(() => matches
     .filter(m => {
       const d = Math.ceil((new Date(m.scholarship.deadline).getTime() - Date.now()) / 86400000);
@@ -71,16 +70,15 @@ export default function DashboardHome() {
   }, [matches, profile?.fieldOfStudy]);
 
   return (
-    <div className="space-y-8 max-w-[1200px]">
-      {/* Profile Completion for new Google signups */}
+    <div className="space-y-8">
       <ProfileCompletionPrompt />
 
       {/* Welcome */}
       <div>
-        <h1 className="font-display text-2xl md:text-3xl font-extrabold text-foreground tracking-tight">
+        <h1 className="page-title">
           Welcome{profile ? `, ${profile.fullName.split(" ")[0]}` : ""} 👋
         </h1>
-        <p className="mt-1 text-muted-foreground">
+        <p className="page-subtitle">
           {profile ? "Your scholarship command center" : "Complete your profile to get personalized matches"}
         </p>
       </div>
@@ -89,15 +87,15 @@ export default function DashboardHome() {
       {!profile && (
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
           <Card className="border-primary/20 gradient-subtle rounded-2xl">
-            <CardContent className="flex flex-col sm:flex-row items-start sm:items-center gap-5 p-6">
+            <CardContent className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-6">
               <div className="rounded-xl gradient-primary p-3 shadow-glow shrink-0">
                 <AlertCircle className="h-6 w-6 text-primary-foreground" />
               </div>
-              <div className="flex-1">
+              <div className="flex-1 min-w-0">
                 <p className="font-display font-semibold text-foreground">Let's refine your profile to find better matches.</p>
                 <p className="text-sm text-muted-foreground mt-1">Fill in your academic and personal details to unlock AI-powered recommendations.</p>
               </div>
-              <Link to="/dashboard/profile">
+              <Link to="/dashboard/profile" className="shrink-0">
                 <Button className="gradient-primary text-primary-foreground font-semibold shadow-glow rounded-xl">
                   <User className="mr-2 h-4 w-4" /> Set Up Profile
                 </Button>
@@ -109,27 +107,27 @@ export default function DashboardHome() {
 
       {/* Top row: Gauge + Profile Strength + Financial Gap */}
       {profile && (
-        <div className="grid gap-5 md:grid-cols-12">
-          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="md:col-span-4">
+        <div className="grid gap-4 md:grid-cols-3">
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
             <Card className="shadow-card rounded-2xl h-full">
               <CardContent className="flex flex-col items-center justify-center py-8 px-6">
                 <SemiCircleGauge value={avgApproval} label="Avg. Approval Probability" color="hsl(var(--primary))" />
-                <div className="flex gap-6 mt-5 text-center">
+                <div className="flex gap-8 mt-6 text-center">
                   <div>
                     <p className="font-display text-xl font-bold text-foreground">{matches.length}</p>
-                    <p className="text-[11px] text-muted-foreground">Matched</p>
+                    <p className="text-[11px] text-muted-foreground mt-0.5">Matched</p>
                   </div>
                   <div className="w-px bg-border" />
                   <div>
                     <p className="font-display text-xl font-bold text-foreground">{avgMatch}%</p>
-                    <p className="text-[11px] text-muted-foreground">Avg Match</p>
+                    <p className="text-[11px] text-muted-foreground mt-0.5">Avg Match</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }} className="md:col-span-4">
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}>
             <Card className="shadow-card rounded-2xl h-full">
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm font-display flex items-center gap-2"><User className="h-4 w-4 text-primary" /> Profile Strength</CardTitle>
@@ -151,8 +149,8 @@ export default function DashboardHome() {
             </Card>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="md:col-span-4">
-            <Card className="shadow-float rounded-2xl h-full border-primary/10 bg-card">
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
+            <Card className="shadow-float rounded-2xl h-full border-primary/10">
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm font-display flex items-center gap-2"><IndianRupee className="h-4 w-4 text-primary" /> Financial Gap</CardTitle>
               </CardHeader>
@@ -164,7 +162,7 @@ export default function DashboardHome() {
                   </div>
                   <div className="flex justify-between text-xs">
                     <span className="text-muted-foreground">Scholarship Potential</span>
-                    <span className="font-semibold text-emerald-600">₹{(scholarshipPotential / 100000).toFixed(1)}L</span>
+                    <span className="font-semibold text-success">₹{(scholarshipPotential / 100000).toFixed(1)}L</span>
                   </div>
                   <div className="h-px bg-border my-1" />
                   <div className="flex justify-between text-xs">
@@ -182,12 +180,12 @@ export default function DashboardHome() {
 
       {/* Quick Stats */}
       {profile && (
-        <div className="grid gap-3 grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
           {[
-            { icon: Target, label: "Matched", value: matches.length, accent: "bg-primary/8" },
-            { icon: TrendingUp, label: "Avg Match", value: `${avgMatch}%`, accent: "bg-emerald-500/8" },
-            { icon: Bookmark, label: "Saved", value: savedScholarships.length, accent: "bg-accent/8" },
-            { icon: Clock, label: "Deadlines", value: upcomingDeadlines.length, accent: "bg-amber-500/8" },
+            { icon: Target, label: "Matched", value: matches.length, accent: "bg-primary/10" },
+            { icon: TrendingUp, label: "Avg Match", value: `${avgMatch}%`, accent: "bg-success/10" },
+            { icon: Bookmark, label: "Saved", value: savedScholarships.length, accent: "bg-accent/10" },
+            { icon: Clock, label: "Deadlines", value: upcomingDeadlines.length, accent: "bg-warning/10" },
           ].map((s, i) => (
             <motion.div key={s.label} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 + i * 0.04 }}>
               <Card className="shadow-card rounded-2xl">
@@ -206,7 +204,7 @@ export default function DashboardHome() {
         </div>
       )}
 
-      {/* Netflix-style Recommendation Sections */}
+      {/* Recommendation Sections */}
       {topMatches.length > 0 && (
         <ScholarshipScrollSection
           title="Recommended for You"
@@ -239,16 +237,16 @@ export default function DashboardHome() {
       )}
 
       {/* Document Checklist + Deadline Tracker */}
-      <div className="grid gap-5 md:grid-cols-12">
-        <Card className="shadow-card rounded-2xl md:col-span-5">
+      <div className="grid gap-4 md:grid-cols-5">
+        <Card className="shadow-card rounded-2xl md:col-span-2">
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-display flex items-center gap-2"><FileText className="h-4 w-4 text-primary" /> Document Readiness</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-1">
+          <CardContent className="space-y-0.5">
             {allDocs.map((doc) => (
               <button key={doc} onClick={() => toggleDocument(doc)} className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm hover:bg-muted/60 transition-colors text-left group">
                 {documentChecklist[doc]
-                  ? <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0 transition-transform group-hover:scale-110" />
+                  ? <CheckCircle2 className="h-4 w-4 text-success shrink-0 transition-transform group-hover:scale-110" />
                   : <Circle className="h-4 w-4 text-muted-foreground/40 shrink-0 transition-transform group-hover:scale-110" />
                 }
                 <span className={documentChecklist[doc] ? "text-foreground font-medium" : "text-muted-foreground"}>{doc}</span>
@@ -258,11 +256,11 @@ export default function DashboardHome() {
           </CardContent>
         </Card>
 
-        <Card className="shadow-card rounded-2xl md:col-span-7">
+        <Card className="shadow-card rounded-2xl md:col-span-3">
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-display flex items-center gap-2"><Clock className="h-4 w-4 text-primary" /> Upcoming Deadlines</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-1">
+          <CardContent className="space-y-0.5">
             {upcomingDeadlines.length === 0 ? (
               <div className="text-center py-10">
                 <Clock className="mx-auto h-8 w-8 text-muted-foreground/30 mb-3" />
@@ -298,9 +296,9 @@ export default function DashboardHome() {
           { to: "/dashboard/strategy", icon: TrendingUp, label: "Financial Strategy", desc: "Funding breakdown & plan" },
         ].map((a) => (
           <Link key={a.to} to={a.to}>
-            <Card className="shadow-card hover-lift rounded-2xl cursor-pointer group">
+            <Card className="shadow-card hover-lift rounded-2xl cursor-pointer group h-full">
               <CardContent className="flex items-center gap-4 p-5">
-                <div className="rounded-xl gradient-primary p-3 group-hover:shadow-glow transition-shadow">
+                <div className="rounded-xl gradient-primary p-3 group-hover:shadow-glow transition-shadow shrink-0">
                   <a.icon className="h-5 w-5 text-primary-foreground" />
                 </div>
                 <div>

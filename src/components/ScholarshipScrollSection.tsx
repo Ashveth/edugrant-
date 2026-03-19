@@ -31,13 +31,13 @@ export function ScholarshipScrollSection({ title, icon, matches, savedScholarshi
         </h2>
         {viewAllLink && (
           <Link to={viewAllLink}>
-            <Button variant="ghost" size="sm" className="text-primary font-medium gap-1">
+            <Button variant="ghost" size="sm" className="text-primary font-medium gap-1 rounded-xl">
               View All <ChevronRight className="h-3.5 w-3.5" />
             </Button>
           </Link>
         )}
       </div>
-      <div className="flex gap-4 overflow-x-auto pb-3 snap-x snap-mandatory scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent">
+      <div className="flex gap-4 overflow-x-auto pb-2 snap-x snap-mandatory -mx-1 px-1">
         {matches.map((m, i) => {
           const s = m.scholarship;
           const days = getDeadlineDays(s.deadline);
@@ -54,7 +54,7 @@ export function ScholarshipScrollSection({ title, icon, matches, savedScholarshi
               <Card className="shadow-card hover-lift rounded-2xl h-full border-border/60">
                 <CardContent className="p-4 space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="inline-flex items-center gap-1 rounded-full gradient-primary px-2 py-0.5 text-[10px] font-bold text-primary-foreground">
+                    <span className="inline-flex items-center gap-1 rounded-full gradient-primary px-2.5 py-0.5 text-[10px] font-bold text-primary-foreground">
                       <Sparkles className="h-2.5 w-2.5" /> {m.matchPercentage}%
                     </span>
                     <button onClick={() => onToggleSave(s.id)} className="text-primary hover:scale-110 transition-transform">
@@ -81,12 +81,12 @@ export function ScholarshipScrollSection({ title, icon, matches, savedScholarshi
 
                   <div className="flex gap-2">
                     <a href={s.applicationUrl} target="_blank" rel="noopener noreferrer" className="flex-1">
-                      <Button size="sm" className="w-full gradient-primary text-primary-foreground font-semibold text-xs rounded-xl shadow-glow">
+                      <Button size="sm" className="w-full gradient-primary text-primary-foreground font-semibold text-xs rounded-xl shadow-glow h-8">
                         <ExternalLink className="mr-1 h-3 w-3" /> Apply
                       </Button>
                     </a>
                     <Link to={`/dashboard/scholarship/${s.id}`}>
-                      <Button variant="outline" size="sm" className="rounded-xl text-xs">Details</Button>
+                      <Button variant="outline" size="sm" className="rounded-xl text-xs h-8">Details</Button>
                     </Link>
                   </div>
                 </CardContent>

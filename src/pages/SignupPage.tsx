@@ -67,103 +67,106 @@ export default function SignupPage() {
 
   return (
     <div className="flex min-h-screen">
-      <div className="hidden w-1/2 gradient-hero lg:flex lg:items-center lg:justify-center relative overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.07]" style={{ backgroundImage: "radial-gradient(circle at 30% 40%, hsl(265 70% 58%) 0%, transparent 50%), radial-gradient(circle at 70% 60%, hsl(230 75% 55%) 0%, transparent 50%)" }} />
-        <div className="relative text-center px-12">
-          <GraduationCap className="mx-auto h-16 w-16 text-primary" />
-          <h2 className="mt-6 font-display text-3xl font-bold text-primary-foreground">Join EduGrant AI</h2>
-          <p className="mt-4 text-primary-foreground/60 max-w-md mx-auto">Create your free account and discover scholarships that match your unique academic profile.</p>
+      {/* Left brand panel */}
+      <div className="hidden w-[48%] gradient-hero lg:flex lg:items-center lg:justify-center relative overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.06]" style={{ backgroundImage: "radial-gradient(circle at 30% 40%, hsl(265 70% 58%) 0%, transparent 50%), radial-gradient(circle at 70% 60%, hsl(230 75% 55%) 0%, transparent 50%)" }} />
+        <div className="relative text-center px-12 max-w-md">
+          <GraduationCap className="mx-auto h-14 w-14 text-primary" />
+          <h2 className="mt-6 font-display text-3xl font-bold text-primary-foreground tracking-tight">Join EduGrant AI</h2>
+          <p className="mt-4 text-primary-foreground/50 leading-relaxed">Create your free account and discover scholarships that match your unique academic profile.</p>
         </div>
       </div>
-      <div className="flex w-full items-center justify-center px-6 py-10 lg:w-1/2 overflow-auto">
+
+      {/* Right form panel */}
+      <div className="flex w-full items-center justify-center px-6 py-10 lg:w-[52%] overflow-auto">
         <div className="w-full max-w-md">
-          <Link to="/" className="mb-6 flex items-center gap-2 lg:hidden">
+          <Link to="/" className="mb-8 flex items-center gap-2 lg:hidden">
             <GraduationCap className="h-7 w-7 text-primary" />
             <span className="font-display text-xl font-bold">EduGrant AI</span>
           </Link>
-          <h1 className="font-display text-2xl font-bold text-foreground">Create Account</h1>
-          <p className="mt-1 text-sm text-muted-foreground">Start your scholarship journey today</p>
+          <h1 className="font-display text-2xl font-extrabold text-foreground tracking-tight">Create Account</h1>
+          <p className="mt-1.5 text-sm text-muted-foreground">Start your scholarship journey today</p>
 
-          <form onSubmit={handleSubmit} className="mt-6 space-y-3">
+          <form onSubmit={handleSubmit} className="mt-8 space-y-4">
             <div>
-              <Label htmlFor="name">Full Name *</Label>
-              <div className="relative mt-1">
-                <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input id="name" placeholder="Your full name" className="pl-10" value={name} onChange={(e) => setName(e.target.value)} />
+              <Label className="text-xs font-medium text-muted-foreground">Full Name *</Label>
+              <div className="relative mt-1.5">
+                <User className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/50" />
+                <Input placeholder="Your full name" className="pl-11 h-10 rounded-xl" value={name} onChange={(e) => setName(e.target.value)} />
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="email">Email *</Label>
-                <div className="relative mt-1">
-                  <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                  <Input id="email" type="email" placeholder="you@email.com" className="pl-10" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <Label className="text-xs font-medium text-muted-foreground">Email *</Label>
+                <div className="relative mt-1.5">
+                  <Mail className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/50" />
+                  <Input type="email" placeholder="you@email.com" className="pl-11 h-10 rounded-xl" value={email} onChange={(e) => setEmail(e.target.value)} />
                 </div>
               </div>
               <div>
-                <Label htmlFor="password">Password * (min 6)</Label>
-                <div className="relative mt-1">
-                  <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                  <Input id="password" type={showPw ? "text" : "password"} placeholder="••••••••" className="pl-10 pr-10" value={password} onChange={(e) => setPassword(e.target.value)} />
-                  <button type="button" onClick={() => setShowPw(!showPw)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
+                <Label className="text-xs font-medium text-muted-foreground">Password * (min 6)</Label>
+                <div className="relative mt-1.5">
+                  <Lock className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/50" />
+                  <Input type={showPw ? "text" : "password"} placeholder="••••••••" className="pl-11 pr-11 h-10 rounded-xl" value={password} onChange={(e) => setPassword(e.target.value)} />
+                  <button type="button" onClick={() => setShowPw(!showPw)} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted-foreground/40 hover:text-foreground transition-colors">
                     {showPw ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
                 </div>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-4">
               <div>
-                <Label>Education Level</Label>
+                <Label className="text-xs font-medium text-muted-foreground">Education Level</Label>
                 <Select value={educationLevel} onValueChange={setEducationLevel}>
-                  <SelectTrigger className="mt-1"><SelectValue /></SelectTrigger>
+                  <SelectTrigger className="mt-1.5 h-10 rounded-xl"><SelectValue /></SelectTrigger>
                   <SelectContent>{["High School","Undergraduate","Postgraduate","Doctorate"].map(l => <SelectItem key={l} value={l}>{l}</SelectItem>)}</SelectContent>
                 </Select>
               </div>
               <div>
-                <Label>Field of Study</Label>
+                <Label className="text-xs font-medium text-muted-foreground">Field of Study</Label>
                 <Select value={fieldOfStudy} onValueChange={setFieldOfStudy}>
-                  <SelectTrigger className="mt-1"><SelectValue /></SelectTrigger>
+                  <SelectTrigger className="mt-1.5 h-10 rounded-xl"><SelectValue /></SelectTrigger>
                   <SelectContent>{fieldsOfStudy.map(f => <SelectItem key={f} value={f}>{f}</SelectItem>)}</SelectContent>
                 </Select>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-4">
               <div>
-                <Label>Marks %</Label>
-                <Input className="mt-1" type="number" min={0} max={100} value={percentage} onChange={(e) => setPercentage(e.target.value)} />
+                <Label className="text-xs font-medium text-muted-foreground">Marks %</Label>
+                <Input className="mt-1.5 h-10 rounded-xl" type="number" min={0} max={100} value={percentage} onChange={(e) => setPercentage(e.target.value)} />
               </div>
               <div>
-                <Label>Annual Family Income (₹)</Label>
-                <Input className="mt-1" type="number" min={0} value={income} onChange={(e) => setIncome(e.target.value)} />
+                <Label className="text-xs font-medium text-muted-foreground">Annual Family Income (₹)</Label>
+                <Input className="mt-1.5 h-10 rounded-xl" type="number" min={0} value={income} onChange={(e) => setIncome(e.target.value)} />
               </div>
             </div>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-3 gap-4">
               <div>
-                <Label>Category</Label>
+                <Label className="text-xs font-medium text-muted-foreground">Category</Label>
                 <Select value={category} onValueChange={setCategory}>
-                  <SelectTrigger className="mt-1"><SelectValue /></SelectTrigger>
+                  <SelectTrigger className="mt-1.5 h-10 rounded-xl"><SelectValue /></SelectTrigger>
                   <SelectContent>{["General","OBC","SC","ST"].map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}</SelectContent>
                 </Select>
               </div>
               <div>
-                <Label>State</Label>
+                <Label className="text-xs font-medium text-muted-foreground">State</Label>
                 <Select value={state} onValueChange={setState}>
-                  <SelectTrigger className="mt-1"><SelectValue /></SelectTrigger>
+                  <SelectTrigger className="mt-1.5 h-10 rounded-xl"><SelectValue /></SelectTrigger>
                   <SelectContent>{indianStates.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
                 </Select>
               </div>
               <div>
-                <Label>Target Course Cost (₹)</Label>
-                <Input className="mt-1" type="number" min={0} value={courseCost} onChange={(e) => setCourseCost(e.target.value)} />
+                <Label className="text-xs font-medium text-muted-foreground">Course Cost (₹)</Label>
+                <Input className="mt-1.5 h-10 rounded-xl" type="number" min={0} value={courseCost} onChange={(e) => setCourseCost(e.target.value)} />
               </div>
             </div>
-            <Button type="submit" disabled={loading} className="w-full gradient-primary text-primary-foreground font-semibold shadow-glow mt-2">
+            <Button type="submit" disabled={loading} className="w-full h-11 gradient-primary text-primary-foreground font-semibold shadow-glow rounded-xl mt-2">
               {loading ? "Creating account..." : "Create Account"}
             </Button>
           </form>
-          <p className="mt-4 text-center text-sm text-muted-foreground">
+          <p className="mt-6 text-center text-sm text-muted-foreground">
             Already have an account?{" "}
-            <Link to="/login" className="font-medium text-primary hover:underline">Log in</Link>
+            <Link to="/login" className="font-semibold text-primary hover:underline">Log in</Link>
           </p>
         </div>
       </div>
