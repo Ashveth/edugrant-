@@ -19,7 +19,6 @@ export default function TwoFactorSetup() {
   const [isEnabled, setIsEnabled] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  // Check if MFA is already enrolled
   const checkStatus = async () => {
     const { data } = await supabase.auth.mfa.listFactors();
     if (data?.totp && data.totp.length > 0) {
@@ -34,7 +33,6 @@ export default function TwoFactorSetup() {
     return false;
   };
 
-  // Initialize on mount-like behavior
   useState(() => {
     checkStatus();
   });
@@ -42,7 +40,6 @@ export default function TwoFactorSetup() {
   const startEnrollment = async () => {
     setLoading(true);
     try {
-      // Unenroll any unverified factors first
       const { data: factors } = await supabase.auth.mfa.listFactors();
       if (factors?.totp) {
         for (const f of factors.totp) {
@@ -127,27 +124,29 @@ export default function TwoFactorSetup() {
   };
 
   return (
-    <Card className="mt-4 shadow-card">
-      <CardHeader>
-        <CardTitle className="font-display text-lg flex items-center gap-2">
-          <Shield className="h-5 w-5 text-primary" />
-          Two-Factor Authentication
-        </CardTitle>
-        <CardDescription>
-          Add an extra layer of security using an authenticator app
-        </CardDescription>
+    <Card className="shadow-card rounded-2xl">
+      <CardHeader className="pb-2">
+        <div className="flex items-center gap-3">
+          <div className="h-9 w-9 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+            <Shield className="h-4 w-4 text-primary" />
+          </div>
+          <div>
+            <CardTitle className="font-display text-base">Two-Factor Authentication</CardTitle>
+            <CardDescription className="text-xs mt-0.5">Add an extra layer of security using an authenticator app</CardDescription>
+          </div>
+        </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className="pt-4">
         {step === "idle" && (
           <div className="space-y-4">
             <div className="flex items-center gap-3 rounded-xl border border-border/60 bg-muted/30 p-4">
-              <ShieldOff className="h-5 w-5 text-muted-foreground" />
+              <ShieldOff className="h-5 w-5 text-muted-foreground shrink-0" />
               <div>
                 <p className="text-sm font-medium text-foreground">2FA is not enabled</p>
                 <p className="text-xs text-muted-foreground">Protect your account with a TOTP authenticator app</p>
               </div>
             </div>
-            <Button onClick={startEnrollment} disabled={loading} className="gradient-primary text-primary-foreground font-semibold shadow-glow">
+            <Button onClick={startEnrollment} disabled={loading} className="gradient-primary text-primary-foreground font-semibold shadow-glow rounded-xl h-10">
               {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Shield className="mr-2 h-4 w-4" />}
               Enable 2FA
             </Button>
@@ -158,18 +157,18 @@ export default function TwoFactorSetup() {
           <div className="space-y-5">
             <div className="space-y-3">
               <p className="text-sm font-medium text-foreground">1. Scan this QR code with your authenticator app</p>
-              <div className="flex justify-center rounded-xl border border-border/60 bg-card p-4">
-                <img src={qrCode} alt="2FA QR Code" className="h-48 w-48" />
+              <div className="flex justify-center rounded-2xl border border-border/60 bg-background p-6">
+                <img src={qrCode} alt="2FA QR Code" className="h-44 w-44 rounded-lg" />
               </div>
             </div>
 
             <div className="space-y-2">
               <p className="text-xs text-muted-foreground">Or enter this secret manually:</p>
               <div className="flex items-center gap-2">
-                <code className="flex-1 rounded-lg bg-muted/50 px-3 py-2 text-xs font-mono text-foreground break-all">
+                <code className="flex-1 rounded-xl bg-muted/50 border border-border/40 px-3 py-2.5 text-xs font-mono text-foreground break-all">
                   {secret}
                 </code>
-                <Button variant="outline" size="icon" onClick={copySecret} className="shrink-0">
+                <Button variant="outline" size="icon" onClick={copySecret} className="shrink-0 rounded-xl h-10 w-10">
                   {copied ? <Check className="h-4 w-4 text-success" /> : <Copy className="h-4 w-4" />}
                 </Button>
               </div>
@@ -182,15 +181,15 @@ export default function TwoFactorSetup() {
                 maxLength={6}
                 value={verifyCode}
                 onChange={(e) => setVerifyCode(e.target.value.replace(/\D/g, ""))}
-                className="text-center text-lg tracking-[0.5em] font-mono h-12 rounded-xl"
+                className="text-center text-lg tracking-[0.5em] font-mono h-12 rounded-xl border-border/60 focus:border-primary/40 focus:shadow-search transition-all"
               />
             </div>
 
             <div className="flex gap-3">
-              <Button variant="outline" onClick={() => setStep("idle")} disabled={loading}>
+              <Button variant="outline" onClick={() => setStep("idle")} disabled={loading} className="rounded-xl h-10">
                 Cancel
               </Button>
-              <Button onClick={verifyAndEnable} disabled={loading || verifyCode.length !== 6} className="gradient-primary text-primary-foreground font-semibold shadow-glow">
+              <Button onClick={verifyAndEnable} disabled={loading || verifyCode.length !== 6} className="gradient-primary text-primary-foreground font-semibold shadow-glow rounded-xl h-10">
                 {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
                 Verify & Enable
               </Button>
@@ -201,13 +200,13 @@ export default function TwoFactorSetup() {
         {step === "enabled" && (
           <div className="space-y-4">
             <div className="flex items-center gap-3 rounded-xl border border-success/30 bg-success/5 p-4">
-              <ShieldCheck className="h-5 w-5 text-success" />
+              <ShieldCheck className="h-5 w-5 text-success shrink-0" />
               <div>
                 <p className="text-sm font-medium text-foreground">2FA is enabled</p>
                 <p className="text-xs text-muted-foreground">Your account is protected with two-factor authentication</p>
               </div>
             </div>
-            <Button variant="outline" onClick={disable2FA} disabled={loading} className="text-destructive hover:text-destructive">
+            <Button variant="outline" onClick={disable2FA} disabled={loading} className="text-destructive hover:text-destructive rounded-xl h-10">
               {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <ShieldOff className="mr-2 h-4 w-4" />}
               Disable 2FA
             </Button>
