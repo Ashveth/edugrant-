@@ -242,7 +242,27 @@ export default function DocumentsPage() {
         </div>
       </div>
 
-      {/* Document List */}
+      {/* Add Custom Document */}
+      <div className="flex gap-2">
+        {showAddDoc ? (
+          <div className="flex gap-2 flex-1">
+            <Input
+              placeholder="e.g. Income Certificate, Aadhaar Card..."
+              value={newDocName}
+              onChange={e => setNewDocName(e.target.value)}
+              onKeyDown={e => e.key === "Enter" && handleAddCustomDoc()}
+              autoFocus
+              className="flex-1"
+            />
+            <Button onClick={handleAddCustomDoc} size="sm" className="gradient-primary text-primary-foreground">Add</Button>
+            <Button onClick={() => { setShowAddDoc(false); setNewDocName(""); }} size="sm" variant="outline">Cancel</Button>
+          </div>
+        ) : (
+          <Button onClick={() => setShowAddDoc(true)} variant="outline" className="gap-2">
+            <Plus className="h-4 w-4" /> Add Custom Document
+          </Button>
+        )}
+      </div>
       <div className="space-y-3">
         {filteredDocs.length === 0 && (
           <Card className="shadow-card">
