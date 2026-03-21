@@ -28,6 +28,9 @@ export default function DocumentsPage() {
   const [uploadedDocs, setUploadedDocs] = useState<UploadedDoc[]>([]);
   const [uploadingFor, setUploadingFor] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [customDocs, setCustomDocs] = useState<string[]>([]);
+  const [newDocName, setNewDocName] = useState("");
+  const [showAddDoc, setShowAddDoc] = useState(false);
   const { toast } = useToast();
 
   // Fetch uploaded documents
