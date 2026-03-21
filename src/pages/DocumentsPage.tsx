@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { FileText, CheckCircle2, Circle, Search, FolderOpen, AlertCircle, Clock, Upload, Download, Trash2, Loader2, Paperclip } from "lucide-react";
+import { FileText, CheckCircle2, Circle, Search, FolderOpen, AlertCircle, Clock, Upload, Download, Trash2, Loader2, Paperclip, Plus } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
