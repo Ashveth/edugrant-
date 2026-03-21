@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { FileText, CheckCircle2, Circle, Search, FolderOpen, AlertCircle, Clock, Upload, Download, Trash2, Loader2, Paperclip } from "lucide-react";
+import { FileText, CheckCircle2, Circle, Search, FolderOpen, AlertCircle, Clock, Upload, Download, Trash2, Loader2, Paperclip, Plus } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -28,6 +28,9 @@ export default function DocumentsPage() {
   const [uploadedDocs, setUploadedDocs] = useState<UploadedDoc[]>([]);
   const [uploadingFor, setUploadingFor] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [customDocs, setCustomDocs] = useState<string[]>([]);
+  const [newDocName, setNewDocName] = useState("");
+  const [showAddDoc, setShowAddDoc] = useState(false);
   const { toast } = useToast();
 
   // Fetch uploaded documents
@@ -43,6 +46,12 @@ export default function DocumentsPage() {
     fetchDocs();
   }, [userId]);
 
+  // Load custom docs from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem("edugrant_custom_docs");
+    if (saved) setCustomDocs(JSON.parse(saved));
+  }, []);
+
   const relevantScholarships = savedScholarships.length > 0
     ? scholarships.filter(s => savedScholarships.includes(s.id))
     : scholarships;
@@ -55,12 +64,38 @@ export default function DocumentsPage() {
         if (!map[doc].includes(s.name)) map[doc].push(s.name);
       });
     });
+    // Add custom docs
+    customDocs.forEach(doc => {
+      if (!map[doc]) map[doc] = [];
+    });
     return map;
-  }, [relevantScholarships]);
+  }, [relevantScholarships, customDocs]);
 
   const allDocs = Object.keys(documentMap);
   const readyCount = allDocs.filter(d => documentChecklist[d]).length;
   const progressPercent = allDocs.length > 0 ? Math.round((readyCount / allDocs.length) * 100) : 0;
+
+  const handleAddCustomDoc = () => {
+    const name = newDocName.trim();
+    if (!name) return;
+    if (allDocs.includes(name)) {
+      toast({ title: "Document already exists", variant: "destructive" });
+      return;
+    }
+    const updated = [...customDocs, name];
+    setCustomDocs(updated);
+    localStorage.setItem("edugrant_custom_docs", JSON.stringify(updated));
+    setNewDocName("");
+    setShowAddDoc(false);
+    toast({ title: `"${name}" added to your document list` });
+  };
+
+  const handleRemoveCustomDoc = (doc: string) => {
+    const updated = customDocs.filter(d => d !== doc);
+    setCustomDocs(updated);
+    localStorage.setItem("edugrant_custom_docs", JSON.stringify(updated));
+    toast({ title: `"${doc}" removed from your list` });
+  };
 
   const filteredDocs = allDocs
     .filter(doc => {
@@ -207,7 +242,27 @@ export default function DocumentsPage() {
         </div>
       </div>
 
-      {/* Document List */}
+      {/* Add Custom Document */}
+      <div className="flex gap-2">
+        {showAddDoc ? (
+          <div className="flex gap-2 flex-1">
+            <Input
+              placeholder="e.g. Income Certificate, Aadhaar Card..."
+              value={newDocName}
+              onChange={e => setNewDocName(e.target.value)}
+              onKeyDown={e => e.key === "Enter" && handleAddCustomDoc()}
+              autoFocus
+              className="flex-1"
+            />
+            <Button onClick={handleAddCustomDoc} size="sm" className="gradient-primary text-primary-foreground">Add</Button>
+            <Button onClick={() => { setShowAddDoc(false); setNewDocName(""); }} size="sm" variant="outline">Cancel</Button>
+          </div>
+        ) : (
+          <Button onClick={() => setShowAddDoc(true)} variant="outline" className="gap-2">
+            <Plus className="h-4 w-4" /> Add Custom Document
+          </Button>
+        )}
+      </div>
       <div className="space-y-3">
         {filteredDocs.length === 0 && (
           <Card className="shadow-card">
@@ -234,7 +289,14 @@ export default function DocumentsPage() {
                     {isReady ? <CheckCircle2 className="h-5 w-5 text-primary" /> : <Circle className="h-5 w-5 text-muted-foreground" />}
                   </button>
                   <div className="flex-1 min-w-0">
-                    <p className="font-medium text-sm text-foreground">{doc}</p>
+                    <div className="flex items-center gap-2">
+                      <p className="font-medium text-sm text-foreground">{doc}</p>
+                      {customDocs.includes(doc) && (
+                        <button onClick={() => handleRemoveCustomDoc(doc)} className="text-muted-foreground hover:text-destructive transition-colors" title="Remove custom document">
+                          <Trash2 className="h-3 w-3" />
+                        </button>
+                      )}
+                    </div>
 
                     {/* Uploaded file info */}
                     {uploaded && (
