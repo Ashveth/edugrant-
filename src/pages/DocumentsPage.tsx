@@ -289,7 +289,14 @@ export default function DocumentsPage() {
                     {isReady ? <CheckCircle2 className="h-5 w-5 text-primary" /> : <Circle className="h-5 w-5 text-muted-foreground" />}
                   </button>
                   <div className="flex-1 min-w-0">
-                    <p className="font-medium text-sm text-foreground">{doc}</p>
+                    <div className="flex items-center gap-2">
+                      <p className="font-medium text-sm text-foreground">{doc}</p>
+                      {customDocs.includes(doc) && (
+                        <button onClick={() => handleRemoveCustomDoc(doc)} className="text-muted-foreground hover:text-destructive transition-colors" title="Remove custom document">
+                          <Trash2 className="h-3 w-3" />
+                        </button>
+                      )}
+                    </div>
 
                     {/* Uploaded file info */}
                     {uploaded && (
