@@ -103,6 +103,14 @@ export default {
           from: { opacity: "0", transform: "translateX(-20px)" },
           to: { opacity: "1", transform: "translateX(0)" },
         },
+        "slide-down": {
+          from: { opacity: "0", transform: "translateY(-12px)", maxHeight: "0" },
+          to: { opacity: "1", transform: "translateY(0)", maxHeight: "500px" },
+        },
+        "slide-up-out": {
+          from: { opacity: "1", transform: "translateY(0)", maxHeight: "500px" },
+          to: { opacity: "0", transform: "translateY(-12px)", maxHeight: "0" },
+        },
         "scale-in": {
           from: { opacity: "0", transform: "scale(0.95)" },
           to: { opacity: "1", transform: "scale(1)" },
