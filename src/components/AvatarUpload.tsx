@@ -185,7 +185,7 @@ export default function AvatarUpload({ userId, currentUrl, onUploaded }: AvatarU
             <Trash2 className="mr-1 h-3 w-3" /> Remove
           </Button>
         )}
-        <p className="text-[10px] text-muted-foreground/60">JPG, PNG · Max 5MB</p>
+        <p className="text-[10px] text-muted-foreground/60">JPG, PNG · Max 5MB · Drag & drop supported</p>
       </div>
 
       <input
