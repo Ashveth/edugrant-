@@ -20,6 +20,24 @@ interface UploadedDoc {
   uploaded_at: string;
 }
 
+const COMMON_INDIAN_DOCS = [
+  "Income Certificate",
+  "Caste Certificate",
+  "Domicile Certificate",
+  "Aadhaar Card",
+  "PAN Card",
+  "Bank Passbook",
+  "Passport Size Photo",
+  "10th Marksheet",
+  "12th Marksheet",
+  "Bonafide Certificate",
+  "Disability Certificate",
+  "Ration Card",
+  "EWS Certificate",
+  "Migration Certificate",
+  "Fee Receipt",
+];
+
 export default function DocumentsPage() {
   const { savedScholarships, documentChecklist, toggleDocument, userId } = useApp();
   const { scholarships } = useScholarshipsFromDB();
