@@ -100,11 +100,33 @@ export default function AvatarUpload({ userId, currentUrl, onUploaded }: AvatarU
     if (fileRef.current) fileRef.current.value = "";
   };
 
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    if (!uploading) setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const file = e.dataTransfer.files?.[0];
+    if (file) uploadAvatar(file);
+  };
+
   return (
     <div className="flex items-center gap-4">
       {/* Avatar circle */}
-      <div className="relative group">
-        <div className="h-20 w-20 rounded-2xl overflow-hidden border-2 border-border/60 shadow-card bg-muted flex items-center justify-center">
+      <div
+        className="relative group"
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
+      >
+        <div className={`h-20 w-20 rounded-2xl overflow-hidden border-2 shadow-card bg-muted flex items-center justify-center transition-all ${isDragging ? "border-primary border-dashed scale-105 ring-4 ring-primary/20" : "border-border/60"}`}>
           {previewUrl ? (
             <img
               src={previewUrl}
@@ -119,6 +141,11 @@ export default function AvatarUpload({ userId, currentUrl, onUploaded }: AvatarU
           {uploading && (
             <div className="absolute inset-0 bg-background/60 backdrop-blur-sm flex items-center justify-center rounded-2xl">
               <Loader2 className="h-5 w-5 animate-spin text-primary" />
+            </div>
+          )}
+          {isDragging && !uploading && (
+            <div className="absolute inset-0 bg-primary/20 backdrop-blur-sm flex items-center justify-center rounded-2xl pointer-events-none">
+              <Camera className="h-6 w-6 text-primary" />
             </div>
           )}
         </div>
