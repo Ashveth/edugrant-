@@ -20,6 +20,24 @@ interface UploadedDoc {
   uploaded_at: string;
 }
 
+const COMMON_INDIAN_DOCS = [
+  "Income Certificate",
+  "Caste Certificate",
+  "Domicile Certificate",
+  "Aadhaar Card",
+  "PAN Card",
+  "Bank Passbook",
+  "Passport Size Photo",
+  "10th Marksheet",
+  "12th Marksheet",
+  "Bonafide Certificate",
+  "Disability Certificate",
+  "Ration Card",
+  "EWS Certificate",
+  "Migration Certificate",
+  "Fee Receipt",
+];
+
 export default function DocumentsPage() {
   const { savedScholarships, documentChecklist, toggleDocument, userId } = useApp();
   const { scholarships } = useScholarshipsFromDB();
@@ -243,19 +261,40 @@ export default function DocumentsPage() {
       </div>
 
       {/* Add Custom Document */}
-      <div className="flex gap-2">
+      <div className="space-y-2">
         {showAddDoc ? (
-          <div className="flex gap-2 flex-1">
-            <Input
-              placeholder="e.g. Income Certificate, Aadhaar Card..."
-              value={newDocName}
-              onChange={e => setNewDocName(e.target.value)}
-              onKeyDown={e => e.key === "Enter" && handleAddCustomDoc()}
-              autoFocus
-              className="flex-1"
-            />
-            <Button onClick={handleAddCustomDoc} size="sm" className="gradient-primary text-primary-foreground">Add</Button>
-            <Button onClick={() => { setShowAddDoc(false); setNewDocName(""); }} size="sm" variant="outline">Cancel</Button>
+          <div className="space-y-2">
+            <div className="flex gap-2">
+              <Input
+                placeholder="e.g. Income Certificate, Aadhaar Card..."
+                value={newDocName}
+                onChange={e => setNewDocName(e.target.value)}
+                onKeyDown={e => e.key === "Enter" && handleAddCustomDoc()}
+                autoFocus
+                className="flex-1"
+              />
+              <Button onClick={handleAddCustomDoc} size="sm" className="gradient-primary text-primary-foreground">Add</Button>
+              <Button onClick={() => { setShowAddDoc(false); setNewDocName(""); }} size="sm" variant="outline">Cancel</Button>
+            </div>
+            <div className="space-y-1.5">
+              <p className="text-xs text-muted-foreground">Common Indian scholarship documents:</p>
+              <div className="flex flex-wrap gap-1.5">
+                {COMMON_INDIAN_DOCS.filter(d => !allDocs.includes(d)).map(d => (
+                  <button
+                    key={d}
+                    onClick={() => {
+                      const updated = [...customDocs, d];
+                      setCustomDocs(updated);
+                      localStorage.setItem("edugrant_custom_docs", JSON.stringify(updated));
+                      toast({ title: `"${d}" added to your document list` });
+                    }}
+                    className="text-xs px-2.5 py-1 rounded-full border border-border bg-background hover:bg-accent hover:border-primary/50 transition-colors flex items-center gap-1"
+                  >
+                    <Plus className="h-3 w-3" /> {d}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
         ) : (
           <Button onClick={() => setShowAddDoc(true)} variant="outline" className="gap-2">
