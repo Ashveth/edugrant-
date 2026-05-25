@@ -263,7 +263,7 @@ export default function DocumentsPage() {
       {/* Add Custom Document */}
       <div className="space-y-2">
         {showAddDoc ? (
-          <div className="space-y-2">
+          <div className="space-y-2 origin-top overflow-hidden animate-slide-down">
             <div className="flex gap-2">
               <Input
                 placeholder="e.g. Income Certificate, Aadhaar Card..."
@@ -279,7 +279,7 @@ export default function DocumentsPage() {
             <div className="space-y-1.5">
               <p className="text-xs text-muted-foreground">Common Indian scholarship documents:</p>
               <div className="flex flex-wrap gap-1.5">
-                {COMMON_INDIAN_DOCS.filter(d => !allDocs.includes(d)).map(d => (
+                {COMMON_INDIAN_DOCS.filter(d => !allDocs.includes(d)).map((d, idx) => (
                   <button
                     key={d}
                     onClick={() => {
@@ -288,7 +288,8 @@ export default function DocumentsPage() {
                       localStorage.setItem("edugrant_custom_docs", JSON.stringify(updated));
                       toast({ title: `"${d}" added to your document list` });
                     }}
-                    className="text-xs px-2.5 py-1 rounded-full border border-border bg-background hover:bg-accent hover:border-primary/50 transition-colors flex items-center gap-1"
+                    style={{ animationDelay: `${idx * 30}ms`, opacity: 0 }}
+                    className="text-xs px-2.5 py-1 rounded-full border border-border bg-background hover:bg-accent hover:border-primary/50 hover:-translate-y-0.5 transition-all flex items-center gap-1 animate-slide-in-left"
                   >
                     <Plus className="h-3 w-3" /> {d}
                   </button>
@@ -297,7 +298,7 @@ export default function DocumentsPage() {
             </div>
           </div>
         ) : (
-          <Button onClick={() => setShowAddDoc(true)} variant="outline" className="gap-2">
+          <Button onClick={() => setShowAddDoc(true)} variant="outline" className="gap-2 animate-fade-in">
             <Plus className="h-4 w-4" /> Add Custom Document
           </Button>
         )}
