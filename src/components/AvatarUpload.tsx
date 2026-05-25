@@ -14,6 +14,7 @@ export default function AvatarUpload({ userId, currentUrl, onUploaded }: AvatarU
   const { toast } = useToast();
   const [uploading, setUploading] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(currentUrl);
+  const [isDragging, setIsDragging] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
   const uploadAvatar = useCallback(async (file: File) => {
